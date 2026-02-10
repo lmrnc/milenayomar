@@ -1,303 +1,345 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Omar &amp; Milena — 09 Abril 2027</title>
-  <meta name="description" content="Boda de Omar & Milena Save the date: 09 Abril 2027." />
+  <title>Omar &amp; Milena — 09 . 04 . 27</title>
+  <meta name="description" content="Boda de Omar & Milena — 09/04/2027. Ubicación, agenda, transporte y RSVP." />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <a class="skip-link" href="#home">Saltar al contenido</a>
 
-  <header class="site-header" aria-label="Navegación principal">
-    <div class="container header-inner">
-      <a class="logo" href="#home" aria-label="Ir al inicio">Omar &amp; Milena</a>
+<body>
+  <a class="skip" href="#home">Saltar al contenido</a>
+
+  <header class="topbar" aria-label="Navegación principal">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="#home" aria-label="Ir al inicio">
+        Omar <span aria-hidden="true">×</span> Milena
+      </a>
+
       <nav class="nav" aria-label="Secciones">
-        <a href="#home">Inicio</a>
-        <a href="#events">Agenda</a>
         <a href="#story">Historia</a>
-        <a href="#gallery">Galería</a>
         <a href="#transport">Transporte</a>
         <a href="#contact">Contacto</a>
-        <a class="nav-cta" href="#rsvp">Confirmar</a>
+        <a class="cta" href="#rsvp">RSVP</a>
       </nav>
-      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+      <button class="navbtn" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    </div>
+
+    <div class="navpanel" aria-label="Menú móvil">
+      <a href="#story">Historia</a>
+      <a href="#transport">Transporte</a>
+      <a href="#contact">Contacto</a>
+      <a class="cta" href="#rsvp">RSVP</a>
     </div>
   </header>
 
-  <main>
-    <section id="home" class="hero">
-      <div class="hero-media">
-  <img src="assets/hero.jpeg" alt="Omar y Milena" />
-  <div class="img-placeholder" data-placeholder="Añade una imagen en assets/hero.jpeg"></div>
-  <div class="hero-overlay"></div>
-</div>
-      <div class="container hero-content">
-        <div class="hero-copy">
-          <p class="eyebrow">Save the date</p>
-          <h1>Omar &amp; Milena</h1>
-          <p class="hero-date">09 Abril 2027</p>
-          <p class="hero-text">Celebramos nuestro gran día en xxxxxxxxx. Nos encantará compartirlo contigo.</p>
-          <div class="hero-actions">
-            <a class="btn" href="#events">Ver agenda</a>
-            <a class="btn btn-ghost" href="#transport">Cómo llegar</a>
+  <main id="home">
+    <!-- HERO -->
+    <section class="hero" aria-label="Portada">
+      <div class="wrap">
+        <div class="hero__frame media">
+          <img src="assets/hero.jpeg" alt="Omar y Milena" />
+          <div class="ph" data-text="Añade assets/hero.jpeg"></div>
+
+          <div class="hero__overlay" aria-hidden="true"></div>
+
+          <div class="hero__copy">
+            <p class="kicker">¡Nos casamos!</p>
+            <h1 class="h1">Omar <span class="amp">&amp;</span> Milena</h1>
+            <p class="date">09 <span aria-hidden="true">.</span> 04 <span aria-hidden="true">.</span> 27</p>
+            <p class="lede">
+              Te esperamos para celebrar nuestro gran día en <span class="muted">xxxxxxxxx</span>.
+              Queremos que todo sea fácil: horarios, ubicación, transporte y confirmación en un solo sitio.
+            </p>
+
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#rsvp">Confirmar asistencia</a>
+              <a class="btn btn--ghost" href="#details">Ver detalles</a>
+            </div>
+
+            <div class="countdown" data-date="2027-04-09T17:00:00+02:00" aria-live="polite">
+              <div class="cd__grid" role="group" aria-label="Cuenta atrás">
+                <div class="cd__item">
+                  <span class="cd__num" data-unit="days">00</span>
+                  <span class="cd__label">días</span>
+                </div>
+                <div class="cd__item">
+                  <span class="cd__num" data-unit="hours">00</span>
+                  <span class="cd__label">horas</span>
+                </div>
+                <div class="cd__item">
+                  <span class="cd__num" data-unit="minutes">00</span>
+                  <span class="cd__label">min</span>
+                </div>
+                <div class="cd__item">
+                  <span class="cd__num" data-unit="seconds">00</span>
+                  <span class="cd__label">seg</span>
+                </div>
+              </div>
+              <p class="cd__msg" role="status"></p>
+            </div>
           </div>
         </div>
-        <aside class="hero-card" aria-label="Detalles rápidos">
-          <h2>Detalles rápidos</h2>
-          <ul>
-            <li><span>Ciudad</span><strong>xxxxxxxxx</strong></li>
-            <li><span>Fecha</span><strong>09 Abril 2027</strong></li>
-            <li><span>Hora</span><strong>17:00</strong></li>
-            <li><span>Lugar</span><strong>xxxxxxxxx</strong></li>
-          </ul>
-        </aside>
       </div>
     </section>
 
-    <section class="hello">
-      <div class="container">
-        <p class="eyebrow">Hola</p>
-        <h2 class="section-title">Los novios</h2>
-        <div class="card-grid">
-          <article class="profile-card">
-            <div class="avatar">
-              <img src="assets/groom.jpeg" alt="Omar" />
-              <div class="img-placeholder" data-placeholder="Añade una imagen en assets/groom.jpeg"></div>
+    <!-- DETAILS: Ceremony / Reception style blocks -->
+    <section id="details" class="section">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow">Detalles</p>
+          <h2 class="h2">Ceremonia &amp; celebración</h2>
+          <p class="sub">
+            Todo lo esencial en dos bloques, sin complicaciones.
+          </p>
+        </header>
+
+        <div class="twocol">
+          <article class="block">
+            <p class="block__tag">Ceremonia</p>
+            <p class="block__time">17:00</p>
+            <p class="block__place">
+              <strong>xxxxxxxxx</strong><br />
+              <span class="muted">Dirección: xxxxxxxxx</span>
+            </p>
+            <div class="block__actions">
+              <a class="btn btn--ghost" href="#" aria-label="Abrir ceremonia en Maps">Mapa</a>
+              <a class="btn btn--ghost" href="#transport">Cómo llegar</a>
             </div>
-            <h3>Omar</h3>
-            <p>Amante de los viajes, los cafés largos y las conversaciones que se alargan hasta la noche.</p>
           </article>
-          <article class="profile-card">
-            <div class="avatar">
-              <img src="assets/bride.jpeg" alt="Milena" />
-              <div class="img-placeholder" data-placeholder="Añade una imagen en assets/bride.jpeg"></div>
+
+          <article class="block">
+            <p class="block__tag">Celebración</p>
+            <p class="block__time">18:30 – 02:00</p>
+            <p class="block__place">
+              <strong>xxxxxxxxx</strong><br />
+              <span class="muted">Dirección: xxxxxxxxx</span>
+            </p>
+            <div class="block__actions">
+              <a class="btn btn--ghost" href="#" aria-label="Abrir celebración en Maps">Mapa</a>
+              <a class="btn btn--ghost" href="#rsvp">RSVP</a>
             </div>
-            <h3>Milena</h3>
-            <p>Creativa, detallista y con una sonrisa que ilumina cualquier lugar. ¡Lista para celebrar!</p>
           </article>
+        </div>
+
+        <div class="mini">
+          <div class="mini__item"><span class="mini__k">Ciudad</span><strong>xxxxxxxxx</strong></div>
+          <div class="mini__item"><span class="mini__k">Fecha</span><strong>09/04/2027</strong></div>
+          <div class="mini__item"><span class="mini__k">Dress code</span><strong>por confirmar</strong></div>
+          <div class="mini__item"><span class="mini__k">Niños</span><strong>por confirmar</strong></div>
         </div>
       </div>
     </section>
 
-    <section class="big-day" aria-labelledby="big-day-title">
-      <div class="container">
-        <p class="eyebrow">The big day</p>
-        <h2 id="big-day-title" class="section-title">Cuenta atrás</h2>
-        <div class="countdown" data-date="2027-04-09T17:00:00+02:00" aria-live="polite">
-          <div class="countdown-item"><span class="count" data-unit="days">00</span><span class="label">Días</span></div>
-          <div class="countdown-item"><span class="count" data-unit="hours">00</span><span class="label">Horas</span></div>
-          <div class="countdown-item"><span class="count" data-unit="minutes">00</span><span class="label">Minutos</span></div>
-          <div class="countdown-item"><span class="count" data-unit="seconds">00</span><span class="label">Segundos</span></div>
-          <p class="countdown-message" role="status"></p>
-        </div>
-      </div>
-    </section>
-
-    <section id="events" class="events">
-      <div class="container events-grid">
-        <div class="events-media">
+    <!-- Photo stripe (events.jpeg) -->
+    <section class="stripe" aria-label="Foto de ambiente">
+      <div class="wrap">
+        <div class="stripe__img media">
           <img src="assets/events.jpeg" alt="Celebración" />
-          <div class="img-placeholder" data-placeholder="Añade una imagen en assets/events.jpeg"></div>
-        </div>
-        <div class="events-content">
-          <p class="eyebrow">Agenda</p>
-          <h2 class="section-title">El gran día</h2>
-          <ul class="event-list">
-            <li>
-              <span class="event-time">17:00</span>
-              <div>
-                <h3>Ceremonia</h3>
-                <p>xxxxxxxxx</p>
-              </div>
-            </li>
-            <li>
-              <span class="event-time">18:30</span>
-              <div>
-                <h3>Cóctel</h3>
-                <p>xxxxxxxxx</p>
-              </div>
-            </li>
-            <li>
-              <span class="event-time">20:00</span>
-              <div>
-                <h3>Banquete</h3>
-                <p>xxxxxxxxx</p>
-              </div>
-            </li>
-            <li>
-              <span class="event-time">22:30</span>
-              <div>
-                <h3>Fiesta</h3>
-                <p>xxxxxxxxx</p>
-              </div>
-            </li>
-          </ul>
+          <div class="ph" data-text="Añade assets/events.jpeg"></div>
         </div>
       </div>
     </section>
 
-    <section id="transport" class="transport">
-      <div class="container">
-        <p class="eyebrow">Transporte</p>
-        <h2 class="section-title">Cómo llegar</h2>
-        <div class="card-grid three">
-          <article class="info-card">
-            <h3>En coche</h3>
-            <p>Aparcamiento cercano en xxxxxxxxx. Se recomienda llegar con 20 minutos de margen.</p>
-          </article>
-          <article class="info-card">
-            <h3>Transporte público</h3>
-            <p>Estación más cercana: xxxxxxxxx. Desde allí, 10 minutos a pie.</p>
-          </article>
-          <article class="info-card">
-            <h3>Bus / lanzadera</h3>
-            <p>Servicio por confirmar. Compartiremos detalles cuando estén listos.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+    <!-- STORY -->
+    <section id="story" class="section">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow">Nuestra historia</p>
+          <h2 class="h2">Tres momentos</h2>
+          <p class="sub">Una línea sencilla. El resto lo haces tú con fotos.</p>
+        </header>
 
-    <section id="story" class="story">
-      <div class="container">
-        <p class="eyebrow">Our story</p>
-        <h2 class="section-title">Nuestra historia</h2>
-        <div class="timeline">
-          <article class="timeline-item">
-            <div class="timeline-media">
+        <div class="story">
+          <article class="moment">
+            <div class="moment__img media">
               <img src="assets/story1.jpeg" alt="Primer encuentro" />
-              <div class="img-placeholder" data-placeholder="Añade una imagen en assets/story1.jpeg"></div>
+              <div class="ph" data-text="Añade assets/story1.jpeg"></div>
             </div>
-            <div class="timeline-content">
-              <span class="timeline-date">Mayo 2018</span>
-              <h3>Nos encontramos</h3>
-              <p>Una tarde casual en xxxxxxxxx que terminó convirtiéndose en nuestra historia favorita.</p>
+            <div class="moment__txt">
+              <p class="moment__date">Mayo 2018</p>
+              <h3 class="h3">Nos encontramos</h3>
+              <p class="muted">Una tarde casual en xxxxxxxxx que terminó convirtiéndose en nuestra historia favorita.</p>
             </div>
           </article>
-          <article class="timeline-item">
-            <div class="timeline-media">
+
+          <article class="moment">
+            <div class="moment__img media">
               <img src="assets/story2.jpeg" alt="Primer viaje" />
-              <div class="img-placeholder" data-placeholder="Añade una imagen en assets/story2.jpeg"></div>
+              <div class="ph" data-text="Añade assets/story2.jpeg"></div>
             </div>
-            <div class="timeline-content">
-              <span class="timeline-date">Septiembre 2020</span>
-              <h3>El primer gran viaje</h3>
-              <p>Descubrimos que somos el equipo perfecto, incluso con mapas en xxxxxxxxx.</p>
+            <div class="moment__txt">
+              <p class="moment__date">Septiembre 2020</p>
+              <h3 class="h3">El primer gran viaje</h3>
+              <p class="muted">Descubrimos que somos el equipo perfecto, incluso con mapas en xxxxxxxxx.</p>
             </div>
           </article>
-          <article class="timeline-item">
-            <div class="timeline-media">
+
+          <article class="moment">
+            <div class="moment__img media">
               <img src="assets/story3.jpeg" alt="Compromiso" />
-              <div class="img-placeholder" data-placeholder="Añade una imagen en assets/story3.jpeg"></div>
+              <div class="ph" data-text="Añade assets/story3.jpeg"></div>
             </div>
-            <div class="timeline-content">
-              <span class="timeline-date">Diciembre 2024</span>
-              <h3>El sí</h3>
-              <p>Una promesa entre luces suaves y música en xxxxxxxxx.</p>
+            <div class="moment__txt">
+              <p class="moment__date">Diciembre 2024</p>
+              <h3 class="h3">El sí</h3>
+              <p class="muted">Una promesa entre luces suaves y música en xxxxxxxxx.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="couple">
+          <div class="person">
+            <div class="avatar media">
+              <img src="assets/groom.jpeg" alt="Omar" />
+              <div class="ph" data-text="Añade assets/groom.jpeg"></div>
+            </div>
+            <p class="person__name">Omar</p>
+          </div>
+
+          <div class="heart" aria-hidden="true">♥</div>
+
+          <div class="person">
+            <div class="avatar media">
+              <img src="assets/bride.jpeg" alt="Milena" />
+              <div class="ph" data-text="Añade assets/bride.jpeg"></div>
+            </div>
+            <p class="person__name">Milena</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSPORT -->
+    <section id="transport" class="section section--tint">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow">Transporte</p>
+          <h2 class="h2">Cómo llegar</h2>
+          <p class="sub">Tres opciones, directo al grano.</p>
+        </header>
+
+        <div class="grid3">
+          <article class="card">
+            <h3 class="h3">En coche</h3>
+            <p class="muted">Aparcamiento cercano en xxxxxxxxx. Recomendación: llegar con 20 minutos de margen.</p>
+          </article>
+          <article class="card">
+            <h3 class="h3">Transporte público</h3>
+            <p class="muted">Estación más cercana: xxxxxxxxx. Desde allí, 10 minutos a pie.</p>
+          </article>
+          <article class="card">
+            <h3 class="h3">Bus / lanzadera</h3>
+            <p class="muted">Servicio por confirmar. Compartiremos horarios cuando estén listos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow">Contacto</p>
+          <h2 class="h2">Dudas rápidas</h2>
+          <p class="sub">Para que el día fluya sin llamadas cruzadas.</p>
+        </header>
+
+        <div class="twocol twocol--contact">
+          <article class="card">
+            <h3 class="h3">Wedding planner</h3>
+            <p class="muted">
+              <strong>Nombre:</strong> xxxxxxxxx<br />
+              <strong>Teléfono:</strong> xxxxxxxxx<br />
+              <strong>Email:</strong> xxxxxxxxx
+            </p>
+            <p class="muted">El día del evento, contactad aquí para cambios de última hora.</p>
+          </article>
+
+          <article class="card">
+            <h3 class="h3">Ubicación</h3>
+            <div class="map">
+              Mapa aquí
+            </div>
+            <div class="map__actions">
+              <a class="btn btn--ghost" href="#">Abrir ceremonia en Maps</a>
+              <a class="btn btn--ghost" href="#">Abrir celebración en Maps</a>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- GALERÍA: OCULTA HASTA TENER IMÁGENES (g1–g9) -->
-    <section id="gallery" class="gallery" hidden>
-      <div class="container">
-        <p class="eyebrow">Galería</p>
-        <h2 class="section-title">Momentos</h2>
-        <p style="margin-top: 0; color: #7a6f65; font-family: Arial, sans-serif;">
-          Galería en preparación.
-        </p>
-      </div>
-    </section>
+    <!-- RSVP -->
+    <section id="rsvp" class="section section--tint">
+      <div class="wrap">
+        <header class="head">
+          <p class="eyebrow">RSVP</p>
+          <h2 class="h2">Confirma tu asistencia</h2>
+          <p class="sub">Se guarda en Google Sheets cuando conectes la URL.</p>
+        </header>
 
-    <section id="contact" class="contact">
-      <div class="container">
-        <p class="eyebrow">Contacto</p>
-        <h2 class="section-title">Estamos a un mensaje</h2>
-        <div class="card-grid">
-          <article class="info-card">
-            <h3>Wedding planner</h3>
-            <p><strong>Nombre:</strong> xxxxxxxxx</p>
-            <p><strong>Teléfono:</strong> xxxxxxxxx</p>
-            <p><strong>Email:</strong> xxxxxxxxx</p>
-          </article>
-          <article class="info-card">
-            <h3>Ubicación</h3>
-            <div class="map-placeholder" aria-label="Mapa aquí">Mapa aquí</div>
-            <div class="map-actions">
-              <a class="btn btn-ghost" href="#">Abrir ceremonia en Maps</a>
-              <a class="btn btn-ghost" href="#">Abrir celebración en Maps</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+        <div class="rsvp">
+          <form id="rsvpForm" class="form"
+                method="POST"
+                action="REPLACE_WITH_APPS_SCRIPT_URL"
+                target="rsvpFrame"
+                novalidate>
 
-    <section id="rsvp" class="rsvp">
-      <div class="container">
-        <p class="eyebrow">RSVP</p>
-        <h2 class="section-title">Confirma tu asistencia</h2>
-        <div class="rsvp-grid">
-          <form id="rsvpForm" class="rsvp-form" method="POST" action="REPLACE_WITH_APPS_SCRIPT_URL" target="rsvpFrame" novalidate>
-            <div class="segmented" role="group" aria-label="¿Asistirás?">
-              <button type="button" class="segment active" data-value="yes" aria-pressed="true">Sí, asistiré</button>
-              <button type="button" class="segment" data-value="no" aria-pressed="false">No podré asistir</button>
+            <div class="seg" role="group" aria-label="¿Asistirás?">
+              <button type="button" class="seg__btn is-on" data-value="yes" aria-pressed="true">Sí, asistiré</button>
+              <button type="button" class="seg__btn" data-value="no" aria-pressed="false">No podré asistir</button>
               <input type="hidden" name="attend" value="yes" />
             </div>
 
-            <label>
-              Nombre y apellidos*
-              <input type="text" name="name" required placeholder="Nombre completo" />
+            <label class="field">
+              <span>Nombre y apellidos*</span>
+              <input name="name" type="text" required placeholder="Nombre completo" autocomplete="name" />
             </label>
-            <label>
-              Email*
-              <input type="email" name="email" required placeholder="nombre@email.com" />
+
+            <label class="field">
+              <span>Email*</span>
+              <input name="email" type="email" required placeholder="nombre@email.com" autocomplete="email" />
             </label>
-            <label>
-              Notas / alergias
+
+            <label class="field">
+              <span>Notas / alergias</span>
               <textarea name="notes" rows="3" placeholder="Opcional"></textarea>
             </label>
 
             <div class="guests">
-              <div class="guest-header">
-                <h3>Acompañantes</h3>
-                <button type="button" class="btn btn-ghost" id="addGuest">Añadir invitado</button>
+              <div class="guests__head">
+                <p class="guests__title">Acompañantes</p>
+                <button type="button" class="btn btn--ghost" id="addGuest">Añadir</button>
               </div>
-              <div id="guestList"></div>
+              <div id="guestList" class="guestList"></div>
             </div>
 
-            <div class="form-status" aria-live="polite" role="status"></div>
+            <p class="status" aria-live="polite" role="status"></p>
 
-            <button type="submit" class="btn">Enviar confirmación</button>
+            <button type="submit" class="btn btn--primary">Enviar confirmación</button>
           </form>
 
-          <aside class="rsvp-info">
-            <h3>Detalles importantes</h3>
-            <p>Por favor, confirma antes del 15 Marzo 2027 para ayudarnos con la organización.</p>
-            <p>Si tienes dudas, escribe a xxxxxxxxx.</p>
+          <aside class="aside">
+            <h3 class="h3">Info</h3>
+            <p class="muted">Confirma antes del <strong>15/03/2027</strong> para ayudarnos con la organización.</p>
+            <p class="muted">Si tienes dudas, escribe a <strong>xxxxxxxxx</strong>.</p>
           </aside>
         </div>
-        <iframe name="rsvpFrame" id="rsvpFrame" title="Respuesta RSVP" class="rsvp-frame" aria-hidden="true"></iframe>
+
+        <iframe name="rsvpFrame" id="rsvpFrame" title="Respuesta RSVP" class="frame" aria-hidden="true"></iframe>
       </div>
     </section>
+
+    <footer class="footer">
+      <div class="wrap footer__inner">
+        <p>Omar &amp; Milena — 09/04/2027</p>
+        <p class="muted">xxxxxxxxx</p>
+      </div>
+    </footer>
   </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>Gracias por acompañarnos en este momento tan especial. Omar &amp; Milena — 09 Abril 2027.</p>
-    </div>
-  </footer>
-
-  <!-- Lightbox: se mantiene aunque la galería esté oculta -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="lightbox-backdrop" data-close="true"></div>
-    <div class="lightbox-content" role="document">
-      <button class="lightbox-close" aria-label="Cerrar">✕</button>
-      <img id="lightboxImage" alt="Imagen ampliada" />
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
