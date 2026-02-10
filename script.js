@@ -1,191 +1,133 @@
-// script.js
-(() => {
-  "use strict";
+/* =========================
+   Minimal interactions
+   - Mobile nav toggle
+   - Countdown to 2027-04-09T17:00:00+02:00
+   - RSVP hidden iframe success
+   ========================= */
 
-  // Smooth scroll with offset for sticky header
-  const header = document.querySelector(".site-header");
-  const headerOffset = () => (header ? header.getBoundingClientRect().height : 0);
-
-  function scrollToHash(hash) {
-    const el = document.querySelector(hash);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset() - 10;
-    window.scrollTo({ top, behavior: "smooth" });
-  }
-
-  // Intercept in-page nav clicks
-  document.addEventListener("click", (e) => {
-    const a = e.target.closest('a[href^="#"]');
-    if (!a) return;
-
-    const href = a.getAttribute("href");
-    if (!href || href === "#") return;
-
-    e.preventDefault();
-    history.pushState(null, "", href);
-    scrollToHash(href);
-
-    // Close mobile menu if open
-    closeMobileMenu();
-  });
-
-  // Mobile menu toggle
+(function () {
+  // ---------- Mobile nav ----------
   const toggleBtn = document.querySelector(".nav-toggle");
-  const mobileMenu = document.getElementById("mobileMenu");
+  const navPanel = document.getElementById("navPanel");
 
-  function openMobileMenu() {
-    if (!toggleBtn || !mobileMenu) return;
-    toggleBtn.setAttribute("aria-expanded", "true");
-    mobileMenu.hidden = false;
-  }
+  if (toggleBtn && navPanel) {
+    const setPanel = (open) => {
+      toggleBtn.setAttribute("aria-expanded", String(open));
+      navPanel.hidden = !open;
+    };
 
-  function closeMobileMenu() {
-    if (!toggleBtn || !mobileMenu) return;
-    toggleBtn.setAttribute("aria-expanded", "false");
-    mobileMenu.hidden = true;
-  }
-
-  if (toggleBtn && mobileMenu) {
     toggleBtn.addEventListener("click", () => {
-      const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
-      if (expanded) closeMobileMenu();
-      else openMobileMenu();
+      const open = toggleBtn.getAttribute("aria-expanded") !== "true";
+      setPanel(open);
+    });
+
+    navPanel.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if (a) setPanel(false);
     });
 
     // Close on Escape
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMobileMenu();
-    });
-
-    // Close on resize up
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 720) closeMobileMenu();
+      if (e.key === "Escape") setPanel(false);
     });
   }
 
-  // COUNTDOWN: 2027-04-09T17:00:00+02:00
+  // ---------- Countdown ----------
+  const cdDays = document.getElementById("cdDays");
+  const cdHours = document.getElementById("cdHours");
+  const cdMinutes = document.getElementById("cdMinutes");
+  const cdSeconds = document.getElementById("cdSeconds");
+  const cdDone = document.getElementById("cdDone");
+
+  // Fixed target: 2027-04-09T17:00:00+02:00
   const targetISO = "2027-04-09T17:00:00+02:00";
   const target = new Date(targetISO).getTime();
 
-  const dd = document.querySelector("[data-dd]");
-  const hh = document.querySelector("[data-hh]");
-  const mm = document.querySelector("[data-mm]");
-  const ss = document.querySelector("[data-ss]");
-  const done = document.querySelector("[data-countdown-done]");
-  const grid = document.querySelector("[data-countdown]");
+  const pad2 = (n) => String(n).padStart(2, "0");
 
-  function pad2(n) {
-    return String(n).padStart(2, "0");
-  }
-
-  function tick() {
+  function renderCountdown() {
     const now = Date.now();
-    let diff = target - now;
-
-    if (!grid || !done || !dd || !hh || !mm || !ss) return;
+    const diff = target - now;
 
     if (diff <= 0) {
-      grid.hidden = true;
-      done.hidden = false;
+      if (cdDone) cdDone.hidden = false;
+      if (cdDays) cdDays.textContent = "0";
+      if (cdHours) cdHours.textContent = "00";
+      if (cdMinutes) cdMinutes.textContent = "00";
+      if (cdSeconds) cdSeconds.textContent = "00";
       return;
     }
 
     const totalSeconds = Math.floor(diff / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const days = Math.floor(totalSeconds / (3600 * 24));
+    const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    dd.textContent = String(days);
-    hh.textContent = pad2(hours);
-    mm.textContent = pad2(minutes);
-    ss.textContent = pad2(seconds);
+    if (cdDone) cdDone.hidden = true;
+    if (cdDays) cdDays.textContent = String(days);
+    if (cdHours) cdHours.textContent = pad2(hours);
+    if (cdMinutes) cdMinutes.textContent = pad2(minutes);
+    if (cdSeconds) cdSeconds.textContent = pad2(seconds);
   }
 
-  tick();
-  setInterval(tick, 1000);
+  renderCountdown();
+  setInterval(renderCountdown, 1000);
 
-  // RSVP toggle
-  const attendanceInput = document.getElementById("attendance");
-  const toggleButtons = Array.from(document.querySelectorAll(".toggle-btn"));
-
-  function setAttendance(value) {
-    if (!attendanceInput) return;
-    attendanceInput.value = value;
-
-    toggleButtons.forEach((btn) => {
-      const isActive = btn.dataset.value === value;
-      btn.classList.toggle("is-active", isActive);
-      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
-    });
-  }
-
-  toggleButtons.forEach((btn) => {
-    btn.addEventListener("click", () => setAttendance(btn.dataset.value || "Sí"));
-  });
-
-  // RSVP submission to hidden iframe + success message on iframe load
+  // ---------- RSVP (Google Apps Script via hidden iframe) ----------
   const form = document.getElementById("rsvpForm");
-  const iframe = document.getElementById("rsvpTarget");
-  const status = document.getElementById("formStatus");
+  const iframe = document.getElementById("rsvpHiddenFrame");
+
+  const sending = document.getElementById("rsvpSending");
+  const success = document.getElementById("rsvpSuccess");
+  const error = document.getElementById("rsvpError");
+
   let pendingSubmit = false;
 
-  function setStatus(msg, kind) {
-    if (!status) return;
-    status.textContent = msg;
-    status.classList.remove("is-success", "is-error");
-    if (kind) status.classList.add(kind);
+  function show(el) { if (el) el.hidden = false; }
+  function hide(el) { if (el) el.hidden = true; }
+
+  function resetStatus() {
+    hide(sending);
+    hide(success);
+    hide(error);
   }
 
-  function validateForm() {
-    if (!form) return false;
-    const name = form.querySelector('input[name="name"]');
-    const email = form.querySelector('input[name="email"]');
-
-    if (!name || !email) return false;
-
-    const nameOk = name.value.trim().length >= 2;
-    const emailOk = email.value.includes("@") && email.value.trim().length >= 5;
-
-    if (!nameOk) {
-      setStatus("Escribe tu nombre para poder confirmar.", "is-error");
-      name.focus();
-      return false;
-    }
-    if (!emailOk) {
-      setStatus("Revisa el email (parece incompleto).", "is-error");
-      email.focus();
-      return false;
-    }
-
-    return true;
-  }
-
-  if (form) {
+  if (form && iframe) {
     form.addEventListener("submit", () => {
-      if (!validateForm()) {
-        // Block submit if invalid
-        event.preventDefault();
-        return;
-      }
+      resetStatus();
       pendingSubmit = true;
-      setStatus("Enviando…", "");
+      show(sending);
+      // success will be handled on iframe load
     });
-  }
 
-  if (iframe) {
     iframe.addEventListener("load", () => {
+      // Some browsers may load iframe at page init; guard with pendingSubmit
       if (!pendingSubmit) return;
       pendingSubmit = false;
 
-      setStatus("¡RSVP recibido! Gracias — te contactaremos si necesitamos algún detalle.", "is-success");
-      if (form) form.reset();
-      setAttendance("Sí");
-    });
-  }
+      hide(sending);
+      show(success);
 
-  // If page loads with hash, scroll with offset
-  window.addEventListener("load", () => {
-    if (location.hash) scrollToHash(location.hash);
-  });
+      // Optional: clear form softly, keep attendance choice if you want
+      // Here: reset all fields for a "clean" premium feel.
+      try { form.reset(); } catch (_) {}
+
+      // Bring success into view subtly
+      success?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    // Lightweight client-side hint if action isn't replaced
+    form.addEventListener("submit", () => {
+      const action = form.getAttribute("action") || "";
+      if (action.includes("REPLACE_WITH_APPS_SCRIPT_URL")) {
+        hide(sending);
+        show(error);
+        if (error) {
+          error.textContent = "xxxxxxxxx";
+        }
+        pendingSubmit = false;
+      }
+    }, { capture: true });
+  }
 })();
