@@ -1,133 +1,191 @@
-/* Check: menú móvil + placeholders + scroll suave + RSVP (Apps Script) */
+// script.js
 (() => {
   "use strict";
 
-  // Menú móvil
-  const navBtn = document.querySelector(".navbtn");
-  const navPanel = document.querySelector(".navpanel");
+  // Smooth scroll with offset for sticky header
+  const header = document.querySelector(".site-header");
+  const headerOffset = () => (header ? header.getBoundingClientRect().height : 0);
 
-  if (navBtn && navPanel) {
-    navBtn.addEventListener("click", () => {
-      const open = navPanel.classList.toggle("open");
-      navBtn.setAttribute("aria-expanded", String(open));
-      navBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+  function scrollToHash(hash) {
+    const el = document.querySelector(hash);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset() - 10;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+
+  // Intercept in-page nav clicks
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+
+    const href = a.getAttribute("href");
+    if (!href || href === "#") return;
+
+    e.preventDefault();
+    history.pushState(null, "", href);
+    scrollToHash(href);
+
+    // Close mobile menu if open
+    closeMobileMenu();
+  });
+
+  // Mobile menu toggle
+  const toggleBtn = document.querySelector(".nav-toggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  function openMobileMenu() {
+    if (!toggleBtn || !mobileMenu) return;
+    toggleBtn.setAttribute("aria-expanded", "true");
+    mobileMenu.hidden = false;
+  }
+
+  function closeMobileMenu() {
+    if (!toggleBtn || !mobileMenu) return;
+    toggleBtn.setAttribute("aria-expanded", "false");
+    mobileMenu.hidden = true;
+  }
+
+  if (toggleBtn && mobileMenu) {
+    toggleBtn.addEventListener("click", () => {
+      const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
+      if (expanded) closeMobileMenu();
+      else openMobileMenu();
     });
 
-    navPanel.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener("click", () => {
-        navPanel.classList.remove("open");
-        navBtn.setAttribute("aria-expanded", "false");
-        navBtn.setAttribute("aria-label", "Abrir menú");
-      });
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+
+    // Close on resize up
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 720) closeMobileMenu();
     });
   }
 
-  // Scroll suave
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href");
-      if (!href || href === "#") return;
-      const target = document.querySelector(href);
-      if (!target) return;
+  // COUNTDOWN: 2027-04-09T17:00:00+02:00
+  const targetISO = "2027-04-09T17:00:00+02:00";
+  const target = new Date(targetISO).getTime();
 
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+  const dd = document.querySelector("[data-dd]");
+  const hh = document.querySelector("[data-hh]");
+  const mm = document.querySelector("[data-mm]");
+  const ss = document.querySelector("[data-ss]");
+  const done = document.querySelector("[data-countdown-done]");
+  const grid = document.querySelector("[data-countdown]");
 
-      target.setAttribute("tabindex", "-1");
-      target.focus({ preventScroll: true });
-      window.setTimeout(() => target.removeAttribute("tabindex"), 300);
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function tick() {
+    const now = Date.now();
+    let diff = target - now;
+
+    if (!grid || !done || !dd || !hh || !mm || !ss) return;
+
+    if (diff <= 0) {
+      grid.hidden = true;
+      done.hidden = false;
+      return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    dd.textContent = String(days);
+    hh.textContent = pad2(hours);
+    mm.textContent = pad2(minutes);
+    ss.textContent = pad2(seconds);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+
+  // RSVP toggle
+  const attendanceInput = document.getElementById("attendance");
+  const toggleButtons = Array.from(document.querySelectorAll(".toggle-btn"));
+
+  function setAttendance(value) {
+    if (!attendanceInput) return;
+    attendanceInput.value = value;
+
+    toggleButtons.forEach((btn) => {
+      const isActive = btn.dataset.value === value;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
+  }
+
+  toggleButtons.forEach((btn) => {
+    btn.addEventListener("click", () => setAttendance(btn.dataset.value || "Sí"));
   });
 
-  // Placeholders de imágenes
-  document.querySelectorAll(".media img").forEach(img => {
-    img.addEventListener("error", () => {
-      const box = img.closest(".media");
-      if (!box) return;
-      box.classList.add("fallback");
-      const ph = box.querySelector(".ph");
-      if (ph && ph.dataset && ph.dataset.text) ph.textContent = ph.dataset.text;
-    });
-  });
-
-  // RSVP: toggle + guests + validación + iframe load
+  // RSVP submission to hidden iframe + success message on iframe load
   const form = document.getElementById("rsvpForm");
-  const frame = document.getElementById("rsvpFrame");
+  const iframe = document.getElementById("rsvpTarget");
+  const status = document.getElementById("formStatus");
+  let pendingSubmit = false;
+
+  function setStatus(msg, kind) {
+    if (!status) return;
+    status.textContent = msg;
+    status.classList.remove("is-success", "is-error");
+    if (kind) status.classList.add(kind);
+  }
+
+  function validateForm() {
+    if (!form) return false;
+    const name = form.querySelector('input[name="name"]');
+    const email = form.querySelector('input[name="email"]');
+
+    if (!name || !email) return false;
+
+    const nameOk = name.value.trim().length >= 2;
+    const emailOk = email.value.includes("@") && email.value.trim().length >= 5;
+
+    if (!nameOk) {
+      setStatus("Escribe tu nombre para poder confirmar.", "is-error");
+      name.focus();
+      return false;
+    }
+    if (!emailOk) {
+      setStatus("Revisa el email (parece incompleto).", "is-error");
+      email.focus();
+      return false;
+    }
+
+    return true;
+  }
 
   if (form) {
-    const status = form.querySelector(".status");
-    const segBtns = form.querySelectorAll(".seg__btn");
-    const attend = form.querySelector('input[name="attend"]');
-
-    const nameInput = form.querySelector('input[name="name"]');
-    const emailInput = form.querySelector('input[name="email"]');
-
-    const guestList = document.getElementById("guestList");
-    const addGuest = document.getElementById("addGuest");
-
-    segBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        segBtns.forEach(b => {
-          b.classList.remove("is-on");
-          b.setAttribute("aria-pressed", "false");
-        });
-        btn.classList.add("is-on");
-        btn.setAttribute("aria-pressed", "true");
-        const v = btn.getAttribute("data-value") || "yes";
-        if (attend) attend.value = v;
-      });
-    });
-
-    if (addGuest && guestList) {
-      addGuest.addEventListener("click", () => {
-        const input = document.createElement("input");
-        input.type = "text";
-        input.name = "guest[]";
-        input.placeholder = "Nombre del acompañante";
-        guestList.appendChild(input);
-        input.focus();
-      });
-    }
-
-    const isEmailValid = (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(val || "").trim());
-
-    form.addEventListener("submit", (e) => {
-      const nameOk = nameInput && String(nameInput.value || "").trim().length > 1;
-      const emailOk = emailInput && isEmailValid(emailInput.value);
-
-      if (!nameOk || !emailOk) {
-        e.preventDefault();
-        if (status) status.textContent = !nameOk ? "Revisa el nombre (obligatorio)." : "Revisa el email (obligatorio).";
-        if (!nameOk && nameInput) nameInput.focus();
-        else if (!emailOk && emailInput) emailInput.focus();
+    form.addEventListener("submit", () => {
+      if (!validateForm()) {
+        // Block submit if invalid
+        event.preventDefault();
         return;
       }
-
-      if (status) status.textContent = "Enviando…";
+      pendingSubmit = true;
+      setStatus("Enviando…", "");
     });
-
-    if (frame) {
-      frame.addEventListener("load", () => {
-        const action = form.getAttribute("action") || "";
-        const isPlaceholder = action.includes("REPLACE_WITH_APPS_SCRIPT_URL");
-
-        if (status) {
-          status.textContent = isPlaceholder
-            ? "Formulario listo. Falta conectar la URL de Google Sheets."
-            : "¡Gracias! Tu confirmación se ha registrado.";
-        }
-
-        if (!isPlaceholder) {
-          form.reset();
-          if (attend) attend.value = "yes";
-          segBtns.forEach(b => {
-            const isYes = (b.getAttribute("data-value") || "") === "yes";
-            b.classList.toggle("is-on", isYes);
-            b.setAttribute("aria-pressed", String(isYes));
-          });
-          if (guestList) guestList.innerHTML = "";
-        }
-      });
-    }
   }
+
+  if (iframe) {
+    iframe.addEventListener("load", () => {
+      if (!pendingSubmit) return;
+      pendingSubmit = false;
+
+      setStatus("¡RSVP recibido! Gracias — te contactaremos si necesitamos algún detalle.", "is-success");
+      if (form) form.reset();
+      setAttendance("Sí");
+    });
+  }
+
+  // If page loads with hash, scroll with offset
+  window.addEventListener("load", () => {
+    if (location.hash) scrollToHash(location.hash);
+  });
 })();
