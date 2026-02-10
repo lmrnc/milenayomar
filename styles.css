@@ -197,7 +197,6 @@ a:hover{ text-decoration: none; }
 .nav-toggle__icon::before{ top: 1px; }
 .nav-toggle__icon::after{ bottom: 1px; }
 
-/* nav-panel: disabled on desktop to avoid big blank panel */
 .nav-panel{ display: none; }
 
 /* ---------- Layout helpers ---------- */
@@ -232,15 +231,19 @@ a:hover{ text-decoration: none; }
   padding-top: 10px;
 }
 
+/* FIX: media as background layer */
 .hero-media{
   margin: 0;
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
-/* Video background */
+/* FIX: both elements in the SAME layer (no stacking below) */
 .hero-video,
 .hero-fallback{
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -248,11 +251,11 @@ a:hover{ text-decoration: none; }
 }
 
 /* default: show video */
-.hero-fallback{ display: none; }
+.hero-fallback{ opacity: 0; pointer-events: none; }
 
 /* if video fails, show image */
-.no-hero-video .hero-video{ display: none; }
-.no-hero-video .hero-fallback{ display: block; }
+.no-hero-video .hero-video{ opacity: 0; }
+.no-hero-video .hero-fallback{ opacity: 1; }
 
 .hero-video{
   filter: saturate(.98) contrast(1.02);
