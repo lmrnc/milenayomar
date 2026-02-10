@@ -1,8 +1,9 @@
 /* =========================
    Minimal interactions
-   - Mobile nav toggle (only matters under 740px)
+   - Mobile nav toggle (under 740px)
    - Countdown to 2027-04-09T17:00:00+02:00
    - RSVP hidden iframe success
+   - Hero video autoplay fallback
    ========================= */
 
 (function () {
@@ -16,7 +17,6 @@
       navPanel.hidden = !open;
     };
 
-    // Ensure closed on load
     setPanel(false);
 
     toggleBtn.addEventListener("click", () => {
@@ -33,11 +33,8 @@
       if (e.key === "Escape") setPanel(false);
     });
 
-    // If user resizes to desktop, keep panel closed
     window.addEventListener("resize", () => {
-      if (window.matchMedia("(min-width: 741px)").matches) {
-        setPanel(false);
-      }
+      if (window.matchMedia("(min-width: 741px)").matches) setPanel(false);
     }, { passive: true });
   }
 
@@ -116,7 +113,6 @@
       show(success);
 
       try { form.reset(); } catch (_) {}
-
       success?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
@@ -129,5 +125,33 @@
         pendingSubmit = false;
       }
     }, { capture: true });
+  }
+
+  // ---------- Hero video autoplay fallback ----------
+  const video = document.querySelector(".hero-video");
+  const fallbackToImage = () => document.documentElement.classList.add("no-hero-video");
+
+  if (video) {
+    video.addEventListener("error", fallbackToImage, { once: true });
+
+    const tryPlay = async () => {
+      try {
+        video.muted = true;
+        video.playsInline = true;
+
+        const p = video.play();
+        if (p && typeof p.then === "function") await p;
+
+        if (video.paused) fallbackToImage();
+      } catch (_) {
+        fallbackToImage();
+      }
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", tryPlay, { once: true });
+    } else {
+      tryPlay();
+    }
   }
 })();
