@@ -26,7 +26,6 @@
       if (a) setPanel(false);
     });
 
-    // Close on Escape
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") setPanel(false);
     });
@@ -39,7 +38,6 @@
   const cdSeconds = document.getElementById("cdSeconds");
   const cdDone = document.getElementById("cdDone");
 
-  // Fixed target: 2027-04-09T17:00:00+02:00
   const targetISO = "2027-04-09T17:00:00+02:00";
   const target = new Date(targetISO).getTime();
 
@@ -98,34 +96,27 @@
       resetStatus();
       pendingSubmit = true;
       show(sending);
-      // success will be handled on iframe load
     });
 
     iframe.addEventListener("load", () => {
-      // Some browsers may load iframe at page init; guard with pendingSubmit
       if (!pendingSubmit) return;
       pendingSubmit = false;
 
       hide(sending);
       show(success);
 
-      // Optional: clear form softly, keep attendance choice if you want
-      // Here: reset all fields for a "clean" premium feel.
       try { form.reset(); } catch (_) {}
 
-      // Bring success into view subtly
       success?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
-    // Lightweight client-side hint if action isn't replaced
+    // Hint if Apps Script URL not replaced
     form.addEventListener("submit", () => {
       const action = form.getAttribute("action") || "";
       if (action.includes("REPLACE_WITH_APPS_SCRIPT_URL")) {
         hide(sending);
         show(error);
-        if (error) {
-          error.textContent = "xxxxxxxxx";
-        }
+        if (error) error.textContent = "xxxxxxxxx";
         pendingSubmit = false;
       }
     }, { capture: true });
