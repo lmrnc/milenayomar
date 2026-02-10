@@ -1,9 +1,8 @@
 /* =========================
    Minimal interactions
-   - Mobile nav toggle
+   - Mobile nav toggle (only matters under 740px)
    - Countdown to 2027-04-09T17:00:00+02:00
    - RSVP hidden iframe success
-   - Header shows while at top (body.at-top)
    ========================= */
 
 (function () {
@@ -16,6 +15,9 @@
       toggleBtn.setAttribute("aria-expanded", String(open));
       navPanel.hidden = !open;
     };
+
+    // Ensure closed on load
+    setPanel(false);
 
     toggleBtn.addEventListener("click", () => {
       const open = toggleBtn.getAttribute("aria-expanded") !== "true";
@@ -30,6 +32,13 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") setPanel(false);
     });
+
+    // If user resizes to desktop, keep panel closed
+    window.addEventListener("resize", () => {
+      if (window.matchMedia("(min-width: 741px)").matches) {
+        setPanel(false);
+      }
+    }, { passive: true });
   }
 
   // ---------- Countdown ----------
@@ -121,12 +130,4 @@
       }
     }, { capture: true });
   }
-
-  // ---------- Header visible at top ----------
-  const topThreshold = 40; // px
-  function updateTop() {
-    document.body.classList.toggle("at-top", window.scrollY <= topThreshold);
-  }
-  updateTop();
-  window.addEventListener("scroll", updateTop, { passive: true });
 })();
