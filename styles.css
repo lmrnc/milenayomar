@@ -792,3 +792,17 @@ textarea{ resize: vertical; min-height: 120px; }
   .hero-content{ max-width: 92vw; }
   .form-grid{ grid-template-columns: 1fr; }
 }
+/* Backdrop para el menú móvil */
+.nav-backdrop{
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(2px);
+}
+
+/* Asegura que el panel quede por encima del backdrop */
+@media (max-width: 740px){
+  .nav-panel{ z-index: 999; }
+}
+
