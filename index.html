@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
-  <title>Omar & Milena — 09 . 04 . 27</title>
+  <title>Omar &amp; Milena — 09 . 04 . 27</title>
   <meta name="description" content="Boda de Omar & Milena — 09/04/2027. Ceremonia a las 17:00." />
 
   <link rel="stylesheet" href="styles.css" />
@@ -53,51 +53,42 @@
       </figure>
 
       <div class="hero-overlay">
-        <p class="kicker">¡Nos casamos!</p>
+        <div class="hero-content">
+          <p class="kicker">¡Nos casamos!</p>
 
-        <h1 class="hero-title">
-          <span class="hero-title__names">Omar <span aria-hidden="true">&amp;</span> Milena</span>
-        </h1>
+          <h1 class="hero-title">
+            <span class="hero-title__names">Omar <span aria-hidden="true">&amp;</span> Milena</span>
+          </h1>
 
-        <p class="hero-date" aria-label="Fecha">
-          <span class="hero-date__dot">09</span>
-          <span class="hero-date__sep"> . </span>
-          <span class="hero-date__dot">04</span>
-          <span class="hero-date__sep"> . </span>
-          <span class="hero-date__dot">27</span>
-        </p>
+          <p class="hero-date" aria-label="Fecha">
+            09 <span aria-hidden="true">·</span> 04 <span aria-hidden="true">·</span> 27
+          </p>
 
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#rsvp">RSVP</a>
-          <a class="btn btn-ghost" href="#story">Ver historia</a>
-        </div>
-
-        <div class="countdown" aria-label="Cuenta atrás">
-          <p class="countdown-label">Cuenta atrás</p>
-          <div class="countdown-grid" role="group" aria-live="polite" aria-atomic="true">
-            <div class="timebox">
-              <div class="timebox-num" id="cdDays">—</div>
-              <div class="timebox-lbl">Días</div>
-            </div>
-            <div class="timebox">
-              <div class="timebox-num" id="cdHours">—</div>
-              <div class="timebox-lbl">Horas</div>
-            </div>
-            <div class="timebox">
-              <div class="timebox-num" id="cdMinutes">—</div>
-              <div class="timebox-lbl">Min</div>
-            </div>
-            <div class="timebox">
-              <div class="timebox-num" id="cdSeconds">—</div>
-              <div class="timebox-lbl">Seg</div>
-            </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#rsvp">RSVP</a>
+            <a class="btn btn-ghost" href="#story">Nuestra historia</a>
           </div>
-          <p class="countdown-done" id="cdDone" hidden aria-live="polite">¡Hoy es el día!</p>
+
+          <div class="countdown" aria-label="Cuenta atrás">
+            <p class="countdown-label">Cuenta atrás</p>
+
+            <div class="countdown-inline" role="group" aria-live="polite" aria-atomic="true">
+              <span class="cd-part"><strong id="cdDays">—</strong> <span>días</span></span>
+              <span class="cd-sep" aria-hidden="true">/</span>
+              <span class="cd-part"><strong id="cdHours">—</strong> <span>h</span></span>
+              <span class="cd-sep" aria-hidden="true">/</span>
+              <span class="cd-part"><strong id="cdMinutes">—</strong> <span>min</span></span>
+              <span class="cd-sep" aria-hidden="true">/</span>
+              <span class="cd-part"><strong id="cdSeconds">—</strong> <span>s</span></span>
+            </div>
+
+            <p class="countdown-done" id="cdDone" hidden aria-live="polite">¡Hoy es el día!</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Ceremony / Reception blocks (Soria-like: airy, no heavy boxes) -->
+    <!-- Ceremony / Reception blocks -->
     <section class="events" aria-label="Ceremonia y celebración">
       <div class="section-shell">
         <div class="events-head">
@@ -120,7 +111,8 @@
             </p>
 
             <div class="event-actions">
-              <a class="btn btn-outline" href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjwgovoys6SAxWcTaQEHUgLCoUQ4kB6BAgnEAM&url=%2Fmaps%2Fplace%2F%2Fdata%3D!4m2!3m1!1s0x12a4c3e7c711f469%3A0x653a613cf6101fac%3Fsa%3DX%26ved%3D1t%3A8290%26ictx%3D111&usg=AOvVaw2p8YApomMRgTZyT03cQtSf&opi=89978449"
+              <a class="btn btn-outline"
+                 href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjwgovoys6SAxWcTaQEHUgLCoUQ4kB6BAgnEAM&url=%2Fmaps%2Fplace%2F%2Fdata%3D!4m2!3m1!1s0x12a4c3e7c711f469%3A0x653a613cf6101fac%3Fsa%3DX%26ved%3D1t%3A8290%26ictx%3D111&usg=AOvVaw2p8YApomMRgTZyT03cQtSf&opi=89978449"
                  target="_blank" rel="noopener noreferrer">
                 Mapa
               </a>
@@ -312,9 +304,7 @@
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-primary" type="submit">
-                Enviar RSVP
-              </button>
+              <button class="btn btn-primary" type="submit">Enviar RSVP</button>
               <p class="form-hint">Se enviará a nuestra lista (Google Sheets).</p>
             </div>
 
@@ -330,8 +320,7 @@
             id="rsvpHiddenFrame"
             class="hidden-frame"
             title="RSVP hidden target"
-            aria-hidden="true">
-          </iframe>
+            aria-hidden="true"></iframe>
         </div>
 
         <footer class="page-footer">
