@@ -15,9 +15,7 @@
 
   <header class="site-header" role="banner">
     <div class="header-inner">
-      <a class="brand" href="#home" aria-label="Ir al inicio">
-        Mielna &amp; Omar
-      </a>
+      <a class="brand" href="#home" aria-label="Ir al inicio">Mielna &amp; Omar</a>
 
       <nav class="nav" aria-label="Navegación principal">
         <a href="#story">Our story</a>
@@ -45,7 +43,21 @@
     <!-- HERO -->
     <section id="home" class="hero" aria-label="Hero">
       <figure class="hero-media">
-        <img src="assets/hero.jpeg" alt="Omar y Milena — foto principal" loading="eager" />
+        <video
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="assets/hero.jpeg"
+          aria-label="Vídeo de fondo"
+        >
+          <source src="assets/hero.mp4" type="video/mp4" />
+        </video>
+
+        <!-- Fallback si el vídeo no carga o autoplay falla -->
+        <img class="hero-fallback" src="assets/hero.jpeg" alt="Omar y Milena — foto principal" loading="eager" />
       </figure>
 
       <div class="hero-overlay">
@@ -129,9 +141,7 @@
             </p>
 
             <div class="event-actions">
-              <a class="btn btn-outline" href="xxxxxxxxx" target="_blank" rel="noopener noreferrer">
-                Mapa
-              </a>
+              <a class="btn btn-outline" href="xxxxxxxxx" target="_blank" rel="noopener noreferrer">Mapa</a>
             </div>
           </article>
         </div>
