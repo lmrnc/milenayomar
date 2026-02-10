@@ -161,17 +161,17 @@
     return true;
   }
 
-if (form) {
-  form.addEventListener("submit", (e) => {
-    if (!validateForm()) {
-      e.preventDefault();
-      return;
-    }
-    pendingSubmit = true;
-    setStatus("Enviando…", "");
-  });
-}
-
+  if (form) {
+    form.addEventListener("submit", () => {
+      if (!validateForm()) {
+        // Block submit if invalid
+        event.preventDefault();
+        return;
+      }
+      pendingSubmit = true;
+      setStatus("Enviando…", "");
+    });
+  }
 
   if (iframe) {
     iframe.addEventListener("load", () => {
