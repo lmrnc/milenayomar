@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Omar &amp; Milena — 09 . 04 . 27</title>
+  <title>Omar &amp; Milena — 09.04.27</title>
   <meta name="description" content="Boda de Omar & Milena — 09/04/2027. Ubicación, agenda, transporte y RSVP." />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -11,275 +11,164 @@
 <body>
   <a class="skip" href="#home">Saltar al contenido</a>
 
+  <!-- Top bar (similar al demo: izquierda links, centro monograma, derecha botón) -->
   <header class="topbar" aria-label="Navegación principal">
-    <div class="wrap topbar__inner">
-      <a class="brand" href="#home" aria-label="Ir al inicio">
-        Omar <span aria-hidden="true">×</span> Milena
-      </a>
-
-      <nav class="nav" aria-label="Secciones">
-        <a href="#story">Historia</a>
-        <a href="#transport">Transporte</a>
-        <a href="#contact">Contacto</a>
-        <a class="cta" href="#rsvp">RSVP</a>
+    <div class="topbar__inner">
+      <nav class="topbar__left" aria-label="Secciones">
+        <a href="#story">Nuestra historia</a>
+        <a href="#travel">Viaje y estancia</a>
+        <a href="#registry">Lista de regalos</a>
       </nav>
 
-      <button class="navbtn" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <a class="topbar__center" href="#home" aria-label="Ir al inicio">
+        <span class="mono">O&amp;M</span>
+        <span class="mono__date">09.04.27</span>
+      </a>
+
+      <div class="topbar__right">
+        <a class="topbar__cta" href="#rsvp">Confirmar asistencia</a>
+        <button class="navbtn" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      </div>
     </div>
 
+    <!-- menú móvil -->
     <div class="navpanel" aria-label="Menú móvil">
-      <a href="#story">Historia</a>
-      <a href="#transport">Transporte</a>
-      <a href="#contact">Contacto</a>
-      <a class="cta" href="#rsvp">RSVP</a>
+      <a href="#story">Nuestra historia</a>
+      <a href="#travel">Viaje y estancia</a>
+      <a href="#registry">Lista de regalos</a>
+      <a class="topbar__cta" href="#rsvp">Confirmar asistencia</a>
     </div>
   </header>
 
-  <main id="home">
-    <!-- HERO -->
-    <section class="hero" aria-label="Portada">
-      <div class="wrap">
-        <div class="hero__frame media">
-          <img src="assets/hero.jpeg" alt="Omar y Milena" />
-          <div class="ph" data-text="Añade assets/hero.jpeg"></div>
+  <main>
+    <!-- HERO full height -->
+    <section id="home" class="hero" aria-label="Portada">
+      <div class="hero__media media">
+        <img src="assets/hero.jpeg" alt="Omar y Milena" />
+        <div class="ph" data-text="Añade assets/hero.jpeg"></div>
+        <div class="hero__overlay" aria-hidden="true"></div>
+      </div>
 
-          <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__copy">
+        <p class="hero__kicker">¡Nos casamos!</p>
+        <h1 class="hero__title">Omar y Milena</h1>
+        <p class="hero__date">14 . 10 . 25</p>
+        <p class="hero__date hero__date--real">09 . 04 . 27</p>
 
-          <div class="hero__copy">
-            <p class="kicker">¡Nos casamos!</p>
-            <h1 class="h1">Omar <span class="amp">&amp;</span> Milena</h1>
-            <p class="date">09 <span aria-hidden="true">.</span> 04 <span aria-hidden="true">.</span> 27</p>
-            <p class="lede">
-              Te esperamos para celebrar nuestro gran día en <span class="muted">xxxxxxxxx</span>.
-              Queremos que todo sea fácil: horarios, ubicación, transporte y confirmación en un solo sitio.
-            </p>
-
-            <div class="hero__actions">
-              <a class="btn btn--primary" href="#rsvp">Confirmar asistencia</a>
-              <a class="btn btn--ghost" href="#details">Ver detalles</a>
-            </div>
-
-            <div class="countdown" data-date="2027-04-09T17:00:00+02:00" aria-live="polite">
-              <div class="cd__grid" role="group" aria-label="Cuenta atrás">
-                <div class="cd__item">
-                  <span class="cd__num" data-unit="days">00</span>
-                  <span class="cd__label">días</span>
-                </div>
-                <div class="cd__item">
-                  <span class="cd__num" data-unit="hours">00</span>
-                  <span class="cd__label">horas</span>
-                </div>
-                <div class="cd__item">
-                  <span class="cd__num" data-unit="minutes">00</span>
-                  <span class="cd__label">min</span>
-                </div>
-                <div class="cd__item">
-                  <span class="cd__num" data-unit="seconds">00</span>
-                  <span class="cd__label">seg</span>
-                </div>
-              </div>
-              <p class="cd__msg" role="status"></p>
-            </div>
-          </div>
+        <div class="hero__actions">
+          <a class="btn btn--light" href="#rsvp">Confirmar asistencia</a>
         </div>
       </div>
     </section>
 
-    <!-- DETAILS: Ceremony / Reception style blocks -->
-    <section id="details" class="section">
-      <div class="wrap">
-        <header class="head">
-          <p class="eyebrow">Detalles</p>
-          <h2 class="h2">Ceremonia &amp; celebración</h2>
-          <p class="sub">
-            Todo lo esencial en dos bloques, sin complicaciones.
-          </p>
-        </header>
+    <!-- Ceremony block -->
+    <section id="details" class="panel" aria-label="Ceremonia y recepción">
+      <div class="panel__wrap">
+        <div class="split">
+          <div class="split__media media">
+            <img src="assets/story1.jpeg" alt="Foto ceremonia" />
+            <div class="ph" data-text="Añade assets/story1.jpeg"></div>
+          </div>
 
-        <div class="twocol">
-          <article class="block">
-            <p class="block__tag">Ceremonia</p>
-            <p class="block__time">17:00</p>
-            <p class="block__place">
+          <div class="split__text">
+            <h2 class="bigtitle">Ceremonia</h2>
+            <p class="time">17:00</p>
+            <p class="place">
               <strong>xxxxxxxxx</strong><br />
-              <span class="muted">Dirección: xxxxxxxxx</span>
+              Calle de Ejemplo, 123<br />
+              xxxxxxxxx
             </p>
-            <div class="block__actions">
-              <a class="btn btn--ghost" href="#" aria-label="Abrir ceremonia en Maps">Mapa</a>
-              <a class="btn btn--ghost" href="#transport">Cómo llegar</a>
-            </div>
-          </article>
+            <a class="link" href="#">Mapa</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-          <article class="block">
-            <p class="block__tag">Celebración</p>
-            <p class="block__time">18:30 – 02:00</p>
-            <p class="block__place">
+    <!-- Reception block (alternado) -->
+    <section class="panel">
+      <div class="panel__wrap">
+        <div class="split split--reverse">
+          <div class="split__media media">
+            <img src="assets/story2.jpeg" alt="Foto recepción" />
+            <div class="ph" data-text="Añade assets/story2.jpeg"></div>
+          </div>
+
+          <div class="split__text">
+            <h2 class="bigtitle">Recepción</h2>
+            <p class="time">18:30 – 02:00</p>
+            <p class="place">
               <strong>xxxxxxxxx</strong><br />
-              <span class="muted">Dirección: xxxxxxxxx</span>
+              Calle de Ejemplo, 123<br />
+              xxxxxxxxx
             </p>
-            <div class="block__actions">
-              <a class="btn btn--ghost" href="#" aria-label="Abrir celebración en Maps">Mapa</a>
-              <a class="btn btn--ghost" href="#rsvp">RSVP</a>
-            </div>
-          </article>
-        </div>
-
-        <div class="mini">
-          <div class="mini__item"><span class="mini__k">Ciudad</span><strong>xxxxxxxxx</strong></div>
-          <div class="mini__item"><span class="mini__k">Fecha</span><strong>09/04/2027</strong></div>
-          <div class="mini__item"><span class="mini__k">Dress code</span><strong>por confirmar</strong></div>
-          <div class="mini__item"><span class="mini__k">Niños</span><strong>por confirmar</strong></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Photo stripe (events.jpeg) -->
-    <section class="stripe" aria-label="Foto de ambiente">
-      <div class="wrap">
-        <div class="stripe__img media">
-          <img src="assets/events.jpeg" alt="Celebración" />
-          <div class="ph" data-text="Añade assets/events.jpeg"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STORY -->
-    <section id="story" class="section">
-      <div class="wrap">
-        <header class="head">
-          <p class="eyebrow">Nuestra historia</p>
-          <h2 class="h2">Tres momentos</h2>
-          <p class="sub">Una línea sencilla. El resto lo haces tú con fotos.</p>
-        </header>
-
-        <div class="story">
-          <article class="moment">
-            <div class="moment__img media">
-              <img src="assets/story1.jpeg" alt="Primer encuentro" />
-              <div class="ph" data-text="Añade assets/story1.jpeg"></div>
-            </div>
-            <div class="moment__txt">
-              <p class="moment__date">Mayo 2018</p>
-              <h3 class="h3">Nos encontramos</h3>
-              <p class="muted">Una tarde casual en xxxxxxxxx que terminó convirtiéndose en nuestra historia favorita.</p>
-            </div>
-          </article>
-
-          <article class="moment">
-            <div class="moment__img media">
-              <img src="assets/story2.jpeg" alt="Primer viaje" />
-              <div class="ph" data-text="Añade assets/story2.jpeg"></div>
-            </div>
-            <div class="moment__txt">
-              <p class="moment__date">Septiembre 2020</p>
-              <h3 class="h3">El primer gran viaje</h3>
-              <p class="muted">Descubrimos que somos el equipo perfecto, incluso con mapas en xxxxxxxxx.</p>
-            </div>
-          </article>
-
-          <article class="moment">
-            <div class="moment__img media">
-              <img src="assets/story3.jpeg" alt="Compromiso" />
-              <div class="ph" data-text="Añade assets/story3.jpeg"></div>
-            </div>
-            <div class="moment__txt">
-              <p class="moment__date">Diciembre 2024</p>
-              <h3 class="h3">El sí</h3>
-              <p class="muted">Una promesa entre luces suaves y música en xxxxxxxxx.</p>
-            </div>
-          </article>
-        </div>
-
-        <div class="couple">
-          <div class="person">
-            <div class="avatar media">
-              <img src="assets/groom.jpeg" alt="Omar" />
-              <div class="ph" data-text="Añade assets/groom.jpeg"></div>
-            </div>
-            <p class="person__name">Omar</p>
-          </div>
-
-          <div class="heart" aria-hidden="true">♥</div>
-
-          <div class="person">
-            <div class="avatar media">
-              <img src="assets/bride.jpeg" alt="Milena" />
-              <div class="ph" data-text="Añade assets/bride.jpeg"></div>
-            </div>
-            <p class="person__name">Milena</p>
+            <a class="link" href="#">Mapa</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TRANSPORT -->
-    <section id="transport" class="section section--tint">
-      <div class="wrap">
-        <header class="head">
-          <p class="eyebrow">Transporte</p>
-          <h2 class="h2">Cómo llegar</h2>
-          <p class="sub">Tres opciones, directo al grano.</p>
-        </header>
+    <!-- “Ve cómo empezó todo” -->
+    <section id="story" class="callout">
+      <div class="callout__wrap">
+        <div class="callout__top">
+          <span class="rule"></span>
+          <h2 class="callout__title">Ve cómo empezó todo</h2>
+          <span class="rule"></span>
+        </div>
+        <a class="btn btn--dark" href="#story-details">Nuestra historia</a>
+      </div>
+    </section>
 
-        <div class="grid3">
+    <!-- Historia con imagen + texto encima (editorial) -->
+    <section id="story-details" class="imageband" aria-label="Nuestra historia">
+      <div class="imageband__media media">
+        <img src="assets/story3.jpeg" alt="Nuestra historia" />
+        <div class="ph" data-text="Añade assets/story3.jpeg"></div>
+        <div class="imageband__overlay" aria-hidden="true"></div>
+      </div>
+      <div class="imageband__copy">
+        <p class="imageband__kicker">Acompáñanos</p>
+        <h2 class="imageband__headline">¡Esperamos que puedas acompañarnos!</h2>
+        <a class="btn btn--light" href="#rsvp">Confirmar asistencia</a>
+      </div>
+    </section>
+
+    <!-- Travel & stay -->
+    <section id="travel" class="section">
+      <div class="section__wrap">
+        <h2 class="section__title">Viaje y estancia</h2>
+        <div class="cards">
           <article class="card">
-            <h3 class="h3">En coche</h3>
-            <p class="muted">Aparcamiento cercano en xxxxxxxxx. Recomendación: llegar con 20 minutos de margen.</p>
+            <h3>Cómo llegar</h3>
+            <p>En coche, transporte público o taxi desde xxxxxxxxx.</p>
           </article>
           <article class="card">
-            <h3 class="h3">Transporte público</h3>
-            <p class="muted">Estación más cercana: xxxxxxxxx. Desde allí, 10 minutos a pie.</p>
+            <h3>Recomendaciones</h3>
+            <p>Hoteles cercanos en xxxxxxxxx. Lista por confirmar.</p>
           </article>
           <article class="card">
-            <h3 class="h3">Bus / lanzadera</h3>
-            <p class="muted">Servicio por confirmar. Compartiremos horarios cuando estén listos.</p>
+            <h3>Parking</h3>
+            <p>Aparcamiento disponible en xxxxxxxxx. Llega con 20 min de margen.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-      <div class="wrap">
-        <header class="head">
-          <p class="eyebrow">Contacto</p>
-          <h2 class="h2">Dudas rápidas</h2>
-          <p class="sub">Para que el día fluya sin llamadas cruzadas.</p>
-        </header>
-
-        <div class="twocol twocol--contact">
-          <article class="card">
-            <h3 class="h3">Wedding planner</h3>
-            <p class="muted">
-              <strong>Nombre:</strong> xxxxxxxxx<br />
-              <strong>Teléfono:</strong> xxxxxxxxx<br />
-              <strong>Email:</strong> xxxxxxxxx
-            </p>
-            <p class="muted">El día del evento, contactad aquí para cambios de última hora.</p>
-          </article>
-
-          <article class="card">
-            <h3 class="h3">Ubicación</h3>
-            <div class="map">
-              Mapa aquí
-            </div>
-            <div class="map__actions">
-              <a class="btn btn--ghost" href="#">Abrir ceremonia en Maps</a>
-              <a class="btn btn--ghost" href="#">Abrir celebración en Maps</a>
-            </div>
-          </article>
-        </div>
+    <!-- Registry -->
+    <section id="registry" class="section section--alt">
+      <div class="section__wrap">
+        <h2 class="section__title">Lista de regalos</h2>
+        <p class="section__text">
+          Lo más importante es que vengas. Si quieres tener un detalle, aquí pondremos la información cuando esté lista.
+        </p>
       </div>
     </section>
 
     <!-- RSVP -->
-    <section id="rsvp" class="section section--tint">
-      <div class="wrap">
-        <header class="head">
-          <p class="eyebrow">RSVP</p>
-          <h2 class="h2">Confirma tu asistencia</h2>
-          <p class="sub">Se guarda en Google Sheets cuando conectes la URL.</p>
-        </header>
+    <section id="rsvp" class="section section--alt">
+      <div class="section__wrap">
+        <h2 class="section__title">Confirmar asistencia</h2>
+        <p class="section__text">Fecha: <strong>09/04/2027</strong> · Hora: <strong>17:00</strong> · xxxxxxxxx</p>
 
         <div class="rsvp">
           <form id="rsvpForm" class="form"
@@ -319,13 +208,15 @@
 
             <p class="status" aria-live="polite" role="status"></p>
 
-            <button type="submit" class="btn btn--primary">Enviar confirmación</button>
+            <button type="submit" class="btn btn--dark">Enviar</button>
           </form>
 
           <aside class="aside">
-            <h3 class="h3">Info</h3>
-            <p class="muted">Confirma antes del <strong>15/03/2027</strong> para ayudarnos con la organización.</p>
-            <p class="muted">Si tienes dudas, escribe a <strong>xxxxxxxxx</strong>.</p>
+            <h3>¿Tienes preguntas?</h3>
+            <p>Contacto wedding planner:</p>
+            <p><strong>Nombre:</strong> xxxxxxxxx<br />
+               <strong>Teléfono:</strong> xxxxxxxxx<br />
+               <strong>Email:</strong> xxxxxxxxx</p>
           </aside>
         </div>
 
@@ -333,10 +224,25 @@
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="wrap footer__inner">
-        <p>Omar &amp; Milena — 09/04/2027</p>
-        <p class="muted">xxxxxxxxx</p>
+    <!-- Footer estilo demo -->
+    <footer class="footer" aria-label="Pie de página">
+      <div class="footer__wrap">
+        <div class="footer__col">
+          <p class="footer__title">¿Tienes preguntas?</p>
+          <a class="footer__link" href="mailto:xxxxxxxxx">Envíanos un e-mail</a>
+        </div>
+
+        <div class="footer__col footer__center">
+          <a href="#details">Ceremonia y Recepción</a>
+          <a href="#travel">Viaje y estancia</a>
+          <a href="#registry">Lista de regalos</a>
+          <a href="#rsvp">Confirmar asistencia</a>
+        </div>
+
+        <div class="footer__col footer__right">
+          <p class="footer__title">Compartir</p>
+          <p class="footer__tag">#OM2027</p>
+        </div>
       </div>
     </footer>
   </main>
