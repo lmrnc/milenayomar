@@ -3,6 +3,7 @@
    - Mobile nav toggle
    - Countdown to 2027-04-09T17:00:00+02:00
    - RSVP hidden iframe success
+   - Header shows while at top (body.at-top)
    ========================= */
 
 (function () {
@@ -110,7 +111,6 @@
       success?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
-    // Hint if Apps Script URL not replaced
     form.addEventListener("submit", () => {
       const action = form.getAttribute("action") || "";
       if (action.includes("REPLACE_WITH_APPS_SCRIPT_URL")) {
@@ -121,4 +121,12 @@
       }
     }, { capture: true });
   }
+
+  // ---------- Header visible at top ----------
+  const topThreshold = 40; // px
+  function updateTop() {
+    document.body.classList.toggle("at-top", window.scrollY <= topThreshold);
+  }
+  updateTop();
+  window.addEventListener("scroll", updateTop, { passive: true });
 })();
