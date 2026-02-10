@@ -1,7 +1,8 @@
 /* =========================
    Minimal interactions
-   - Mobile nav toggle (under 740px)
-   - Mobile header auto-hide on scroll (under 740px)
+   - Mobile nav toggle (under 740px) + robust iOS behavior
+   - Backdrop click to close
+   - Mobile header auto-hide on scroll
    - Countdown to 2027-04-09T17:00:00+02:00
    - RSVP hidden iframe success
    - Hero video autoplay fallback
@@ -19,44 +20,77 @@
   setHeaderHeightVar();
   window.addEventListener("resize", setHeaderHeightVar, { passive: true });
 
-  // ---------- Mobile nav ----------
+  // ---------- Mobile nav (robust toggle) ----------
   const toggleBtn = document.querySelector(".nav-toggle");
   const navPanel = document.getElementById("navPanel");
 
   const isMobile = () => window.matchMedia("(max-width: 740px)").matches;
 
-  const setMenuOpen = (open) => {
-    if (!toggleBtn || !navPanel) return;
-    toggleBtn.setAttribute("aria-expanded", String(open));
-    navPanel.hidden = !open;
+  // Backdrop para cerrar tocando fuera
+  let backdrop = document.querySelector(".nav-backdrop");
+  if (!backdrop) {
+    backdrop = document.createElement("div");
+    backdrop.className = "nav-backdrop";
+    backdrop.hidden = true;
+    document.body.appendChild(backdrop);
+  }
 
-    if (header) {
-      header.classList.toggle("menu-open", open);
-    }
+  let menuOpen = false;
+
+  const applyHidden = (el, hide) => {
+    if (!el) return;
+    el.hidden = hide;
+    if (hide) el.setAttribute("hidden", "");
+    else el.removeAttribute("hidden");
+  };
+
+  const setMenuOpen = (open) => {
+    menuOpen = open;
+
+    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", String(open));
+    if (navPanel) applyHidden(navPanel, !open);
+    if (backdrop) applyHidden(backdrop, !open);
+
+    if (header) header.classList.toggle("menu-open", open);
+
+    // lock scroll solo en móvil
     document.body.classList.toggle("lock-scroll", open && isMobile());
+
+    // Recalcular altura por si cambia
+    setHeaderHeightVar();
   };
 
   if (toggleBtn && navPanel) {
+    // estado inicial
     setMenuOpen(false);
 
-    toggleBtn.addEventListener("click", () => {
-      const open = toggleBtn.getAttribute("aria-expanded") !== "true";
-      setMenuOpen(open);
-    });
+    // iOS: usar pointerup + click para asegurar
+    const onToggle = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setMenuOpen(!menuOpen);
+    };
 
+    toggleBtn.addEventListener("click", onToggle, { passive: false });
+    toggleBtn.addEventListener("pointerup", onToggle, { passive: false });
+
+    // cerrar tocando fuera
+    backdrop.addEventListener("click", () => setMenuOpen(false));
+
+    // cerrar al tocar enlaces
     navPanel.addEventListener("click", (e) => {
       const a = e.target.closest("a");
       if (a) setMenuOpen(false);
     });
 
+    // cerrar con ESC
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") setMenuOpen(false);
     });
 
+    // al cambiar a desktop, cerramos
     window.addEventListener("resize", () => {
-      // al pasar a desktop, cerramos panel y desbloqueamos scroll
       if (!isMobile()) setMenuOpen(false);
-      setHeaderHeightVar();
     }, { passive: true });
   }
 
@@ -65,6 +99,8 @@
 
   const onScroll = () => {
     if (!header) return;
+
+    // desktop: sin autohide
     if (!isMobile()) {
       header.classList.remove("header-hidden");
       return;
@@ -79,23 +115,17 @@
     const y = window.scrollY || 0;
     const delta = y - lastY;
 
-    // cerca del top, siempre visible
     if (y < 20) {
       header.classList.remove("header-hidden");
       lastY = y;
       return;
     }
 
-    // umbral para evitar parpadeo
     if (Math.abs(delta) < 8) return;
 
-    if (delta > 0) {
-      // scrollea hacia abajo -> ocultar
-      header.classList.add("header-hidden");
-    } else {
-      // hacia arriba -> mostrar
-      header.classList.remove("header-hidden");
-    }
+    if (delta > 0) header.classList.add("header-hidden");
+    else header.classList.remove("header-hidden");
+
     lastY = y;
   };
 
@@ -111,7 +141,6 @@
 
   const targetISO = "2027-04-09T17:00:00+02:00";
   const target = new Date(targetISO).getTime();
-
   const pad2 = (n) => String(n).padStart(2, "0");
 
   function renderCountdown() {
