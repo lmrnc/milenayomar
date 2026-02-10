@@ -23,6 +23,7 @@
   --serif: ui-serif, Georgia, "Times New Roman", Times, serif;
 
   --tracking: 0.06em;
+  --header-reveal: 14px;
 }
 
 *{ box-sizing: border-box; }
@@ -36,10 +37,8 @@ body{
 }
 
 img{ max-width: 100%; display: block; }
-
 a{ color: inherit; text-decoration: none; }
 a:hover{ text-decoration: none; }
-
 ::selection{ background: rgba(231,201,204,.55); }
 
 .skip-link{
@@ -81,47 +80,48 @@ a:hover{ text-decoration: none; }
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
-/* ---------- Header ---------- */
+/* ---------- Header (FIXED, no blank gap) ---------- */
 .site-header{
-  position: sticky;
+  position: fixed; /* <- clave: ya no ocupa espacio */
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
+
   backdrop-filter: blur(10px);
-  background: rgba(246,241,232,.72);
+  background: rgba(246,241,232,.78);
   border-bottom: 1px solid var(--line);
 
-  /* reveal on hover (desktop) */
-  transform: translateY(-92%);
+  /* reveal on hover (desktop): casi oculto, dejando una franja */
+  transform: translateY(calc(-100% + var(--header-reveal)));
   transition: transform .28s ease, background .28s ease, border-color .28s ease;
   will-change: transform;
 }
 
-/* hover “hot zone” to reveal header */
+/* franja “hot zone” visible para hover */
 .site-header::before{
   content:"";
   position:absolute;
   left:0; right:0;
   top:0;
-  height: 14px;
-  background: rgba(246,241,232,.65);
-  border-bottom: 1px solid var(--line);
+  height: var(--header-reveal);
+  background: rgba(246,241,232,.68);
 }
 
 .site-header:hover,
 .site-header:focus-within{
   transform: translateY(0);
-  background: rgba(246,241,232,.82);
+  background: rgba(246,241,232,.86);
 }
 
-/* show header while at top */
-body.at-top .site-header{
-  transform: translateY(0);
-}
-
-/* no hover on touch -> keep visible */
+/* en touch no existe hover fiable -> header visible */
 @media (hover: none), (pointer: coarse){
-  .site-header{ transform: translateY(0); }
-  .site-header::before{ display:none; }
+  .site-header{
+    transform: translateY(0);
+  }
+  .site-header::before{
+    display:none;
+  }
 }
 
 .header-inner{
@@ -205,23 +205,14 @@ body.at-top .site-header{
 .nav-toggle__icon::before{ top: 1px; }
 .nav-toggle__icon::after{ bottom: 1px; }
 
+/* nav-panel: por defecto NUNCA en desktop (evita el bloque gigante) */
 .nav-panel{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 18px 14px 18px;
-  display: grid;
-  gap: 6px;
-}
-.nav-panel a{
-  padding: 12px 12px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(251,247,240,.55);
-  font-size: 14px;
+  display: none;
 }
 
 /* ---------- Layout helpers ---------- */
 .page{ min-height: 100vh; }
+
 .section-shell{
   max-width: var(--max);
   margin: 0 auto;
@@ -249,6 +240,8 @@ body.at-top .site-header{
   position: relative;
   min-height: clamp(560px, 78vh, 860px);
   display: grid;
+  /* un poco de aire para que el header fixed no tape sensaciones */
+  padding-top: 10px;
 }
 
 .hero-media{
@@ -264,20 +257,20 @@ body.at-top .site-header{
   filter: saturate(.98) contrast(1.02);
 }
 
-/* NEW overlay: minimal haze + micro-vignette (no cream wash) */
+/* Overlay: muy sutil (sin “crema” fuerte) */
 .hero::after{
   content:"";
   position:absolute;
   inset:0;
   background:
     radial-gradient(900px 650px at 18% 55%,
-      rgba(246,241,232,.42) 0%,
-      rgba(246,241,232,.18) 48%,
-      rgba(246,241,232,.00) 76%),
+      rgba(246,241,232,.26) 0%,
+      rgba(246,241,232,.10) 52%,
+      rgba(246,241,232,.00) 78%),
     linear-gradient(to bottom,
-      rgba(0,0,0,.14) 0%,
-      rgba(0,0,0,.06) 40%,
-      rgba(0,0,0,.18) 100%);
+      rgba(0,0,0,.12) 0%,
+      rgba(0,0,0,.05) 40%,
+      rgba(0,0,0,.16) 100%);
 }
 
 .hero-overlay{
@@ -301,8 +294,8 @@ body.at-top .site-header{
   letter-spacing: .18em;
   text-transform: uppercase;
   font-size: 11px;
-  opacity: .72;
-  color: rgba(22,20,20,.78);
+  opacity: .78;
+  color: rgba(22,20,20,.80);
 }
 
 .hero-title{
@@ -325,7 +318,7 @@ body.at-top .site-header{
   letter-spacing: .14em;
   text-transform: uppercase;
   font-size: 12px;
-  opacity: .80;
+  opacity: .82;
   color: rgba(22,20,20,.78);
 }
 
@@ -348,8 +341,8 @@ body.at-top .site-header{
   font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  opacity: .70;
-  color: rgba(22,20,20,.70);
+  opacity: .72;
+  color: rgba(22,20,20,.72);
 }
 .countdown-inline{
   display: flex;
@@ -364,7 +357,7 @@ body.at-top .site-header{
   padding: 8px 12px;
   border: 1px solid rgba(22,20,20,.14);
   border-radius: 999px;
-  background: rgba(251,247,240,.40);
+  background: rgba(251,247,240,.34);
   backdrop-filter: blur(6px);
 }
 .cd-part strong{
@@ -376,7 +369,7 @@ body.at-top .site-header{
   font-size: 12px;
   letter-spacing: .10em;
   text-transform: uppercase;
-  opacity: .72;
+  opacity: .74;
 }
 .cd-sep{ opacity: .35; }
 
@@ -413,10 +406,10 @@ body.at-top .site-header{
 .btn-primary:hover{ background: rgba(11,59,46,.98); }
 
 .btn-ghost{
-  background: rgba(251,247,240,.50);
+  background: rgba(251,247,240,.42);
   backdrop-filter: blur(6px);
 }
-.btn-ghost:hover{ background: rgba(231,201,204,.22); }
+.btn-ghost:hover{ background: rgba(231,201,204,.18); }
 
 .btn-outline{
   border-color: rgba(106,23,48,.35);
@@ -740,9 +733,26 @@ textarea{ resize: vertical; min-height: 120px; }
   .portraits{ grid-template-columns: 1fr; }
 }
 
+/* Mobile menu: nav hidden, toggle visible, panel enabled */
 @media (max-width: 740px){
   .nav{ display: none; }
   .nav-toggle{ display: inline-flex; }
+
+  .nav-panel{
+    display: grid;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 18px 14px 18px;
+    gap: 6px;
+  }
+  .nav-panel a{
+    padding: 12px 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(251,247,240,.55);
+    font-size: 14px;
+  }
+
   .hero-overlay{
     padding: 104px 18px 58px 18px;
     align-content: end;
