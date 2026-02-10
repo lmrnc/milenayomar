@@ -633,3 +633,45 @@ textarea:focus-visible{
   .countdown-grid{ grid-template-columns: repeat(2, 1fr); }
   .form-grid{ grid-template-columns: 1fr; }
 }
+/* --- Editorial polish (override) --- */
+.site-header{
+  border-bottom: 1px solid color-mix(in srgb, var(--rule) 40%, transparent);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+
+.nav-link{
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+
+.hero-content{
+  max-width: 760px;
+}
+
+.hero-kicker{
+  font-size: 12px;
+  letter-spacing: .18em;
+  color: color-mix(in srgb, var(--muted) 85%, var(--green));
+}
+
+.hero-names{
+  letter-spacing: .015em;
+  line-height: 1.00;
+}
+
+.overview{
+  padding: 54px 0 14px;
+}
+
+.event-block{
+  padding: 34px 2px 6px;
+}
+
+.event-head{
+  border-bottom: 1px solid color-mix(in srgb, var(--rule) 55%, transparent);
+}
+
+.link{
+  border-bottom-width: 1px;
+  padding-bottom: 6px;
+}
