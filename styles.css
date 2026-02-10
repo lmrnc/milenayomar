@@ -24,6 +24,9 @@
 
   --tracking: 0.06em;
   --header-reveal: 14px;
+
+  /* lo setea JS con la altura real del header */
+  --header-h: 72px;
 }
 
 *{ box-sizing: border-box; }
@@ -80,7 +83,7 @@ a:hover{ text-decoration: none; }
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
-/* ---------- Header (fixed + reveal on hover) ---------- */
+/* ---------- Header (desktop: reveal on hover) ---------- */
 .site-header{
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -110,10 +113,14 @@ a:hover{ text-decoration: none; }
   background: rgba(246,241,232,.86);
 }
 
-/* touch: keep visible */
-@media (hover: none), (pointer: coarse){
-  .site-header{ transform: translateY(0); }
-  .site-header::before{ display:none; }
+/* Clase que usa JS para ocultar/mostrar en móvil */
+.site-header.header-hidden{
+  transform: translateY(calc(-100% + var(--header-reveal)));
+}
+
+/* Cuando el menú está abierto, el header siempre visible */
+.site-header.menu-open{
+  transform: translateY(0) !important;
 }
 
 .header-inner{
@@ -168,7 +175,8 @@ a:hover{ text-decoration: none; }
 .nav-toggle{
   display: none;
   border: 1px solid var(--line);
-  background: transparent;
+  background: rgba(251,247,240,.38);
+  backdrop-filter: blur(10px);
   border-radius: 999px;
   padding: 8px 12px;
   gap: 10px;
@@ -197,10 +205,12 @@ a:hover{ text-decoration: none; }
 .nav-toggle__icon::before{ top: 1px; }
 .nav-toggle__icon::after{ bottom: 1px; }
 
+/* desktop: panel off */
 .nav-panel{ display: none; }
 
 /* ---------- Layout helpers ---------- */
 .page{ min-height: 100vh; }
+
 .section-shell{
   max-width: var(--max);
   margin: 0 auto;
@@ -231,7 +241,6 @@ a:hover{ text-decoration: none; }
   padding-top: 10px;
 }
 
-/* FIX: media as background layer */
 .hero-media{
   margin: 0;
   position: absolute;
@@ -239,7 +248,6 @@ a:hover{ text-decoration: none; }
   overflow: hidden;
 }
 
-/* FIX: both elements in the SAME layer (no stacking below) */
 .hero-video,
 .hero-fallback{
   position: absolute;
@@ -250,10 +258,7 @@ a:hover{ text-decoration: none; }
   object-position: 50% 45%;
 }
 
-/* default: show video */
 .hero-fallback{ opacity: 0; pointer-events: none; }
-
-/* if video fails, show image */
 .no-hero-video .hero-video{ opacity: 0; }
 .no-hero-video .hero-fallback{ opacity: 1; }
 
@@ -261,7 +266,6 @@ a:hover{ text-decoration: none; }
   filter: saturate(.98) contrast(1.02);
 }
 
-/* Overlay (subtle) */
 .hero::after{
   content:"";
   position:absolute;
@@ -735,23 +739,50 @@ textarea{ resize: vertical; min-height: 120px; }
   .portraits{ grid-template-columns: 1fr; }
 }
 
+/* ===== MOBILE: panel overlay + header auto-hide ===== */
 @media (max-width: 740px){
   .nav{ display: none; }
   .nav-toggle{ display: inline-flex; }
 
+  /* En móvil NO usamos hover reveal: el JS decide (scroll) */
+  .site-header{
+    transform: translateY(0);
+  }
+  .site-header::before{ display:none; }
+
+  /* Panel como overlay real (no empuja layout) */
   .nav-panel{
     display: grid;
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 0 18px 14px 18px;
-    gap: 6px;
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 12px 18px 16px 18px;
+    gap: 8px;
+
+    background: rgba(246,241,232,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 16px 40px rgba(0,0,0,.10);
+
+    max-height: calc(100vh - var(--header-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
+
   .nav-panel a{
-    padding: 12px 12px;
+    padding: 14px 14px;
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 16px;
     background: rgba(251,247,240,.55);
     font-size: 14px;
+  }
+
+  /* Cuando el menú está abierto, bloqueamos scroll del body (lo hace JS con .lock-scroll) */
+  body.lock-scroll{
+    overflow: hidden;
+    touch-action: none;
   }
 
   .hero-overlay{
