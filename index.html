@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
-  <title>Milena &amp; Omar — 09 . 04 . 27</title>
-  <meta name="description" content="Boda de Milena & Omar — 09/04/2027. Ceremonia a las 17:00." />
+  <title>Omar &amp; Milena — 09 . 04 . 27</title>
+  <meta name="description" content="Boda de Omar & Milena — 09/04/2027. Ceremonia a las 17:00." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -13,9 +13,10 @@
   <a class="skip-link" href="#main">Saltar al contenido</a>
   <div class="grain" aria-hidden="true"></div>
 
+  <!-- HEADER: siempre visible (sin hover) -->
   <header class="site-header" role="banner">
     <div class="header-inner">
-      <a class="brand" href="#home" aria-label="Ir al inicio">Milena &amp; Omar</a>
+      <a class="brand" href="#home" aria-label="Ir al inicio">Mielna &amp; Omar</a>
 
       <nav class="nav" aria-label="Navegación principal">
         <a href="#story">Our story</a>
@@ -24,37 +25,49 @@
         <a href="#rsvp" class="nav-cta">RSVP</a>
       </nav>
 
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navPanel">
-        <span class="nav-toggle__label">Menú</span>
-        <span class="nav-toggle__icon" aria-hidden="true"></span>
+      <button id="menuBtn" class="menu-btn" type="button"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="menuOverlay">
+        <span class="menu-btn__label">MENÚ</span>
+        <span class="menu-btn__icon" aria-hidden="true"></span>
       </button>
     </div>
-
-    <div id="navPanel" class="nav-panel" hidden>
-      <a href="#story">Our story</a>
-      <a href="#transport">Transporte</a>
-      <a href="#contact">Contacto</a>
-      <a href="#rsvp">RSVP</a>
-    </div>
   </header>
+
+  <!-- OVERLAY MENU (desktop + mobile) -->
+  <div id="menuOverlay" class="menu-overlay" role="dialog" aria-modal="true"
+       aria-label="Menú" hidden>
+    <div class="menu-backdrop" data-menu-close aria-hidden="true"></div>
+
+    <div class="menu-panel" role="document">
+      <div class="menu-panel__top">
+        <div class="menu-panel__brand">Mielna &amp; Omar</div>
+
+        <button class="menu-close" type="button" data-menu-close aria-label="Cerrar menú">
+          <span class="menu-close__label">CERRAR</span>
+          <span class="menu-close__x" aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="menu-panel__links" aria-label="Secciones">
+        <a href="#story" data-menu-link>Our story</a>
+        <a href="#transport" data-menu-link>Transporte</a>
+        <a href="#contact" data-menu-link>Contacto</a>
+        <a href="#rsvp" data-menu-link class="menu-link-cta">RSVP</a>
+      </div>
+
+      <p class="menu-panel__hint">09 . 04 . 27 · Can Ribas de Montbui</p>
+    </div>
+  </div>
 
   <main id="main" class="page" role="main">
     <!-- HERO -->
     <section id="home" class="hero" aria-label="Hero">
       <figure class="hero-media" aria-hidden="true">
-        <video
-          class="hero-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          poster="assets/hero.jpeg"
-        >
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero.jpeg">
           <source src="assets/hero.mp4" type="video/mp4" />
         </video>
-
-        <!-- Fallback (queda en la MISMA capa, nunca abajo) -->
         <img class="hero-fallback" src="assets/hero.jpeg" alt="" />
       </figure>
 
@@ -63,7 +76,7 @@
           <p class="kicker">¡Nos casamos!</p>
 
           <h1 class="hero-title">
-            <span class="hero-title__names">Milena <span aria-hidden="true">&amp;</span> Omar</span>
+            <span class="hero-title__names">Omar <span aria-hidden="true">&amp;</span> Milena</span>
           </h1>
 
           <p class="hero-date" aria-label="Fecha">
@@ -77,7 +90,6 @@
 
           <div class="countdown" aria-label="Cuenta atrás">
             <p class="countdown-label">Cuenta atrás</p>
-
             <div class="countdown-inline" role="group" aria-live="polite" aria-atomic="true">
               <span class="cd-part"><strong id="cdDays">—</strong> <span>días</span></span>
               <span class="cd-sep" aria-hidden="true">/</span>
@@ -87,7 +99,6 @@
               <span class="cd-sep" aria-hidden="true">/</span>
               <span class="cd-part"><strong id="cdSeconds">—</strong> <span>s</span></span>
             </div>
-
             <p class="countdown-done" id="cdDone" hidden aria-live="polite">¡Hoy es el día!</p>
           </div>
         </div>
@@ -251,9 +262,9 @@
           <p class="contact-text">Para cualquier duda, escribe o llama:</p>
 
           <ul class="contact-list">
-            <li><span class="label">Clàudia Mir - WEDDBO </span> <span class="value"></span></li>
-            <li><span class="label">Teléfono</span> <a class="value link" href="tel:611 532 724"></a></li>
-            <li><span class="label">email</span> <a class="value link" href="mailto:xxxxxxxxx">hello@weddbo.com</a></li>
+            <li><span class="label">Nombre</span> <span class="value">xxxxxxxxx</span></li>
+            <li><span class="label">Teléfono</span> <a class="value link" href="tel:xxxxxxxxx">xxxxxxxxx</a></li>
+            <li><span class="label">Email</span> <a class="value link" href="mailto:xxxxxxxxx">xxxxxxxxx</a></li>
           </ul>
         </div>
       </div>
