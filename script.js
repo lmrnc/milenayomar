@@ -1,15 +1,5 @@
 (function () {
-  // ---------- Header height var ----------
-  const header = document.querySelector(".site-header");
-  const setHeaderHeightVar = () => {
-    if (!header) return;
-    const h = Math.round(header.getBoundingClientRect().height);
-    document.documentElement.style.setProperty("--header-h", `${h}px`);
-  };
-  setHeaderHeightVar();
-  window.addEventListener("resize", setHeaderHeightVar, { passive: true });
-
-  // ---------- Menu overlay (robust) ----------
+  // ---------- Menu overlay ----------
   const menuBtn = document.getElementById("menuBtn");
   const menuOverlay = document.getElementById("menuOverlay");
   const closeEls = menuOverlay ? menuOverlay.querySelectorAll("[data-menu-close]") : [];
@@ -17,8 +7,6 @@
 
   let menuOpen = false;
   let lastFocus = null;
-
-  const isMobile = () => window.matchMedia("(max-width: 740px)").matches;
 
   const applyHidden = (el, hide) => {
     if (!el) return;
@@ -29,6 +17,10 @@
       el.hidden = false;
       el.removeAttribute("hidden");
     }
+  };
+
+  const lockScroll = (lock) => {
+    document.body.classList.toggle("menu-lock", lock);
   };
 
   const focusableSelector = [
@@ -45,46 +37,39 @@
       .filter(el => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
   };
 
-  const lockScroll = (lock) => {
-    document.body.classList.toggle("menu-lock", lock);
-  };
-
   const openMenu = () => {
-    if (!menuOverlay || !menuBtn) return;
-    if (menuOpen) return;
+    if (!menuBtn || !menuOverlay || menuOpen) return;
 
     menuOpen = true;
     lastFocus = document.activeElement;
 
     applyHidden(menuOverlay, false);
-    // siguiente frame para activar animación
-    requestAnimationFrame(() => {
-      menuOverlay.classList.add("is-open");
-    });
+
+    // next frame -> animate in
+    requestAnimationFrame(() => menuOverlay.classList.add("is-open"));
 
     menuBtn.setAttribute("aria-expanded", "true");
     lockScroll(true);
 
-    // focus al primer link del panel
+    // focus inside panel
+    const panel = menuOverlay.querySelector(".menu-panel");
     const focusables = getFocusable(menuOverlay);
-    (focusables[0] || menuOverlay).focus?.({ preventScroll: true });
+    (focusables[0] || panel || menuOverlay).focus?.({ preventScroll: true });
   };
 
   const closeMenu = () => {
-    if (!menuOverlay || !menuBtn) return;
-    if (!menuOpen) return;
+    if (!menuBtn || !menuOverlay || !menuOpen) return;
 
     menuOpen = false;
     menuOverlay.classList.remove("is-open");
+
     menuBtn.setAttribute("aria-expanded", "false");
     lockScroll(false);
 
-    // esperar a que acabe animación antes de ocultar
-    window.setTimeout(() => {
-      applyHidden(menuOverlay, true);
-    }, 260);
+    // wait animation end, then hide
+    window.setTimeout(() => applyHidden(menuOverlay, true), 260);
 
-    // devolver foco
+    // restore focus
     if (lastFocus && typeof lastFocus.focus === "function") {
       lastFocus.focus({ preventScroll: true });
     } else {
@@ -96,6 +81,7 @@
 
   if (menuBtn && menuOverlay) {
     applyHidden(menuOverlay, true);
+
     menuBtn.addEventListener("click", (e) => {
       e.preventDefault();
       toggleMenu();
@@ -106,9 +92,7 @@
       closeMenu();
     }));
 
-    linkEls.forEach(el => el.addEventListener("click", () => {
-      closeMenu();
-    }));
+    linkEls.forEach(el => el.addEventListener("click", () => closeMenu()));
 
     document.addEventListener("keydown", (e) => {
       if (!menuOpen) return;
@@ -136,12 +120,6 @@
         }
       }
     });
-
-    // Si cambia tamaño, cerramos para evitar estados raros
-    window.addEventListener("resize", () => {
-      setHeaderHeightVar();
-      if (!isMobile() && menuOpen) closeMenu();
-    }, { passive: true });
   }
 
   // ---------- Countdown ----------
@@ -180,6 +158,7 @@
     if (cdMinutes) cdMinutes.textContent = pad2(minutes);
     if (cdSeconds) cdSeconds.textContent = pad2(seconds);
   }
+
   renderCountdown();
   setInterval(renderCountdown, 1000);
 
@@ -192,6 +171,7 @@
   const error = document.getElementById("rsvpError");
 
   let pendingSubmit = false;
+
   function show(el) { if (el) el.hidden = false; }
   function hide(el) { if (el) el.hidden = true; }
   function resetStatus() { hide(sending); hide(success); hide(error); }
