@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
-  <title>Omar &amp; Milena — 09 . 04 . 27</title>
-  <meta name="description" content="Boda de Omar & Milena — 09/04/2027. Ceremonia a las 17:00." />
+  <title>Milena &amp; Omar — 09 . 04 . 27</title>
+  <meta name="description" content="Boda de Milena & Omar — 09/04/2027. Ceremonia a las 17:00." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -13,45 +13,33 @@
   <a class="skip-link" href="#main">Saltar al contenido</a>
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- HEADER: siempre visible (sin hover) -->
-  <header class="site-header" role="banner">
-    <div class="header-inner">
-      <a class="brand" href="#home" aria-label="Ir al inicio">Mielna &amp; Omar</a>
+  <!-- Floating menu button (no banner) -->
+  <button id="menuBtn"
+          class="fab-menu"
+          type="button"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="menuOverlay">
+    <span class="sr-only">Abrir menú</span>
+    <span class="fab-menu__icon" aria-hidden="true"></span>
+  </button>
 
-      <nav class="nav" aria-label="Navegación principal">
-        <a href="#story">Our story</a>
-        <a href="#transport">Transporte</a>
-        <a href="#contact">Contacto</a>
-        <a href="#rsvp" class="nav-cta">RSVP</a>
-      </nav>
-
-      <button id="menuBtn" class="menu-btn" type="button"
-              aria-haspopup="dialog"
-              aria-expanded="false"
-              aria-controls="menuOverlay">
-        <span class="menu-btn__label">MENÚ</span>
-        <span class="menu-btn__icon" aria-hidden="true"></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- OVERLAY MENU (desktop + mobile) -->
-  <div id="menuOverlay" class="menu-overlay" role="dialog" aria-modal="true"
-       aria-label="Menú" hidden>
+  <!-- Overlay menu -->
+  <div id="menuOverlay" class="menu-overlay" role="dialog" aria-modal="true" aria-label="Menú" hidden>
     <div class="menu-backdrop" data-menu-close aria-hidden="true"></div>
 
-    <div class="menu-panel" role="document">
+    <div class="menu-panel" role="document" tabindex="-1">
       <div class="menu-panel__top">
-        <div class="menu-panel__brand">Mielna &amp; Omar</div>
+        <div class="menu-panel__brand">Milena &amp; Omar</div>
 
         <button class="menu-close" type="button" data-menu-close aria-label="Cerrar menú">
-          <span class="menu-close__label">CERRAR</span>
           <span class="menu-close__x" aria-hidden="true">×</span>
         </button>
       </div>
 
       <div class="menu-panel__links" aria-label="Secciones">
-        <a href="#story" data-menu-link>Our story</a>
+        <a href="#home" data-menu-link>Inicio</a>
+        <a href="#story" data-menu-link>Nuestra historia</a>
         <a href="#transport" data-menu-link>Transporte</a>
         <a href="#contact" data-menu-link>Contacto</a>
         <a href="#rsvp" data-menu-link class="menu-link-cta">RSVP</a>
@@ -76,7 +64,7 @@
           <p class="kicker">¡Nos casamos!</p>
 
           <h1 class="hero-title">
-            <span class="hero-title__names">Omar <span aria-hidden="true">&amp;</span> Milena</span>
+            <span class="hero-title__names">Milena <span aria-hidden="true">&amp;</span> Omar</span>
           </h1>
 
           <p class="hero-date" aria-label="Fecha">
@@ -161,7 +149,7 @@
     <section id="story" class="story" aria-label="Nuestra historia">
       <div class="section-shell">
         <div class="section-head">
-          <h2 class="section-title">Our story</h2>
+          <h2 class="section-title">Nuestra historia</h2>
           <p class="section-subtitle">See how it all started / Nuestra historia</p>
         </div>
 
@@ -202,12 +190,12 @@
 
         <div class="portraits" aria-label="Retratos">
           <figure class="portrait">
-            <img src="assets/groom.jpeg" alt="Omar — retrato" loading="lazy" />
-            <figcaption>Omar</figcaption>
-          </figure>
-          <figure class="portrait">
             <img src="assets/bride.jpeg" alt="Milena — retrato" loading="lazy" />
             <figcaption>Milena</figcaption>
+          </figure>
+          <figure class="portrait">
+            <img src="assets/groom.jpeg" alt="Omar — retrato" loading="lazy" />
+            <figcaption>Omar</figcaption>
           </figure>
         </div>
       </div>
@@ -341,7 +329,7 @@
         <footer class="page-footer">
           <div class="footer-line" aria-hidden="true"></div>
           <p class="footer-text">
-            Omar &amp; Milena · 09 . 04 . 27 · <span class="footer-accent">Can Ribas de Montbui</span>
+            Milena &amp; Omar · 09 . 04 . 27 · <span class="footer-accent">Can Ribas de Montbui</span>
           </p>
         </footer>
       </div>
