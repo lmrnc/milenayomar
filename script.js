@@ -1,17 +1,6 @@
-/* =========================
-   Minimal interactions
-   - Mobile nav toggle (under 740px) + robust iOS behavior
-   - Backdrop click to close
-   - Mobile header auto-hide on scroll
-   - Countdown to 2027-04-09T17:00:00+02:00
-   - RSVP hidden iframe success
-   - Hero video autoplay fallback
-   ========================= */
-
 (function () {
+  // ---------- Header height var ----------
   const header = document.querySelector(".site-header");
-
-  // ---------- Helper: set header height CSS var ----------
   const setHeaderHeightVar = () => {
     if (!header) return;
     const h = Math.round(header.getBoundingClientRect().height);
@@ -20,117 +9,140 @@
   setHeaderHeightVar();
   window.addEventListener("resize", setHeaderHeightVar, { passive: true });
 
-  // ---------- Mobile nav (robust toggle) ----------
-  const toggleBtn = document.querySelector(".nav-toggle");
-  const navPanel = document.getElementById("navPanel");
+  // ---------- Menu overlay (robust) ----------
+  const menuBtn = document.getElementById("menuBtn");
+  const menuOverlay = document.getElementById("menuOverlay");
+  const closeEls = menuOverlay ? menuOverlay.querySelectorAll("[data-menu-close]") : [];
+  const linkEls = menuOverlay ? menuOverlay.querySelectorAll("[data-menu-link]") : [];
+
+  let menuOpen = false;
+  let lastFocus = null;
 
   const isMobile = () => window.matchMedia("(max-width: 740px)").matches;
 
-  // Backdrop para cerrar tocando fuera
-  let backdrop = document.querySelector(".nav-backdrop");
-  if (!backdrop) {
-    backdrop = document.createElement("div");
-    backdrop.className = "nav-backdrop";
-    backdrop.hidden = true;
-    document.body.appendChild(backdrop);
-  }
-
-  let menuOpen = false;
-
   const applyHidden = (el, hide) => {
     if (!el) return;
-    el.hidden = hide;
-    if (hide) el.setAttribute("hidden", "");
-    else el.removeAttribute("hidden");
+    if (hide) {
+      el.setAttribute("hidden", "");
+      el.hidden = true;
+    } else {
+      el.hidden = false;
+      el.removeAttribute("hidden");
+    }
   };
 
-  const setMenuOpen = (open) => {
-    menuOpen = open;
+  const focusableSelector = [
+    "a[href]",
+    "button:not([disabled])",
+    "input:not([disabled])",
+    "textarea:not([disabled])",
+    "[tabindex]:not([tabindex='-1'])"
+  ].join(",");
 
-    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", String(open));
-    if (navPanel) applyHidden(navPanel, !open);
-    if (backdrop) applyHidden(backdrop, !open);
-
-    if (header) header.classList.toggle("menu-open", open);
-
-    // lock scroll solo en móvil
-    document.body.classList.toggle("lock-scroll", open && isMobile());
-
-    // Recalcular altura por si cambia
-    setHeaderHeightVar();
+  const getFocusable = (root) => {
+    if (!root) return [];
+    return Array.from(root.querySelectorAll(focusableSelector))
+      .filter(el => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
   };
 
-  if (toggleBtn && navPanel) {
-    // estado inicial
-    setMenuOpen(false);
+  const lockScroll = (lock) => {
+    document.body.classList.toggle("menu-lock", lock);
+  };
 
-    // iOS: usar pointerup + click para asegurar
-    const onToggle = (e) => {
+  const openMenu = () => {
+    if (!menuOverlay || !menuBtn) return;
+    if (menuOpen) return;
+
+    menuOpen = true;
+    lastFocus = document.activeElement;
+
+    applyHidden(menuOverlay, false);
+    // siguiente frame para activar animación
+    requestAnimationFrame(() => {
+      menuOverlay.classList.add("is-open");
+    });
+
+    menuBtn.setAttribute("aria-expanded", "true");
+    lockScroll(true);
+
+    // focus al primer link del panel
+    const focusables = getFocusable(menuOverlay);
+    (focusables[0] || menuOverlay).focus?.({ preventScroll: true });
+  };
+
+  const closeMenu = () => {
+    if (!menuOverlay || !menuBtn) return;
+    if (!menuOpen) return;
+
+    menuOpen = false;
+    menuOverlay.classList.remove("is-open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    lockScroll(false);
+
+    // esperar a que acabe animación antes de ocultar
+    window.setTimeout(() => {
+      applyHidden(menuOverlay, true);
+    }, 260);
+
+    // devolver foco
+    if (lastFocus && typeof lastFocus.focus === "function") {
+      lastFocus.focus({ preventScroll: true });
+    } else {
+      menuBtn.focus({ preventScroll: true });
+    }
+  };
+
+  const toggleMenu = () => (menuOpen ? closeMenu() : openMenu());
+
+  if (menuBtn && menuOverlay) {
+    applyHidden(menuOverlay, true);
+    menuBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      e.stopPropagation();
-      setMenuOpen(!menuOpen);
-    };
-
-    toggleBtn.addEventListener("click", onToggle, { passive: false });
-    toggleBtn.addEventListener("pointerup", onToggle, { passive: false });
-
-    // cerrar tocando fuera
-    backdrop.addEventListener("click", () => setMenuOpen(false));
-
-    // cerrar al tocar enlaces
-    navPanel.addEventListener("click", (e) => {
-      const a = e.target.closest("a");
-      if (a) setMenuOpen(false);
+      toggleMenu();
     });
 
-    // cerrar con ESC
+    closeEls.forEach(el => el.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeMenu();
+    }));
+
+    linkEls.forEach(el => el.addEventListener("click", () => {
+      closeMenu();
+    }));
+
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") setMenuOpen(false);
+      if (!menuOpen) return;
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      // Focus trap
+      if (e.key === "Tab") {
+        const focusables = getFocusable(menuOverlay);
+        if (!focusables.length) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     });
 
-    // al cambiar a desktop, cerramos
+    // Si cambia tamaño, cerramos para evitar estados raros
     window.addEventListener("resize", () => {
-      if (!isMobile()) setMenuOpen(false);
+      setHeaderHeightVar();
+      if (!isMobile() && menuOpen) closeMenu();
     }, { passive: true });
   }
-
-  // ---------- Mobile header auto-hide on scroll ----------
-  let lastY = window.scrollY || 0;
-
-  const onScroll = () => {
-    if (!header) return;
-
-    // desktop: sin autohide
-    if (!isMobile()) {
-      header.classList.remove("header-hidden");
-      return;
-    }
-
-    // si menú abierto, no ocultar
-    if (header.classList.contains("menu-open")) {
-      header.classList.remove("header-hidden");
-      return;
-    }
-
-    const y = window.scrollY || 0;
-    const delta = y - lastY;
-
-    if (y < 20) {
-      header.classList.remove("header-hidden");
-      lastY = y;
-      return;
-    }
-
-    if (Math.abs(delta) < 8) return;
-
-    if (delta > 0) header.classList.add("header-hidden");
-    else header.classList.remove("header-hidden");
-
-    lastY = y;
-  };
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 
   // ---------- Countdown ----------
   const cdDays = document.getElementById("cdDays");
@@ -168,7 +180,6 @@
     if (cdMinutes) cdMinutes.textContent = pad2(minutes);
     if (cdSeconds) cdSeconds.textContent = pad2(seconds);
   }
-
   renderCountdown();
   setInterval(renderCountdown, 1000);
 
@@ -181,15 +192,9 @@
   const error = document.getElementById("rsvpError");
 
   let pendingSubmit = false;
-
   function show(el) { if (el) el.hidden = false; }
   function hide(el) { if (el) el.hidden = true; }
-
-  function resetStatus() {
-    hide(sending);
-    hide(success);
-    hide(error);
-  }
+  function resetStatus() { hide(sending); hide(success); hide(error); }
 
   if (form && iframe) {
     form.addEventListener("submit", () => {
@@ -231,10 +236,8 @@
       try {
         video.muted = true;
         video.playsInline = true;
-
         const p = video.play();
         if (p && typeof p.then === "function") await p;
-
         if (video.paused) fallbackToImage();
       } catch (_) {
         fallbackToImage();
