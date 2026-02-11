@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
   <div class="grain" aria-hidden="true"></div>
 
   <!-- Floating menu button (no banner) -->
@@ -20,7 +20,7 @@
           aria-haspopup="dialog"
           aria-expanded="false"
           aria-controls="menuOverlay">
-    <span class="sr-only">Abrir menú</span>
+    <span class="sr-only" data-i18n="menu.open">Abrir menú</span>
     <span class="fab-menu__icon" aria-hidden="true"></span>
   </button>
 
@@ -37,15 +37,25 @@
         </button>
       </div>
 
-      <div class="menu-panel__links" aria-label="Secciones">
-        <a href="#home" data-menu-link>Inicio</a>
-        <a href="#story" data-menu-link>Nuestra historia</a>
-        <a href="#transport" data-menu-link>Transporte</a>
-        <a href="#contact" data-menu-link>Contacto</a>
-        <a href="#rsvp" data-menu-link class="menu-link-cta">RSVP</a>
+      <!-- Language selector -->
+      <div class="menu-lang" aria-label="Idioma">
+        <span class="menu-lang__label" data-i18n="menu.language">Idioma</span>
+        <div class="seg" role="group" aria-label="Selector de idioma">
+          <button class="seg__btn" type="button" data-lang="es" aria-pressed="true">ES</button>
+          <button class="seg__btn" type="button" data-lang="ca" aria-pressed="false">CAT</button>
+          <button class="seg__btn" type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
       </div>
 
-      <p class="menu-panel__hint">09 . 04 . 27 · Can Ribas de Montbui</p>
+      <div class="menu-panel__links" aria-label="Secciones">
+        <a href="#home" data-menu-link data-i18n="nav.home">Inicio</a>
+        <a href="#story" data-menu-link data-i18n="nav.story">Nuestra historia</a>
+        <a href="#transport" data-menu-link data-i18n="nav.transport">Transporte</a>
+        <a href="#contact" data-menu-link data-i18n="nav.contact">Contacto</a>
+        <a href="#rsvp" data-menu-link class="menu-link-cta" data-i18n="nav.rsvp">RSVP</a>
+      </div>
+
+      <p class="menu-panel__hint" data-i18n="menu.hint">09 . 04 . 27 · Can Ribas de Montbui</p>
     </div>
   </div>
 
@@ -61,7 +71,7 @@
 
       <div class="hero-overlay">
         <div class="hero-content">
-          <p class="kicker">¡Nos casamos!</p>
+          <p class="kicker" data-i18n="hero.kicker">¡Nos casamos!</p>
 
           <h1 class="hero-title">
             <span class="hero-title__names">Milena <span aria-hidden="true">&amp;</span> Omar</span>
@@ -71,34 +81,56 @@
             09 <span aria-hidden="true">·</span> 04 <span aria-hidden="true">·</span> 27
           </p>
 
+          <p class="hero-place" data-i18n="hero.place">Can Ribas de Montbui · xxxxxxxxx</p>
+
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#rsvp">RSVP</a>
-            <a class="btn btn-ghost" href="#story">Nuestra historia</a>
+            <a class="btn btn-primary" href="#rsvp" data-i18n="hero.ctaPrimary">RSVP</a>
+            <a class="btn btn-ghost" href="#story" data-i18n="hero.ctaSecondary">Nuestra historia</a>
           </div>
 
           <div class="countdown" aria-label="Cuenta atrás">
-            <p class="countdown-label">Cuenta atrás</p>
+            <p class="countdown-label" data-i18n="countdown.label">Cuenta atrás</p>
+
             <div class="countdown-inline" role="group" aria-live="polite" aria-atomic="true">
-              <span class="cd-part"><strong id="cdDays">—</strong> <span>días</span></span>
+              <span class="cd-part">
+                <strong id="cdDays">—</strong>
+                <span id="cdDaysLabel" data-i18n="countdown.days">días</span>
+              </span>
+
               <span class="cd-sep" aria-hidden="true">/</span>
-              <span class="cd-part"><strong id="cdHours">—</strong> <span>h</span></span>
+
+              <span class="cd-part">
+                <strong id="cdHours">—</strong>
+                <span id="cdHoursLabel" data-i18n="countdown.hours">h</span>
+              </span>
+
               <span class="cd-sep" aria-hidden="true">/</span>
-              <span class="cd-part"><strong id="cdMinutes">—</strong> <span>min</span></span>
+
+              <span class="cd-part">
+                <strong id="cdMinutes">—</strong>
+                <span id="cdMinutesLabel" data-i18n="countdown.minutes">min</span>
+              </span>
+
               <span class="cd-sep" aria-hidden="true">/</span>
-              <span class="cd-part"><strong id="cdSeconds">—</strong> <span>s</span></span>
+
+              <span class="cd-part">
+                <strong id="cdSeconds">—</strong>
+                <span id="cdSecondsLabel" data-i18n="countdown.seconds">s</span>
+              </span>
             </div>
-            <p class="countdown-done" id="cdDone" hidden aria-live="polite">¡Hoy es el día!</p>
+
+            <p class="countdown-done" id="cdDone" hidden aria-live="polite" data-i18n="countdown.done">¡Hoy es el día!</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Ceremony / Reception blocks -->
+    <!-- Events -->
     <section class="events" aria-label="Ceremonia y celebración">
       <div class="section-shell">
         <div class="events-head">
-          <h2 class="section-title">El día</h2>
-          <p class="section-subtitle">Dos momentos. Un mismo sí.</p>
+          <h2 class="section-title" data-i18n="events.title">El día</h2>
+          <p class="section-subtitle" data-i18n="events.subtitle">Dos momentos. Un mismo sí.</p>
         </div>
 
         <div class="events-grid">
@@ -106,7 +138,7 @@
             <div class="event-line" aria-hidden="true"></div>
 
             <header class="event-head">
-              <h3 class="event-title">Ceremonia</h3>
+              <h3 class="event-title" data-i18n="events.ceremony.title">Ceremonia</h3>
               <p class="event-time">17:00</p>
             </header>
 
@@ -118,7 +150,8 @@
             <div class="event-actions">
               <a class="btn btn-outline"
                  href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjwgovoys6SAxWcTaQEHUgLCoUQ4kB6BAgnEAM&url=%2Fmaps%2Fplace%2F%2Fdata%3D!4m2!3m1!1s0x12a4c3e7c711f469%3A0x653a613cf6101fac%3Fsa%3DX%26ved%3D1t%3A8290%26ictx%3D111&usg=AOvVaw2p8YApomMRgTZyT03cQtSf&opi=89978449"
-                 target="_blank" rel="noopener noreferrer">
+                 target="_blank" rel="noopener noreferrer"
+                 data-i18n="events.map">
                 Mapa
               </a>
             </div>
@@ -128,7 +161,7 @@
             <div class="event-line" aria-hidden="true"></div>
 
             <header class="event-head">
-              <h3 class="event-title">Celebración</h3>
+              <h3 class="event-title" data-i18n="events.reception.title">Celebración</h3>
               <p class="event-time">xx:xx–xx:xx</p>
             </header>
 
@@ -138,7 +171,7 @@
             </p>
 
             <div class="event-actions">
-              <a class="btn btn-outline" href="xxxxxxxxx" target="_blank" rel="noopener noreferrer">Mapa</a>
+              <a class="btn btn-outline" href="xxxxxxxxx" target="_blank" rel="noopener noreferrer" data-i18n="events.map">Mapa</a>
             </div>
           </article>
         </div>
@@ -149,8 +182,8 @@
     <section id="story" class="story" aria-label="Nuestra historia">
       <div class="section-shell">
         <div class="section-head">
-          <h2 class="section-title">Nuestra historia</h2>
-          <p class="section-subtitle">See how it all started / Nuestra historia</p>
+          <h2 class="section-title" data-i18n="story.title">Nuestra historia</h2>
+          <p class="section-subtitle" data-i18n="story.subtitle">Tres momentos que nos trajeron hasta aquí.</p>
         </div>
 
         <div class="story-grid">
@@ -159,9 +192,9 @@
               <img src="assets/story1.jpeg" alt="Hito 1 — foto" loading="lazy" />
             </div>
             <div class="story-body">
-              <p class="story-kicker">Hito 01</p>
-              <h3 class="story-title">xxxxxxxxx</h3>
-              <p class="story-text">xxxxxxxxx</p>
+              <p class="story-kicker" data-i18n="story.m1.kicker">Hito 01</p>
+              <h3 class="story-title" data-i18n="story.m1.title">xxxxxxxxx</h3>
+              <p class="story-text" data-i18n="story.m1.text">xxxxxxxxx</p>
             </div>
           </article>
 
@@ -170,9 +203,9 @@
               <img src="assets/story2.jpeg" alt="Hito 2 — foto" loading="lazy" />
             </div>
             <div class="story-body">
-              <p class="story-kicker">Hito 02</p>
-              <h3 class="story-title">xxxxxxxxx</h3>
-              <p class="story-text">xxxxxxxxx</p>
+              <p class="story-kicker" data-i18n="story.m2.kicker">Hito 02</p>
+              <h3 class="story-title" data-i18n="story.m2.title">xxxxxxxxx</h3>
+              <p class="story-text" data-i18n="story.m2.text">xxxxxxxxx</p>
             </div>
           </article>
 
@@ -181,9 +214,9 @@
               <img src="assets/story3.jpeg" alt="Hito 3 — foto" loading="lazy" />
             </div>
             <div class="story-body">
-              <p class="story-kicker">Hito 03</p>
-              <h3 class="story-title">xxxxxxxxx</h3>
-              <p class="story-text">xxxxxxxxx</p>
+              <p class="story-kicker" data-i18n="story.m3.kicker">Hito 03</p>
+              <h3 class="story-title" data-i18n="story.m3.title">xxxxxxxxx</h3>
+              <p class="story-text" data-i18n="story.m3.text">xxxxxxxxx</p>
             </div>
           </article>
         </div>
@@ -191,11 +224,11 @@
         <div class="portraits" aria-label="Retratos">
           <figure class="portrait">
             <img src="assets/bride.jpeg" alt="Milena — retrato" loading="lazy" />
-            <figcaption>Milena</figcaption>
+            <figcaption data-i18n="story.portrait1">Milena</figcaption>
           </figure>
           <figure class="portrait">
             <img src="assets/groom.jpeg" alt="Omar — retrato" loading="lazy" />
-            <figcaption>Omar</figcaption>
+            <figcaption data-i18n="story.portrait2">Omar</figcaption>
           </figure>
         </div>
       </div>
@@ -205,27 +238,27 @@
     <section id="transport" class="transport" aria-label="Transporte">
       <div class="section-shell">
         <div class="section-head">
-          <h2 class="section-title">Travel &amp; Stay</h2>
-          <p class="section-subtitle">Transporte</p>
+          <h2 class="section-title" data-i18n="transport.title">Transporte</h2>
+          <p class="section-subtitle" data-i18n="transport.subtitle">Cómo llegar y moverse con calma.</p>
         </div>
 
         <div class="simple-columns">
           <article class="simple-block">
-            <h3 class="simple-title">Coche</h3>
-            <p class="simple-text">xxxxxxxxx</p>
-            <p class="simple-meta">Parking: xxxxxxxxx</p>
+            <h3 class="simple-title" data-i18n="transport.car.title">Coche</h3>
+            <p class="simple-text" data-i18n="transport.car.text">xxxxxxxxx</p>
+            <p class="simple-meta" data-i18n="transport.car.meta">Parking: xxxxxxxxx</p>
           </article>
 
           <article class="simple-block">
-            <h3 class="simple-title">Transporte público</h3>
-            <p class="simple-text">xxxxxxxxx</p>
-            <p class="simple-meta">Parada cercana: xxxxxxxxx</p>
+            <h3 class="simple-title" data-i18n="transport.public.title">Transporte público</h3>
+            <p class="simple-text" data-i18n="transport.public.text">xxxxxxxxx</p>
+            <p class="simple-meta" data-i18n="transport.public.meta">Parada cercana: xxxxxxxxx</p>
           </article>
 
           <article class="simple-block">
-            <h3 class="simple-title">Bus</h3>
-            <p class="simple-text">xxxxxxxxx</p>
-            <p class="simple-meta">Horario: xxxxxxxxx</p>
+            <h3 class="simple-title" data-i18n="transport.bus.title">Bus</h3>
+            <p class="simple-text" data-i18n="transport.bus.text">xxxxxxxxx</p>
+            <p class="simple-meta" data-i18n="transport.bus.meta">Horario: xxxxxxxxx</p>
           </article>
         </div>
 
@@ -239,20 +272,20 @@
     <section id="contact" class="contact" aria-label="Contacto">
       <div class="section-shell">
         <div class="section-head">
-          <h2 class="section-title">Contacto</h2>
-          <p class="section-subtitle">Preguntas, logística, detalles</p>
+          <h2 class="section-title" data-i18n="contact.title">Contacto</h2>
+          <p class="section-subtitle" data-i18n="contact.subtitle">Preguntas, logística, detalles</p>
         </div>
 
         <div class="contact-card">
           <div class="contact-line" aria-hidden="true"></div>
 
-          <h3 class="contact-title">Wedding planner</h3>
-          <p class="contact-text">Para cualquier duda o consulta, puedes contar con:</p>
+          <h3 class="contact-title" data-i18n="contact.plannerTitle">Wedding planner</h3>
+          <p class="contact-text" data-i18n="contact.text">Para cualquier duda o consulta, puedes contar con:</p>
 
           <ul class="contact-list">
-            <li><span class="label">Nombre</span> <span class="value">Clàudia Mir</span></li>
-            <li><span class="label">Teléfono</span> <a class="value link" href="tel:xxxxxxxxx">611 532 724</a></li>
-            <li><span class="label">Email</span> <a class="value link" href="mailto:xxxxxxxxx">hello@weddbo.com</a></li>
+            <li><span class="label" data-i18n="contact.nameLabel">Nombre</span> <span class="value">Clàudia Mir</span></li>
+            <li><span class="label" data-i18n="contact.phoneLabel">Teléfono</span> <a class="value link" href="tel:xxxxxxxxx">611 532 724</a></li>
+            <li><span class="label" data-i18n="contact.emailLabel">Email</span> <a class="value link" href="mailto:xxxxxxxxx">hello@weddbo.com</a></li>
           </ul>
         </div>
       </div>
@@ -263,7 +296,7 @@
       <div class="section-shell">
         <div class="section-head">
           <h2 class="section-title">RSVP</h2>
-          <p class="section-subtitle">Una respuesta breve, todo claro.</p>
+          <p class="section-subtitle" data-i18n="rsvp.subtitle">Una respuesta breve, todo claro.</p>
         </div>
 
         <div class="rsvp-wrap">
@@ -275,45 +308,45 @@
                 autocomplete="on">
 
             <fieldset class="toggle" aria-label="¿Asistirás?">
-              <legend class="toggle-legend">¿Asistirás?</legend>
+              <legend class="toggle-legend" data-i18n="rsvp.attendLegend">¿Asistirás?</legend>
 
               <input class="sr-only" type="radio" name="attendance" id="attYes" value="Yes" required>
-              <label class="toggle-btn" for="attYes">Sí</label>
+              <label class="toggle-btn" for="attYes" data-i18n="rsvp.yes">Sí</label>
 
               <input class="sr-only" type="radio" name="attendance" id="attNo" value="No" required>
-              <label class="toggle-btn" for="attNo">No</label>
+              <label class="toggle-btn" for="attNo" data-i18n="rsvp.no">No</label>
             </fieldset>
 
             <div class="form-grid">
               <label class="field">
-                <span class="field-label">Nombre y apellidos</span>
-                <input name="name" type="text" required placeholder="Tu nombre" />
+                <span class="field-label" data-i18n="rsvp.nameLabel">Nombre y apellidos</span>
+                <input name="name" type="text" required placeholder="Tu nombre" data-i18n-placeholder="rsvp.namePh" />
               </label>
 
               <label class="field">
-                <span class="field-label">Email</span>
-                <input name="email" type="email" required placeholder="tu@email.com" />
+                <span class="field-label" data-i18n="rsvp.emailLabel">Email</span>
+                <input name="email" type="email" required placeholder="tu@email.com" data-i18n-placeholder="rsvp.emailPh" />
               </label>
 
               <label class="field">
-                <span class="field-label">Invitados</span>
+                <span class="field-label" data-i18n="rsvp.guestsLabel">Invitados</span>
                 <input name="guests" type="number" min="0" step="1" inputmode="numeric" placeholder="0" />
               </label>
 
               <label class="field field-full">
-                <span class="field-label">Notas</span>
-                <textarea name="notes" rows="4" placeholder="Alergias, preferencias, etc."></textarea>
+                <span class="field-label" data-i18n="rsvp.notesLabel">Notas</span>
+                <textarea name="notes" rows="4" placeholder="Alergias, preferencias, etc." data-i18n-placeholder="rsvp.notesPh"></textarea>
               </label>
             </div>
 
             <div class="form-actions">
-              <button class="btn btn-primary" type="submit">Enviar RSVP</button>
-              <p class="form-hint">devnote: Se enviará a nuestra lista (Google Sheets).</p>
+              <button class="btn btn-primary" type="submit" data-i18n="rsvp.submit">Enviar RSVP</button>
+              <p class="form-hint" data-i18n="rsvp.hint">Recibirás una confirmación al enviar.</p>
             </div>
 
             <div class="form-status" aria-live="polite" aria-atomic="true">
-              <p id="rsvpSending" class="status muted" hidden>Enviando…</p>
-              <p id="rsvpSuccess" class="status success" hidden>¡Gracias! RSVP recibido.</p>
+              <p id="rsvpSending" class="status muted" hidden data-i18n="rsvp.sending">Enviando…</p>
+              <p id="rsvpSuccess" class="status success" hidden data-i18n="rsvp.success">¡Gracias! Te hemos enviado una confirmación por email.</p>
               <p id="rsvpError" class="status error" hidden>xxxxxxxxx</p>
             </div>
           </form>
