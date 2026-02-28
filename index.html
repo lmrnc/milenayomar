@@ -582,61 +582,14 @@
     </div>
 
     <!-- STEP 2: Confirm form -->
-    <div id="rsvp-step-2" style="display:none; width:100%; max-width:500px;">
+    <div id="rsvp-step-2" style="display:none; width:100%; max-width:560px;">
 
-      <div class="rsvp-card" id="card-main">
-        <p class="rsvp-card-name" id="card-main-name"></p>
-        <div class="form-group" style="margin-top:1.2rem;">
-          <label class="form-label">¿Asistirás a la boda?</label>
-          <div style="display:flex; gap:1rem; margin-top:0.8rem; flex-wrap:wrap;">
-            <button type="button" class="btn-choice" id="btn-si-main" onclick="selectChoice('main','si')">Sí, allí estaré 🥂</button>
-            <button type="button" class="btn-choice" id="btn-no-main" onclick="selectChoice('main','no')">No podré ir</button>
-          </div>
-        </div>
-        <div class="form-group" style="margin-top:1.2rem;">
-          <label class="form-label">Intolerancias o alergias alimentarias</label>
-          <input type="text" id="intol-main" class="form-input" placeholder="Ej: sin gluten, alérgico a frutos secos...">
-        </div>
-        <div class="form-group" style="margin-top:1.2rem;">
-          <label class="form-label">Comentarios</label>
-          <textarea id="comment-main" class="form-textarea form-input" placeholder="Cualquier cosa que quieras contarnos..."></textarea>
-        </div>
-      </div>
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; color:rgba(254,252,252,0.5); margin-bottom:1.5rem;">
+        Confirma la asistencia de tu grupo
+      </p>
 
-      <!-- Companion block -->
-      <div id="companion-section" style="display:none; margin-top:1.5rem;">
-        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem;">
-          <div style="flex:1; height:1px; background:rgba(254,252,252,0.1);"></div>
-          <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(254,252,252,0.4);">¿y tu acompañante?</span>
-          <div style="flex:1; height:1px; background:rgba(254,252,252,0.1);"></div>
-        </div>
-        <div class="rsvp-card">
-          <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:0.8rem;">
-            <p class="rsvp-card-name" id="card-companion-name"></p>
-            <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer; font-weight:200; font-size:0.78rem; color:rgba(254,252,252,0.55); font-family:'Jost',sans-serif;">
-              <input type="checkbox" id="companion-check" onchange="toggleCompanionForm()" style="accent-color:#e8c4c4; width:14px; height:14px;">
-              Confirmar también para esta persona
-            </label>
-          </div>
-          <div id="companion-form" style="display:none; margin-top:1.2rem;">
-            <div class="form-group">
-              <label class="form-label">¿Asistirá?</label>
-              <div style="display:flex; gap:1rem; margin-top:0.8rem; flex-wrap:wrap;">
-                <button type="button" class="btn-choice" id="btn-si-comp" onclick="selectChoice('comp','si')">Sí 🥂</button>
-                <button type="button" class="btn-choice" id="btn-no-comp" onclick="selectChoice('comp','no')">No podrá</button>
-              </div>
-            </div>
-            <div class="form-group" style="margin-top:1rem;">
-              <label class="form-label">Intolerancias / alergias</label>
-              <input type="text" id="intol-comp" class="form-input" placeholder="Ej: vegetariana, celiaca...">
-            </div>
-            <div class="form-group" style="margin-top:1rem;">
-              <label class="form-label">Comentarios</label>
-              <textarea id="comment-comp" class="form-textarea form-input"></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Group members list — injected by JS -->
+      <div id="group-members-list" style="display:flex; flex-direction:column; gap:1rem;"></div>
 
       <button type="button" class="btn-submit" id="btn-send" onclick="submitRSVP()" style="margin-top:2rem;">
         Enviar confirmación
@@ -704,7 +657,8 @@
 
   let guestList = [];
   let selectedGuest = null;
-  const choices = { main: null, comp: null };
+  let groupMembers = [];
+  let memberChoices = [];
 
   async function loadGuests() {
     const hint = document.getElementById('search-hint');
@@ -723,6 +677,115 @@
     };
     document.head.appendChild(s);
   }
+
+  loadGuests();
+
+  function normalize(str) {
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  }
+
+  function onSearchInput(val) {
+    const list = document.getElementById('autocomplete-list');
+    if (val.length < 2) { list.style.display = 'none'; return; }
+    const q = normalize(val);
+    const matches = guestList.filter(g => normalize(g.name).includes(q)).slice(0, 8);
+    if (!matches.length) { list.style.display = 'none'; return; }
+    list.innerHTML = matches.map(g => {
+      const re = new RegExp('(' + val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      const hl = g.name.replace(re, '<strong>$1</strong>');
+      return `<li onclick="selectGuest(${guestList.indexOf(g)})">${hl}</li>`;
+    }).join('');
+    list.style.display = 'block';
+  }
+
+  function getGroupMembers(guest) {
+    // Returns all guests in the same group, or just the guest if solo
+    if (!guest.grupo) return [guest];
+    return guestList.filter(g => g.grupo === guest.grupo);
+  }
+
+  function selectGuest(idx) {
+    selectedGuest = guestList[idx];
+    document.getElementById('guest-search').value = selectedGuest.name;
+    document.getElementById('autocomplete-list').style.display = 'none';
+    document.getElementById('rsvp-step-1').style.display = 'none';
+
+    const members = getGroupMembers(selectedGuest);
+    groupMembers = members;
+
+    // Build group member cards
+    const container = document.getElementById('group-members-list');
+    container.innerHTML = members.map((m, i) => `
+      <div class="rsvp-card" id="member-card-${i}">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+          <p class="rsvp-card-name">${m.name}${m.name === selectedGuest.name ? ' <span style="font-size:0.65rem; letter-spacing:0.15em; font-family:Jost,sans-serif; font-weight:200; opacity:0.5; font-style:normal;">(tú)</span>' : ''}</p>
+          <div style="display:flex; gap:0.6rem;">
+            <button type="button" class="btn-choice" id="btn-si-${i}" onclick="selectMemberChoice(${i},'si')">Sí 🥂</button>
+            <button type="button" class="btn-choice" id="btn-no-${i}" onclick="selectMemberChoice(${i},'no')">No</button>
+          </div>
+        </div>
+        <input type="text" class="form-input" id="intol-${i}" placeholder="Intolerancias / alergias..." style="margin-bottom:0.6rem;">
+        <textarea class="form-textarea form-input" id="comment-${i}" placeholder="Comentarios..." style="height:50px;"></textarea>
+      </div>
+    `).join('');
+
+    memberChoices = new Array(members.length).fill(null);
+
+    const step2 = document.getElementById('rsvp-step-2');
+    step2.style.display = 'block';
+    step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.getElementById('send-error').style.display = 'none';
+  }
+
+  function selectMemberChoice(idx, val) {
+    memberChoices[idx] = val;
+    document.getElementById(`btn-si-${idx}`).className = 'btn-choice' + (val === 'si' ? ' selected-si' : '');
+    document.getElementById(`btn-no-${idx}`).className = 'btn-choice' + (val === 'no' ? ' selected-no' : '');
+  }
+
+  async function submitRSVP() {
+    const errEl = document.getElementById('send-error');
+    errEl.style.display = 'none';
+
+    // Check all members have a choice
+    const unanswered = memberChoices.findIndex(c => c === null);
+    if (unanswered !== -1) {
+      errEl.textContent = `Por favor indica si "${groupMembers[unanswered].name}" asistirá o no.`;
+      errEl.style.display = 'block'; return;
+    }
+
+    const btn = document.getElementById('btn-send');
+    btn.textContent = 'Enviando...'; btn.disabled = true;
+
+    const payload = groupMembers.map((m, i) => ({
+      name: m.name,
+      asistencia: memberChoices[i],
+      intolerancias: document.getElementById(`intol-${i}`).value,
+      comentarios: document.getElementById(`comment-${i}`).value
+    }));
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById('rsvp-step-2').style.display = 'none';
+      document.getElementById('rsvp-step-3').style.display = 'block';
+    } catch(e) {
+      errEl.textContent = 'Hubo un error al enviar. Por favor inténtalo de nuevo.';
+      errEl.style.display = 'block';
+      btn.textContent = 'Enviar confirmación'; btn.disabled = false;
+    }
+  }
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#rsvp-step-1')) {
+      const list = document.getElementById('autocomplete-list');
+      if (list) list.style.display = 'none';
+    }
+  });
 
   loadGuests();
 
