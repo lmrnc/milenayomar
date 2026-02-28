@@ -708,134 +708,21 @@
 
   async function loadGuests() {
     const hint = document.getElementById('search-hint');
-    try {
-      const res = await fetch(APPS_SCRIPT_URL);
-      const data = await res.json();
+    const cbName = 'cb_' + Date.now();
+    window[cbName] = function(data) {
       guestList = data.guests || [];
-      hint.textContent = 'Escribe al menos 2 letras para buscar tu nombre.';
-    } catch(e) {
+      hint.textContent = guestList.length
+        ? 'Escribe al menos 2 letras para buscar tu nombre.'
+        : 'No se encontraron invitados. Contacta con los novios.';
+      delete window[cbName];
+    };
+    const s = document.createElement('script');
+    s.src = APPS_SCRIPT_URL + '?callback=' + cbName;
+    s.onerror = function() {
       hint.textContent = 'No se pudo cargar la lista. Recarga la página e inténtalo de nuevo.';
-    }
+    };
+    document.head.appendChild(s);
   }
-
-  function normalize(str) {
-    return str.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
-  }
-
-  function onSearchInput(val) {
-    const list = document.getElementById('autocomplete-list');
-    if (val.length < 2) { list.style.display = 'none'; return; }
-    const q = normalize(val);
-    const matches = guestList.filter(g => normalize(g.name).includes(q)).slice(0, 8);
-    if (!matches.length) { list.style.display = 'none'; return; }
-    list.innerHTML = matches.map((g) => {
-      const re = new RegExp('(' + val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-      const highlighted = g.name.replace(re, '<strong>$1</strong>');
-      const gIdx = guestList.indexOf(g);
-      return `<li onclick="selectGuest(${gIdx})">${highlighted}</li>`;
-    }).join('');
-    list.style.display = 'block';
-  }
-
-  function selectGuest(idx) {
-    selectedGuest = guestList[idx];
-    document.getElementById('guest-search').value = selectedGuest.name;
-    document.getElementById('autocomplete-list').style.display = 'none';
-
-    document.getElementById('rsvp-step-1').style.display = 'none';
-    const step2 = document.getElementById('rsvp-step-2');
-    step2.style.display = 'block';
-    step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    document.getElementById('card-main-name').textContent = selectedGuest.name;
-
-    if (selectedGuest.companion) {
-      document.getElementById('card-companion-name').textContent = selectedGuest.companion;
-      document.getElementById('companion-section').style.display = 'block';
-    } else {
-      document.getElementById('companion-section').style.display = 'none';
-    }
-
-    choices.main = null; choices.comp = null;
-    ['btn-si-main','btn-no-main','btn-si-comp','btn-no-comp'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.className = 'btn-choice';
-    });
-    document.getElementById('companion-check').checked = false;
-    document.getElementById('companion-form').style.display = 'none';
-    document.getElementById('intol-main').value = '';
-    document.getElementById('comment-main').value = '';
-    document.getElementById('send-error').style.display = 'none';
-  }
-
-  function selectChoice(who, val) {
-    choices[who] = val;
-    const siId = who === 'main' ? 'btn-si-main' : 'btn-si-comp';
-    const noId = who === 'main' ? 'btn-no-main' : 'btn-no-comp';
-    document.getElementById(siId).className = 'btn-choice' + (val === 'si' ? ' selected-si' : '');
-    document.getElementById(noId).className = 'btn-choice' + (val === 'no' ? ' selected-no' : '');
-  }
-
-  function toggleCompanionForm() {
-    const checked = document.getElementById('companion-check').checked;
-    document.getElementById('companion-form').style.display = checked ? 'block' : 'none';
-    if (!checked) choices.comp = null;
-  }
-
-  async function submitRSVP() {
-    const errEl = document.getElementById('send-error');
-    errEl.style.display = 'none';
-    if (!choices.main) {
-      errEl.textContent = 'Por favor indica si asistirás o no.';
-      errEl.style.display = 'block'; return;
-    }
-    const companionChecked = document.getElementById('companion-check').checked;
-    if (companionChecked && !choices.comp) {
-      errEl.textContent = 'Por favor indica si tu acompañante asistirá.';
-      errEl.style.display = 'block'; return;
-    }
-    const btn = document.getElementById('btn-send');
-    btn.textContent = 'Enviando...'; btn.disabled = true;
-
-    const payload = [{
-      name: selectedGuest.name,
-      asistencia: choices.main,
-      intolerancias: document.getElementById('intol-main').value,
-      comentarios: document.getElementById('comment-main').value
-    }];
-    if (companionChecked && selectedGuest.companion) {
-      payload.push({
-        name: selectedGuest.companion,
-        asistencia: choices.comp,
-        intolerancias: document.getElementById('intol-comp').value,
-        comentarios: document.getElementById('comment-comp').value
-      });
-    }
-
-    try {
-      // Use no-cors mode — we can't read the response but the data IS saved
-      // Encode payload as a URL param as fallback for CORS
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
-      });
-      document.getElementById('rsvp-step-2').style.display = 'none';
-      document.getElementById('rsvp-step-3').style.display = 'block';
-    } catch(e) {
-      errEl.textContent = 'Hubo un error al enviar. Por favor inténtalo de nuevo.';
-      errEl.style.display = 'block';
-      btn.textContent = 'Enviar confirmación'; btn.disabled = false;
-    }
-  }
-
-  document.addEventListener('click', e => {
-    if (!e.target.closest('#rsvp-step-1')) {
-      const list = document.getElementById('autocomplete-list');
-      if (list) list.style.display = 'none';
-    }
-  });
 
   loadGuests();
 </script>
