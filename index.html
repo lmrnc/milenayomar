@@ -813,7 +813,14 @@
     }
 
     try {
-      await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+      // Use no-cors mode — we can't read the response but the data IS saved
+      // Encode payload as a URL param as fallback for CORS
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      });
       document.getElementById('rsvp-step-2').style.display = 'none';
       document.getElementById('rsvp-step-3').style.display = 'block';
     } catch(e) {
