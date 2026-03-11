@@ -422,11 +422,11 @@
             <p class="contact-link-value">611 532 724</p>
           </div>
         </a>
-        <a href="mailto:hello@weddbo.com" class="contact-link">
+        <a href="/cdn-cgi/l/email-protection#69010c050506291e0c0d0d0b06470a0604" class="contact-link">
           <span style="font-size:1rem;opacity:0.4;">✉️</span>
           <div>
             <p class="contact-link-label">Email</p>
-            <p class="contact-link-value">hello@weddbo.com</p>
+            <p class="contact-link-value"><span class="__cf_email__" data-cfemail="c3aba6afafac83b4a6a7a7a1aceda0acae">[email&#160;protected]</span></p>
           </div>
         </a>
       </div>
@@ -507,7 +507,7 @@
   <span class="footer-date">09 · 04 · 2027 — Can Ribas de Montbui</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── Countdown ─────────────────────────────────────────────
   function updateCountdown() {
     var diff = new Date('2027-04-09T17:00:00') - new Date();
@@ -543,26 +543,38 @@
   document.querySelectorAll('section').forEach(function(s) { secObs.observe(s); });
 
   // ── RSVP ─────────────────────────────────────────────────
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1ZicLkbdSWOuAdHlN9UbenS1hCGjsaS1iCzAwhmDA0PQOMSq94iVhPZwTSYBxU1-m/exec';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxoLnEQUQefiRPCyMTtHfTsSgRKMCpSHnpZmUhmYbUMf9jFOzd1m8PT0FYlTJAVGzp/exec';
   var guestList = [];
   var selectedGuest = null;
   var mainChoice = null;
   var companions = []; // [{name, resolvedName, choice, intol, comment}]
   var companionCount = 0;
 
-  // Load via JSONP
+  // Load via fetch (CORS) with JSONP fallback
   function loadGuests() {
     var hint = document.getElementById('search-hint');
-    var cb = 'cb_' + Date.now();
-    window[cb] = function(data) {
-      guestList = data.guests || [];
-      hint.textContent = guestList.length ? 'Escribe al menos 2 letras para buscar tu nombre.' : 'No se encontraron invitados.';
-      delete window[cb];
-    };
-    var s = document.createElement('script');
-    s.onerror = function() { hint.textContent = 'No se pudo cargar la lista. Recarga la página.'; };
-    s.src = APPS_SCRIPT_URL + '?callback=' + cb;
-    document.head.appendChild(s);
+    fetch(APPS_SCRIPT_URL)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        guestList = data.guests || [];
+        hint.textContent = guestList.length
+          ? 'Escribe al menos 2 letras para buscar tu nombre.'
+          : 'No se encontraron invitados.';
+      })
+      .catch(function() {
+        var cb = 'cb_' + Date.now();
+        window[cb] = function(data) {
+          guestList = data.guests || [];
+          hint.textContent = guestList.length
+            ? 'Escribe al menos 2 letras para buscar tu nombre.'
+            : 'No se encontraron invitados.';
+          delete window[cb];
+        };
+        var s = document.createElement('script');
+        s.onerror = function() { hint.textContent = 'No se pudo cargar la lista. Recarga la página e inténtalo de nuevo.'; };
+        s.src = APPS_SCRIPT_URL + '?callback=' + cb;
+        document.head.appendChild(s);
+      });
   }
   loadGuests();
 
@@ -771,11 +783,4 @@
 
   // Close autocompletes on outside click
   document.addEventListener('click', function(e) {
-    if (!e.target.closest('#rsvp-step-1')) document.getElementById('autocomplete-list').style.display = 'none';
-    if (!e.target.closest('.companion-name-input')) {
-      document.querySelectorAll('.companion-autocomplete').forEach(function(el) { el.style.display = 'none'; });
-    }
-  });
-</script>
-</body>
-</html>
+    if (!e.target.closest('#rsvp-step-1')) document.getElementById('autocomplete
