@@ -422,11 +422,11 @@
             <p class="contact-link-value">611 532 724</p>
           </div>
         </a>
-        <a href="/cdn-cgi/l/email-protection#69010c050506291e0c0d0d0b06470a0604" class="contact-link">
+        <a href="#" class="contact-link">
           <span style="font-size:1rem;opacity:0.4;">✉️</span>
           <div>
             <p class="contact-link-label">Email</p>
-            <p class="contact-link-value"><span class="__cf_email__" data-cfemail="c3aba6afafac83b4a6a7a7a1aceda0acae">[email&#160;protected]</span></p>
+            <p class="contact-link-value">hello&#64;weddbo&#46;com</p>
           </div>
         </a>
       </div>
@@ -507,8 +507,15 @@
   <span class="footer-date">09 · 04 · 2027 — Can Ribas de Montbui</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // ── Countdown ─────────────────────────────────────────────
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Fix email link
+  var emailLink = document.querySelector('a[href="#"].contact-link');
+  if (emailLink) emailLink.href = 'mailto:hello@weddbo.com';
+
+  // ── Countdown ────────────────────────────────────────────
   function updateCountdown() {
     var diff = new Date('2027-04-09T17:00:00') - new Date();
     if (diff <= 0) { document.getElementById('days').textContent = 'Hoy'; return; }
@@ -519,18 +526,13 @@
   updateCountdown();
   setInterval(updateCountdown, 60000);
 
-  // ── Reveals ───────────────────────────────────────────────
-  new IntersectionObserver(function(entries) {
-    entries.forEach(function(e, i) { if (e.isIntersecting) setTimeout(function() { e.target.classList.add('visible'); }, i*80); });
-  }, { threshold: 0.1 }).observe = (function(orig) {
-    return function(el) { orig.call(this, el); };
-  })(IntersectionObserver.prototype.observe);
-
+  // ── Reveal on scroll ────────────────────────────────────
   var revObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e, i) { if (e.isIntersecting) setTimeout(function() { e.target.classList.add('visible'); }, i*80); });
-  }, { threshold: 0.1 });
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(function(el) { revObs.observe(el); });
 
+  // ── Nav active state ────────────────────────────────────
   var secObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting) {
@@ -542,15 +544,14 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('section').forEach(function(s) { secObs.observe(s); });
 
-  // ── RSVP ─────────────────────────────────────────────────
+  // ── RSVP ────────────────────────────────────────────────
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxoLnEQUQefiRPCyMTtHfTsSgRKMCpSHnpZmUhmYbUMf9jFOzd1m8PT0FYlTJAVGzp/exec';
   var guestList = [];
   var selectedGuest = null;
   var mainChoice = null;
-  var companions = []; // [{name, resolvedName, choice, intol, comment}]
+  var companions = [];
   var companionCount = 0;
 
-  // Load via fetch (CORS) with JSONP fallback
   function loadGuests() {
     var hint = document.getElementById('search-hint');
     fetch(APPS_SCRIPT_URL)
@@ -571,7 +572,7 @@
           delete window[cb];
         };
         var s = document.createElement('script');
-        s.onerror = function() { hint.textContent = 'No se pudo cargar la lista. Recarga la página e inténtalo de nuevo.'; };
+        s.onerror = function() { hint.textContent = 'No se pudo cargar la lista. Recarga la página.'; };
         s.src = APPS_SCRIPT_URL + '?callback=' + cb;
         document.head.appendChild(s);
       });
@@ -582,13 +583,11 @@
     return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
   }
 
-  // Fuzzy: score how well needle matches haystack
   function fuzzyScore(needle, haystack) {
     var n = normalize(needle), h = normalize(haystack);
     if (h === n) return 100;
     if (h.startsWith(n)) return 90;
     if (h.includes(n)) return 80;
-    // character overlap score
     var score = 0;
     for (var i = 0; i < n.length; i++) { if (h.includes(n[i])) score++; }
     return Math.round((score / n.length) * 60);
@@ -604,8 +603,7 @@
       .map(function(x) { return x.g; });
   }
 
-  // ── Main search autocomplete ──────────────────────────────
-  function onSearchInput(val) {
+  window.onSearchInput = function(val) {
     var list = document.getElementById('autocomplete-list');
     var matches = searchGuests(val);
     if (!matches.length) { list.style.display = 'none'; return; }
@@ -613,15 +611,14 @@
       return '<li onclick="selectGuest(' + guestList.indexOf(g) + ')">' + g.name + '</li>';
     }).join('');
     list.style.display = 'block';
-  }
+  };
 
-  function selectGuest(idx) {
+  window.selectGuest = function(idx) {
     selectedGuest = guestList[idx];
     document.getElementById('guest-search').value = selectedGuest.name;
     document.getElementById('autocomplete-list').style.display = 'none';
     document.getElementById('rsvp-step-1').style.display = 'none';
 
-    // Reset form
     document.getElementById('card-main-name').textContent = selectedGuest.name;
     mainChoice = null;
     document.getElementById('btn-si-main').className = 'btn-choice';
@@ -636,36 +633,34 @@
     var step2 = document.getElementById('rsvp-step-2');
     step2.style.display = 'block';
     step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
+  };
 
-  function setMainChoice(val) {
+  window.setMainChoice = function(val) {
     mainChoice = val;
     document.getElementById('btn-si-main').className = 'btn-choice' + (val==='si' ? ' selected-si' : '');
     document.getElementById('btn-no-main').className = 'btn-choice' + (val==='no' ? ' selected-no' : '');
-  }
+  };
 
-  // ── Companions ────────────────────────────────────────────
-  function addCompanion() {
+  window.addCompanion = function() {
     var id = ++companionCount;
     companions.push({ id: id, resolvedName: null, choice: null });
-
     var div = document.createElement('div');
     div.id = 'comp-block-' + id;
     div.className = 'rsvp-card';
     div.style.marginTop = '1rem';
     div.innerHTML =
-      '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">' +
         '<p class="form-label" style="margin:0;">Acompañante</p>' +
         '<button type="button" class="remove-companion" onclick="removeCompanion(' + id + ')">✕</button>' +
       '</div>' +
-      '<div class="form-group companion-name-input" style="position:relative;">' +
+      '<div class="form-group" style="position:relative;">' +
         '<label class="form-label">Nombre</label>' +
         '<input type="text" class="form-input" id="comp-name-' + id + '" placeholder="Nombre del acompañante..." autocomplete="off" oninput="onCompNameInput(' + id + ', this.value)">' +
         '<ul class="companion-autocomplete" id="comp-ac-' + id + '"></ul>' +
       '</div>' +
       '<div class="form-group" style="margin-top:1rem;">' +
         '<label class="form-label">¿Asistirá?</label>' +
-        '<div style="display:flex; gap:0.8rem; margin-top:0.7rem; flex-wrap:wrap;">' +
+        '<div style="display:flex;gap:0.8rem;margin-top:0.7rem;flex-wrap:wrap;">' +
           '<button type="button" class="btn-choice" id="comp-si-' + id + '" onclick="setCompChoice(' + id + ',\'si\')">Sí 🥂</button>' +
           '<button type="button" class="btn-choice" id="comp-no-' + id + '" onclick="setCompChoice(' + id + ',\'no\')">No podrá</button>' +
         '</div>' +
@@ -678,18 +673,17 @@
         '<label class="form-label">Comentarios</label>' +
         '<textarea class="form-textarea form-input" id="comp-comment-' + id + '"></textarea>' +
       '</div>';
-
     document.getElementById('companions-container').appendChild(div);
     document.getElementById('comp-name-' + id).focus();
-  }
+  };
 
-  function removeCompanion(id) {
+  window.removeCompanion = function(id) {
     companions = companions.filter(function(c) { return c.id !== id; });
     var el = document.getElementById('comp-block-' + id);
     if (el) el.remove();
-  }
+  };
 
-  function onCompNameInput(id, val) {
+  window.onCompNameInput = function(id, val) {
     var ac = document.getElementById('comp-ac-' + id);
     var matches = searchGuests(val, 6);
     if (!matches.length || val.length < 2) { ac.style.display = 'none'; return; }
@@ -697,24 +691,23 @@
       return '<li onclick="selectCompName(' + id + ', \'' + g.name.replace(/'/g,"\\'") + '\')">' + g.name + '</li>';
     }).join('');
     ac.style.display = 'block';
-  }
+  };
 
-  function selectCompName(id, name) {
+  window.selectCompName = function(id, name) {
     document.getElementById('comp-name-' + id).value = name;
     document.getElementById('comp-ac-' + id).style.display = 'none';
     var comp = companions.find(function(c) { return c.id === id; });
     if (comp) comp.resolvedName = name;
-  }
+  };
 
-  function setCompChoice(id, val) {
+  window.setCompChoice = function(id, val) {
     var comp = companions.find(function(c) { return c.id === id; });
     if (comp) comp.choice = val;
     document.getElementById('comp-si-' + id).className = 'btn-choice' + (val==='si' ? ' selected-si' : '');
     document.getElementById('comp-no-' + id).className = 'btn-choice' + (val==='no' ? ' selected-no' : '');
-  }
+  };
 
-  // ── Submit ────────────────────────────────────────────────
-  function submitRSVP() {
+  window.submitRSVP = function() {
     var errEl = document.getElementById('send-error');
     errEl.style.display = 'none';
 
@@ -723,7 +716,6 @@
       errEl.style.display = 'block'; return;
     }
 
-    // Validate companions
     for (var i = 0; i < companions.length; i++) {
       var c = companions[i];
       var nameVal = document.getElementById('comp-name-' + c.id).value.trim();
@@ -750,7 +742,6 @@
 
     companions.forEach(function(c) {
       var nameVal = document.getElementById('comp-name-' + c.id).value.trim();
-      // Fuzzy resolve: if typed name closely matches a guest, use that name
       var resolved = c.resolvedName || nameVal;
       if (!c.resolvedName) {
         var best = searchGuests(nameVal, 1);
@@ -779,8 +770,20 @@
       errEl.style.display = 'block';
       btn.textContent = 'Enviar confirmación'; btn.disabled = false;
     });
-  }
+  };
 
   // Close autocompletes on outside click
   document.addEventListener('click', function(e) {
-    if (!e.target.closest('#rsvp-step-1')) document.getElementById('autocomplete
+    if (!e.target.closest('#rsvp-step-1')) {
+      var list = document.getElementById('autocomplete-list');
+      if (list) list.style.display = 'none';
+    }
+    if (!e.target.closest('.companion-name-input')) {
+      document.querySelectorAll('.companion-autocomplete').forEach(function(el) { el.style.display = 'none'; });
+    }
+  });
+
+}); // end DOMContentLoaded
+</script>
+</body>
+</html>
