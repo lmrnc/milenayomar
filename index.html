@@ -21,139 +21,60 @@
   }
 
   html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
 
-  body {
-    font-family: 'Jost', sans-serif;
-    background: var(--white);
-    color: var(--dark);
-    overflow-x: hidden;
-  }
-
-  /* ═══ VICHY TEXTURE ═══
-     Two overlapping semi-transparent stripes create
-     a delicate gingham / vichy pattern  */
   .vichy { position: relative; }
   .vichy::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
     background-image:
-      repeating-linear-gradient(0deg,
-        transparent, transparent 18px,
-        rgba(122,22,40,0.042) 18px, rgba(122,22,40,0.042) 36px),
-      repeating-linear-gradient(90deg,
-        transparent, transparent 18px,
-        rgba(122,22,40,0.042) 18px, rgba(122,22,40,0.042) 36px);
+      repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(122,22,40,0.042) 18px, rgba(122,22,40,0.042) 36px),
+      repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(122,22,40,0.042) 18px, rgba(122,22,40,0.042) 36px);
   }
-  /* Inverted vichy for dark (garnet) backgrounds */
   .vichy-inv::after {
     background-image:
-      repeating-linear-gradient(0deg,
-        transparent, transparent 20px,
-        rgba(255,255,255,0.055) 20px, rgba(255,255,255,0.055) 40px),
-      repeating-linear-gradient(90deg,
-        transparent, transparent 20px,
-        rgba(255,255,255,0.055) 20px, rgba(255,255,255,0.055) 40px);
+      repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,255,255,0.055) 20px, rgba(255,255,255,0.055) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,255,255,0.055) 20px, rgba(255,255,255,0.055) 40px);
   }
   .vichy > * { position: relative; z-index: 1; }
 
-  /* ── NAV ── */
   nav {
-    position: fixed; left: 0; top: 0;
-    width: 60px; height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 2.5rem; z-index: 100;
-    border-right: 1px solid rgba(122,22,40,0.1);
-    background: var(--white);
+    position: fixed; left: 0; top: 0; width: 60px; height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem; z-index: 100; border-right: 1px solid rgba(122,22,40,0.1); background: var(--white);
   }
-  nav a {
-    font-weight: 200; font-size: 0.58rem;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--stone); text-decoration: none;
-    writing-mode: vertical-rl; transform: rotate(180deg);
-    transition: color 0.3s, opacity 0.3s; opacity: 0.55;
-  }
+  nav a { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); text-decoration: none; writing-mode: vertical-rl; transform: rotate(180deg); transition: color 0.3s, opacity 0.3s; opacity: 0.55; }
   nav a:hover, nav a.active { color: var(--garnet); opacity: 1; }
   nav .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--blush); }
 
-  /* ── MAIN ── */
   main { margin-left: 60px; }
   section { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
 
-  /* ── HERO ── */
   #inicio { flex-direction: column; justify-content: center; padding: 0 8vw; background: var(--white); }
-
-  .hero-eyebrow {
-    font-weight: 200; font-size: 0.7rem;
-    letter-spacing: 0.4em; text-transform: uppercase;
-    color: var(--stone); margin-bottom: 2.5rem;
-    animation: fadeUp 1s ease both 0.2s;
-  }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300; font-size: clamp(5rem, 13vw, 11rem);
-    line-height: 0.88; color: var(--dark);
-    animation: fadeUp 1s ease both 0.5s;
-  }
+  .hero-eyebrow { font-weight: 200; font-size: 0.7rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--stone); margin-bottom: 2.5rem; animation: fadeUp 1s ease both 0.2s; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(5rem, 13vw, 11rem); line-height: 0.88; color: var(--dark); animation: fadeUp 1s ease both 0.5s; }
   .hero-title em { font-style: italic; color: var(--garnet); }
-  .hero-ampersand {
-    font-family: 'Cormorant Garamond', serif; font-style: italic;
-    font-size: clamp(3rem, 7vw, 6rem); color: var(--blush);
-    display: block; margin: 0.15em 0;
-  }
-  .hero-date {
-    margin-top: 3rem; font-weight: 200; font-size: 0.75rem;
-    letter-spacing: 0.35em; color: var(--stone); text-transform: uppercase;
-    animation: fadeUp 1s ease both 0.8s;
-  }
-  .floral {
-    position: absolute; right: 5vw; top: 50%; transform: translateY(-50%);
-    opacity: 0.08; width: min(45vw, 500px);
-    pointer-events: none; animation: fadeIn 2s ease both 1s;
-  }
+  .hero-ampersand { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(3rem, 7vw, 6rem); color: var(--blush); display: block; margin: 0.15em 0; }
+  .hero-date { margin-top: 3rem; font-weight: 200; font-size: 0.75rem; letter-spacing: 0.35em; color: var(--stone); text-transform: uppercase; animation: fadeUp 1s ease both 0.8s; }
+  .floral { position: absolute; right: 5vw; top: 50%; transform: translateY(-50%); opacity: 0.08; width: min(45vw, 500px); pointer-events: none; animation: fadeIn 2s ease both 1s; }
 
-  /* ── SHARED LABELS & TITLES ── */
-  .section-label {
-    font-weight: 200; font-size: 0.62rem;
-    letter-spacing: 0.38em; text-transform: uppercase;
-    color: var(--blush); margin-bottom: 2rem;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300; font-size: clamp(2.5rem, 5vw, 4.5rem);
-    line-height: 1.08; margin-bottom: 2rem;
-  }
+  .section-label { font-weight: 200; font-size: 0.62rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--blush); margin-bottom: 2rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.08; margin-bottom: 2rem; }
   .section-title em { font-style: italic; color: var(--blush); }
 
-  /* ── NOSOTROS (garnet) ── */
   #nosotros { padding: 8vw; gap: 6vw; background: var(--garnet); }
   #nosotros .section-title { color: var(--white); }
   .nos-text { flex: 1; }
   .nos-body { font-weight: 300; font-size: 1rem; line-height: 1.9; color: rgba(254,252,252,0.65); max-width: 480px; }
   .nos-image { flex: 1; display: flex; align-items: center; justify-content: center; }
-  .placeholder-img {
-    width: 100%; max-width: 380px; aspect-ratio: 3/4;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 2px; display: flex; align-items: center;
-    justify-content: center; flex-direction: column; gap: 1rem;
-  }
+  .placeholder-img { width: 100%; max-width: 380px; aspect-ratio: 3/4; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
   .placeholder-img span { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(255,255,255,0.55); letter-spacing: 0.1em; }
   .placeholder-img .icon { font-size: 2rem; opacity: 0.35; }
 
-  /* ── FECHA (off-white vichy) ── */
   #fecha { padding: 8vw; flex-direction: column; justify-content: center; text-align: center; background: var(--off); }
   #fecha .section-label { color: var(--stone); }
   #fecha .section-title { color: var(--dark); }
   #fecha .section-title em { color: var(--garnet); }
-  .fecha-watermark {
-    font-family: 'Cormorant Garamond', serif; font-weight: 300;
-    font-size: clamp(5rem,18vw,14rem); line-height: 1; color: var(--garnet);
-    opacity: 0.04; position: absolute; left: 50%; transform: translateX(-50%);
-    white-space: nowrap; pointer-events: none; user-select: none;
-  }
+  .fecha-watermark { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(5rem,18vw,14rem); line-height: 1; color: var(--garnet); opacity: 0.04; position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; user-select: none; }
   .fecha-content { position: relative; z-index: 1; }
   .countdown { display: flex; gap: clamp(2rem,5vw,5rem); justify-content: center; margin-top: 3rem; }
   .countdown-item { text-align: center; }
@@ -161,15 +82,9 @@
   .countdown-label { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone); margin-top: 0.5rem; display: block; }
   .countdown-sep { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--blush); align-self: flex-start; margin-top: 0.4rem; }
 
-  /* ── LUGAR (garnet-deep) ── */
   #lugar { padding: 8vw; gap: 6vw; background: var(--garnet-deep); flex-wrap: wrap; }
   #lugar .section-title { color: var(--white); }
-  .lugar-map {
-    flex: 1; min-width: 280px; aspect-ratio: 1;
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 2px; display: flex; align-items: center;
-    justify-content: center; position: relative; overflow: hidden;
-  }
+  .lugar-map { flex: 1; min-width: 280px; aspect-ratio: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 2px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
   .map-pin { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
   .map-pin-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--blush); margin: 0 auto; position: relative; }
   .map-pin-dot::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 1px solid var(--blush); opacity: 0.4; animation: pulse 2s ease infinite; }
@@ -182,7 +97,6 @@
   .detail-label { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blush); margin-bottom: 0.3rem; }
   .detail-value { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 300; color: var(--white); }
 
-  /* ── PROGRAMA (white vichy) ── */
   #programa { padding: 8vw; flex-direction: column; background: var(--white); }
   #programa .section-label { color: var(--stone); }
   #programa .section-title { color: var(--dark); }
@@ -196,7 +110,6 @@
   .timeline-event { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.4rem; color: var(--dark); margin-bottom: 0.3rem; }
   .timeline-desc { font-weight: 300; font-size: 0.85rem; color: var(--stone); line-height: 1.65; }
 
-  /* ── CONTACTO (off-white vichy) ── */
   #contacto { padding: 8vw; flex-direction: column; align-items: flex-start; background: var(--off); }
   #contacto .section-label { color: var(--stone); }
   #contacto .section-title { color: var(--dark); }
@@ -211,25 +124,22 @@
   .contact-link-value { font-weight: 300; font-size: 1rem; }
   .contact-quote { max-width: 300px; align-self: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.55rem; line-height: 1.55; color: var(--garnet); opacity: 0.5; }
 
-  /* ── RSVP (garnet) ── */
   #confirmacion { padding: 8vw; flex-direction: column; align-items: flex-start; background: var(--garnet); }
   #confirmacion .section-label { color: var(--blush-light); opacity: 0.7; }
   #confirmacion .section-title { color: var(--white); }
   #confirmacion .section-title em { color: var(--blush-light); }
   .confirm-text { font-weight: 300; font-size: 1rem; line-height: 1.9; color: rgba(254,252,252,0.6); max-width: 460px; margin-bottom: 3rem; }
-  .confirm-form { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 460px; }
+  .confirm-form { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 500px; }
   .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
   .form-label { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(254,252,252,0.45); }
-  .form-input, .form-select, .form-textarea {
+  .form-input, .form-textarea {
     background: transparent; border: none; border-bottom: 1px solid rgba(254,252,252,0.2);
     padding: 0.75rem 0; color: var(--white); font-family: 'Jost', sans-serif;
     font-weight: 300; font-size: 1rem; transition: border-color 0.3s; outline: none; width: 100%;
   }
   .form-input::placeholder { color: rgba(254,252,252,0.25); }
-  .form-input:focus, .form-select:focus, .form-textarea:focus { border-bottom-color: var(--blush-light); }
-  .form-select { cursor: pointer; }
-  .form-select option { background: var(--garnet-deep); }
-  .form-textarea { resize: none; height: 80px; }
+  .form-input:focus, .form-textarea:focus { border-bottom-color: var(--blush-light); }
+  .form-textarea { resize: none; height: 70px; }
   .btn-submit {
     margin-top: 1rem; padding: 1rem 3rem; background: transparent;
     border: 1px solid rgba(254,252,252,0.3); color: var(--white);
@@ -239,24 +149,16 @@
   }
   .btn-submit:hover { background: var(--white); border-color: var(--white); color: var(--garnet); }
 
-  /* ── FOOTER ── */
-  footer {
-    margin-left: 60px; padding: 2.5rem 8vw;
-    display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid rgba(122,22,40,0.1); background: var(--white);
-    flex-wrap: wrap; gap: 1rem;
-  }
+  footer { margin-left: 60px; padding: 2.5rem 8vw; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(122,22,40,0.1); background: var(--white); flex-wrap: wrap; gap: 1rem; }
   .footer-names { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--stone); }
   .footer-date { font-weight: 200; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone); opacity: 0.5; }
 
-  /* ── ANIMATIONS ── */
   @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeIn { from { opacity:0; } to { opacity:0.08; } }
   @keyframes pulse { 0%,100% { transform:scale(1); opacity:0.4; } 50% { transform:scale(1.6); opacity:0; } }
   .reveal { opacity:0; transform:translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
   .reveal.visible { opacity:1; transform:translateY(0); }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { display: none; }
     main, footer { margin-left: 0; }
@@ -268,48 +170,25 @@
   }
   @media (min-width: 769px) { .mobile-nav { display: none; } }
 
-  /* ── RSVP Cards & Choices ── */
-  .rsvp-card {
-    background: rgba(254,252,252,0.04);
-    border: 1px solid rgba(254,252,252,0.1);
-    border-radius: 2px;
-    padding: 1.5rem;
-  }
-  .rsvp-card-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--white);
-  }
-  .btn-choice {
-    padding: 0.6rem 1.4rem;
-    background: transparent;
-    border: 1px solid rgba(254,252,252,0.2);
-    color: rgba(254,252,252,0.7);
-    font-family: 'Jost', sans-serif;
-    font-weight: 200;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.25s;
-    border-radius: 1px;
-  }
+  /* ── RSVP styles ── */
+  .rsvp-card { background: rgba(254,252,252,0.05); border: 1px solid rgba(254,252,252,0.12); border-radius: 2px; padding: 1.5rem; margin-bottom: 1rem; }
+  .rsvp-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--white); margin-bottom: 1rem; }
+  .btn-choice { padding: 0.55rem 1.2rem; background: transparent; border: 1px solid rgba(254,252,252,0.2); color: rgba(254,252,252,0.65); font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.75rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; border-radius: 1px; }
   .btn-choice:hover { border-color: rgba(254,252,252,0.5); color: var(--white); }
   .btn-choice.selected-si { background: #1e3d2f; border-color: #1e3d2f; color: #fff; }
-  .btn-choice.selected-no { background: #8b1a2f; border-color: #8b1a2f; color: #fff; }
-  #autocomplete-list li {
-    padding: 0.7rem 1rem;
-    cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    font-size: 0.9rem;
-    color: rgba(254,252,252,0.8);
-    border-bottom: 1px solid rgba(254,252,252,0.06);
-    transition: background 0.2s;
-  }
-  #autocomplete-list li:hover, #autocomplete-list li.highlighted { background: rgba(254,252,252,0.08); }
-  #autocomplete-list li strong { color: var(--white); font-weight: 400; }
-
+  .btn-choice.selected-no { background: #3d1e1e; border-color: #3d1e1e; color: #fff; }
+  .btn-add-companion { display: flex; align-items: center; gap: 0.5rem; background: transparent; border: 1px dashed rgba(254,252,252,0.2); color: rgba(254,252,252,0.5); font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem 1.2rem; cursor: pointer; transition: all 0.2s; border-radius: 1px; width: 100%; justify-content: center; margin-top: 0.5rem; }
+  .btn-add-companion:hover { border-color: rgba(254,252,252,0.4); color: rgba(254,252,252,0.8); }
+  .companion-name-input { position: relative; }
+  .companion-autocomplete { display:none; position:absolute; top:100%; left:0; right:0; background:#3d0e1a; border:1px solid rgba(254,252,252,0.12); list-style:none; max-height:180px; overflow-y:auto; z-index:200; margin-top:2px; padding:0; }
+  .companion-autocomplete li { padding: 0.6rem 1rem; cursor: pointer; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.85rem; color: rgba(254,252,252,0.75); border-bottom: 1px solid rgba(254,252,252,0.06); transition: background 0.15s; }
+  .companion-autocomplete li:hover { background: rgba(254,252,252,0.08); }
+  #autocomplete-list { display:none; position:absolute; top:100%; left:0; right:0; background:#3d0e1a; border:1px solid rgba(254,252,252,0.12); list-style:none; max-height:220px; overflow-y:auto; z-index:200; margin-top:4px; padding:0; }
+  #autocomplete-list li { padding: 0.7rem 1rem; cursor: pointer; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.9rem; color: rgba(254,252,252,0.8); border-bottom: 1px solid rgba(254,252,252,0.06); transition: background 0.2s; }
+  #autocomplete-list li:hover { background: rgba(254,252,252,0.08); }
+  #autocomplete-list li strong, .companion-autocomplete li strong { color: var(--white); font-weight: 400; }
+  .remove-companion { background: transparent; border: none; color: rgba(254,252,252,0.3); font-size: 1rem; cursor: pointer; padding: 0 0.3rem; line-height: 1; transition: color 0.2s; }
+  .remove-companion:hover { color: rgba(254,252,252,0.7); }
 </style>
 </head>
 <body>
@@ -543,11 +422,11 @@
             <p class="contact-link-value">611 532 724</p>
           </div>
         </a>
-        <a href="/cdn-cgi/l/email-protection#e28a878e8e8da295878686808dcc818d8f" class="contact-link">
+        <a href="mailto:hello@weddbo.com" class="contact-link">
           <span style="font-size:1rem;opacity:0.4;">✉️</span>
           <div>
             <p class="contact-link-label">Email</p>
-            <p class="contact-link-value"><span class="__cf_email__" data-cfemail="9df5f8f1f1f2ddeaf8f9f9fff2b3fef2f0">[email&#160;protected]</span></p>
+            <p class="contact-link-value">hello@weddbo.com</p>
           </div>
         </a>
       </div>
@@ -564,37 +443,32 @@
       Tu presencia es el mejor regalo que nos puedes dar.
     </p>
 
-    <!-- STEP 1: Name search -->
+    <!-- STEP 1: buscar nombre -->
     <div id="rsvp-step-1" class="confirm-form reveal">
       <div class="form-group" style="position:relative;">
         <label class="form-label">Busca tu nombre en la lista</label>
         <input type="text" id="guest-search" class="form-input" placeholder="Escribe tu nombre..." autocomplete="off" oninput="onSearchInput(this.value)">
-        <ul id="autocomplete-list" style="
-          display:none; position:absolute; top:100%; left:0; right:0;
-          background:#1e1220; border:1px solid rgba(254,252,252,0.12);
-          list-style:none; max-height:220px; overflow-y:auto; z-index:200;
-          margin-top:4px; padding:0;
-        "></ul>
+        <ul id="autocomplete-list"></ul>
       </div>
-      <p id="search-hint" style="font-size:0.75rem; color:rgba(254,252,252,0.35); margin-top:0.5rem; font-weight:200; font-family:'Jost',sans-serif;">
+      <p id="search-hint" style="font-size:0.75rem; color:rgba(254,252,252,0.35); margin-top:0.5rem; font-weight:200;">
         Cargando lista de invitados...
       </p>
     </div>
 
-    <!-- STEP 2: Confirm form -->
-    <div id="rsvp-step-2" style="display:none; width:100%; max-width:520px;">
+    <!-- STEP 2: formulario -->
+    <div id="rsvp-step-2" style="display:none; width:100%; max-width:500px;">
 
-      <!-- Titular card -->
+      <!-- Tarjeta titular -->
       <div class="rsvp-card">
         <p class="rsvp-card-name" id="card-main-name"></p>
-        <div class="form-group" style="margin-top:1.2rem;">
+        <div class="form-group">
           <label class="form-label">¿Asistirás a la boda?</label>
           <div style="display:flex; gap:0.8rem; margin-top:0.8rem; flex-wrap:wrap;">
-            <button type="button" class="btn-choice" id="btn-si-main" onclick="selectMainChoice('si')">Sí, allí estaré 🥂</button>
-            <button type="button" class="btn-choice" id="btn-no-main" onclick="selectMainChoice('no')">No podré ir</button>
+            <button type="button" class="btn-choice" id="btn-si-main" onclick="setMainChoice('si')">Sí, allí estaré 🥂</button>
+            <button type="button" class="btn-choice" id="btn-no-main" onclick="setMainChoice('no')">No podré ir</button>
           </div>
         </div>
-        <div class="form-group" style="margin-top:1.2rem;">
+        <div class="form-group" style="margin-top:1rem;">
           <label class="form-label">Intolerancias o alergias alimentarias</label>
           <input type="text" id="intol-main" class="form-input" placeholder="Ej: sin gluten, alérgico a frutos secos...">
         </div>
@@ -604,23 +478,21 @@
         </div>
       </div>
 
-      <!-- Companions section -->
-      <div id="companions-section" style="display:none; margin-top:1.5rem;">
-        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem;">
-          <div style="flex:1; height:1px; background:rgba(254,252,252,0.1);"></div>
-          <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(254,252,252,0.4);">¿te acompañará alguien?</span>
-          <div style="flex:1; height:1px; background:rgba(254,252,252,0.1);"></div>
-        </div>
-        <div id="companions-list" style="display:flex; flex-direction:column; gap:0.8rem;"></div>
-      </div>
+      <!-- Acompañantes añadidos dinámicamente -->
+      <div id="companions-container"></div>
+
+      <!-- Botón añadir acompañante -->
+      <button type="button" class="btn-add-companion" onclick="addCompanion()">
+        + Añadir acompañante
+      </button>
 
       <button type="button" class="btn-submit" id="btn-send" onclick="submitRSVP()" style="margin-top:2rem;">
         Enviar confirmación
       </button>
-      <p id="send-error" style="display:none; margin-top:1rem; font-size:0.8rem; color:#e88c8c; font-family:'Jost',sans-serif;"></p>
+      <p id="send-error" style="display:none; margin-top:1rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
-        <!-- STEP 3: Success -->
+    <!-- STEP 3: éxito -->
     <div id="rsvp-step-3" style="display:none; max-width:500px;">
       <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2.2rem; line-height:1.4; color:var(--blush-light);">¡Gracias! 🌿</p>
       <p style="margin-top:1rem; font-weight:300; font-size:1rem; line-height:1.8; color:rgba(254,252,252,0.6);">
@@ -636,16 +508,10 @@
 </footer>
 
 <script>
+  // ── Countdown ─────────────────────────────────────────────
   function updateCountdown() {
-    const wedding = new Date('2027-04-09T17:00:00');
-    const now = new Date();
-    const diff = wedding - now;
-    if (diff <= 0) {
-      document.getElementById('days').textContent = '¡Hoy!';
-      document.getElementById('hours').textContent = '';
-      document.getElementById('minutes').textContent = '';
-      return;
-    }
+    var diff = new Date('2027-04-09T17:00:00') - new Date();
+    if (diff <= 0) { document.getElementById('days').textContent = 'Hoy'; return; }
     document.getElementById('days').textContent    = String(Math.floor(diff/86400000)).padStart(2,'0');
     document.getElementById('hours').textContent   = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
     document.getElementById('minutes').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
@@ -653,69 +519,86 @@
   updateCountdown();
   setInterval(updateCountdown, 60000);
 
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
+  // ── Reveals ───────────────────────────────────────────────
+  new IntersectionObserver(function(entries) {
+    entries.forEach(function(e, i) { if (e.isIntersecting) setTimeout(function() { e.target.classList.add('visible'); }, i*80); });
+  }, { threshold: 0.1 }).observe = (function(orig) {
+    return function(el) { orig.call(this, el); };
+  })(IntersectionObserver.prototype.observe);
 
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('nav a');
-  const secObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(a => a.classList.remove('active'));
-        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-        if (link) link.classList.add('active');
+  var revObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e, i) { if (e.isIntersecting) setTimeout(function() { e.target.classList.add('visible'); }, i*80); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) { revObs.observe(el); });
+
+  var secObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        document.querySelectorAll('nav a').forEach(function(a) { a.classList.remove('active'); });
+        var lnk = document.querySelector('nav a[href="#' + e.target.id + '"]');
+        if (lnk) lnk.classList.add('active');
       }
     });
   }, { threshold: 0.5 });
- 
-  sections.forEach(s => secObserver.observe(s));
+  document.querySelectorAll('section').forEach(function(s) { secObs.observe(s); });
 
-  // ── RSVP Logic ─────────────────────────────────────────────
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1ZicLkbdSWOuAdHlN9UbenS1hCGjsaS1iCzAwhmDA0PQOMSq94iVhPZwTSYBxU1-m/exec';
+  // ── RSVP ─────────────────────────────────────────────────
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1ZicLkbdSWOuAdHlN9UbenS1hCGjsaS1iCzAwhmDA0PQOMSq94iVhPZwTSYBxU1-m/exec';
+  var guestList = [];
+  var selectedGuest = null;
+  var mainChoice = null;
+  var companions = []; // [{name, resolvedName, choice, intol, comment}]
+  var companionCount = 0;
 
-  let guestList = [];
-  let selectedGuest = null;
-  let mainChoice = null;
-  let companionData = [];
-
-  async function loadGuests() {
-    const hint = document.getElementById('search-hint');
-    const cbName = 'cb_' + Date.now();
-    window[cbName] = function(data) {
+  // Load via JSONP
+  function loadGuests() {
+    var hint = document.getElementById('search-hint');
+    var cb = 'cb_' + Date.now();
+    window[cb] = function(data) {
       guestList = data.guests || [];
-      hint.textContent = guestList.length
-        ? 'Escribe al menos 2 letras para buscar tu nombre.'
-        : 'No se encontraron invitados. Contacta con los novios.';
-      delete window[cbName];
+      hint.textContent = guestList.length ? 'Escribe al menos 2 letras para buscar tu nombre.' : 'No se encontraron invitados.';
+      delete window[cb];
     };
-    const s = document.createElement('script');
-    s.src = APPS_SCRIPT_URL + '?callback=' + cbName;
-    s.onerror = function() {
-      hint.textContent = 'No se pudo cargar la lista. Recarga la página e inténtalo de nuevo.';
-    };
+    var s = document.createElement('script');
+    s.onerror = function() { hint.textContent = 'No se pudo cargar la lista. Recarga la página.'; };
+    s.src = APPS_SCRIPT_URL + '?callback=' + cb;
     document.head.appendChild(s);
   }
-
   loadGuests();
 
   function normalize(str) {
     return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
   }
 
+  // Fuzzy: score how well needle matches haystack
+  function fuzzyScore(needle, haystack) {
+    var n = normalize(needle), h = normalize(haystack);
+    if (h === n) return 100;
+    if (h.startsWith(n)) return 90;
+    if (h.includes(n)) return 80;
+    // character overlap score
+    var score = 0;
+    for (var i = 0; i < n.length; i++) { if (h.includes(n[i])) score++; }
+    return Math.round((score / n.length) * 60);
+  }
+
+  function searchGuests(val, limit) {
+    if (val.length < 2) return [];
+    return guestList
+      .map(function(g) { return { g: g, score: fuzzyScore(val, g.name) }; })
+      .filter(function(x) { return x.score > 40; })
+      .sort(function(a, b) { return b.score - a.score; })
+      .slice(0, limit || 8)
+      .map(function(x) { return x.g; });
+  }
+
+  // ── Main search autocomplete ──────────────────────────────
   function onSearchInput(val) {
-    const list = document.getElementById('autocomplete-list');
-    if (val.length < 2) { list.style.display = 'none'; return; }
-    const q = normalize(val);
-    const matches = guestList.filter(g => normalize(g.name).includes(q)).slice(0, 8);
+    var list = document.getElementById('autocomplete-list');
+    var matches = searchGuests(val);
     if (!matches.length) { list.style.display = 'none'; return; }
-    list.innerHTML = matches.map(g => {
-      const re = new RegExp('(' + val.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')','gi');
-      return `<li onclick="selectGuest(${guestList.indexOf(g)})">${g.name.replace(re,'<strong>$1</strong>')}</li>`;
+    list.innerHTML = matches.map(function(g) {
+      return '<li onclick="selectGuest(' + guestList.indexOf(g) + ')">' + g.name + '</li>';
     }).join('');
     list.style.display = 'block';
   }
@@ -726,78 +609,101 @@
     document.getElementById('autocomplete-list').style.display = 'none';
     document.getElementById('rsvp-step-1').style.display = 'none';
 
-    // Reset main card
+    // Reset form
     document.getElementById('card-main-name').textContent = selectedGuest.name;
     mainChoice = null;
-    ['btn-si-main','btn-no-main'].forEach(id => document.getElementById(id).className = 'btn-choice');
+    document.getElementById('btn-si-main').className = 'btn-choice';
+    document.getElementById('btn-no-main').className = 'btn-choice';
     document.getElementById('intol-main').value = '';
     document.getElementById('comment-main').value = '';
+    document.getElementById('companions-container').innerHTML = '';
+    companions = [];
+    companionCount = 0;
     document.getElementById('send-error').style.display = 'none';
 
-    // Build companions from group (excluding self)
-    const companions = selectedGuest.grupo
-      ? guestList.filter(g => g.grupo === selectedGuest.grupo && g.name !== selectedGuest.name)
-      : [];
-
-    if (companions.length > 0) {
-      const list = document.getElementById('companions-list');
-      list.innerHTML = companions.map((c, i) => `
-        <div>
-          <label style="display:flex; align-items:center; gap:0.8rem; cursor:pointer; padding:0.8rem; border:1px solid rgba(254,252,252,0.1); border-radius:2px;">
-            <input type="checkbox" id="chk-${i}" onchange="toggleCompanion(${i})"
-              style="accent-color:#e8c4c4; width:15px; height:15px; flex-shrink:0;">
-            <span style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--white);">${c.name}</span>
-          </label>
-          <div id="comp-form-${i}" style="display:none; padding:1rem; border:1px solid rgba(254,252,252,0.08); border-top:none; margin-bottom:0.2rem;">
-            <div class="form-group" style="margin-bottom:0.8rem;">
-              <label class="form-label">¿Asistirá?</label>
-              <div style="display:flex; gap:0.6rem; margin-top:0.6rem; flex-wrap:wrap;">
-                <button type="button" class="btn-choice" id="btn-si-comp-${i}" onclick="selectCompChoice(${i},'si')">Sí 🥂</button>
-                <button type="button" class="btn-choice" id="btn-no-comp-${i}" onclick="selectCompChoice(${i},'no')">No podrá</button>
-              </div>
-            </div>
-            <input type="text" class="form-input" id="intol-comp-${i}" placeholder="Intolerancias / alergias..." style="margin-bottom:0.6rem;">
-            <textarea class="form-textarea form-input" id="comment-comp-${i}" placeholder="Comentarios..." style="height:50px;"></textarea>
-          </div>
-        </div>
-      `).join('');
-      companionData = companions.map(() => ({ checked: false, choice: null }));
-      document.getElementById('companions-section').style.display = 'block';
-    } else {
-      document.getElementById('companions-section').style.display = 'none';
-      companionData = [];
-    }
-
-    const step2 = document.getElementById('rsvp-step-2');
+    var step2 = document.getElementById('rsvp-step-2');
     step2.style.display = 'block';
     step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function selectMainChoice(val) {
+  function setMainChoice(val) {
     mainChoice = val;
     document.getElementById('btn-si-main').className = 'btn-choice' + (val==='si' ? ' selected-si' : '');
     document.getElementById('btn-no-main').className = 'btn-choice' + (val==='no' ? ' selected-no' : '');
   }
 
-  function toggleCompanion(i) {
-    const checked = document.getElementById(`chk-${i}`).checked;
-    companionData[i].checked = checked;
-    document.getElementById(`comp-form-${i}`).style.display = checked ? 'block' : 'none';
-    if (!checked) {
-      companionData[i].choice = null;
-      document.getElementById(`btn-si-comp-${i}`).className = 'btn-choice';
-      document.getElementById(`btn-no-comp-${i}`).className = 'btn-choice';
-    }
+  // ── Companions ────────────────────────────────────────────
+  function addCompanion() {
+    var id = ++companionCount;
+    companions.push({ id: id, resolvedName: null, choice: null });
+
+    var div = document.createElement('div');
+    div.id = 'comp-block-' + id;
+    div.className = 'rsvp-card';
+    div.style.marginTop = '1rem';
+    div.innerHTML =
+      '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">' +
+        '<p class="form-label" style="margin:0;">Acompañante</p>' +
+        '<button type="button" class="remove-companion" onclick="removeCompanion(' + id + ')">✕</button>' +
+      '</div>' +
+      '<div class="form-group companion-name-input" style="position:relative;">' +
+        '<label class="form-label">Nombre</label>' +
+        '<input type="text" class="form-input" id="comp-name-' + id + '" placeholder="Nombre del acompañante..." autocomplete="off" oninput="onCompNameInput(' + id + ', this.value)">' +
+        '<ul class="companion-autocomplete" id="comp-ac-' + id + '"></ul>' +
+      '</div>' +
+      '<div class="form-group" style="margin-top:1rem;">' +
+        '<label class="form-label">¿Asistirá?</label>' +
+        '<div style="display:flex; gap:0.8rem; margin-top:0.7rem; flex-wrap:wrap;">' +
+          '<button type="button" class="btn-choice" id="comp-si-' + id + '" onclick="setCompChoice(' + id + ',\'si\')">Sí 🥂</button>' +
+          '<button type="button" class="btn-choice" id="comp-no-' + id + '" onclick="setCompChoice(' + id + ',\'no\')">No podrá</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="form-group" style="margin-top:1rem;">' +
+        '<label class="form-label">Intolerancias o alergias</label>' +
+        '<input type="text" class="form-input" id="comp-intol-' + id + '" placeholder="Ej: vegetariana, sin lactosa...">' +
+      '</div>' +
+      '<div class="form-group" style="margin-top:1rem;">' +
+        '<label class="form-label">Comentarios</label>' +
+        '<textarea class="form-textarea form-input" id="comp-comment-' + id + '"></textarea>' +
+      '</div>';
+
+    document.getElementById('companions-container').appendChild(div);
+    document.getElementById('comp-name-' + id).focus();
   }
 
-  function selectCompChoice(i, val) {
-    companionData[i].choice = val;
-    document.getElementById(`btn-si-comp-${i}`).className = 'btn-choice' + (val==='si' ? ' selected-si' : '');
-    document.getElementById(`btn-no-comp-${i}`).className = 'btn-choice' + (val==='no' ? ' selected-no' : '');
+  function removeCompanion(id) {
+    companions = companions.filter(function(c) { return c.id !== id; });
+    var el = document.getElementById('comp-block-' + id);
+    if (el) el.remove();
   }
 
-  async function submitRSVP() {
-    const errEl = document.getElementById('send-error');
+  function onCompNameInput(id, val) {
+    var ac = document.getElementById('comp-ac-' + id);
+    var matches = searchGuests(val, 6);
+    if (!matches.length || val.length < 2) { ac.style.display = 'none'; return; }
+    ac.innerHTML = matches.map(function(g) {
+      return '<li onclick="selectCompName(' + id + ', \'' + g.name.replace(/'/g,"\\'") + '\')">' + g.name + '</li>';
+    }).join('');
+    ac.style.display = 'block';
+  }
+
+  function selectCompName(id, name) {
+    document.getElementById('comp-name-' + id).value = name;
+    document.getElementById('comp-ac-' + id).style.display = 'none';
+    var comp = companions.find(function(c) { return c.id === id; });
+    if (comp) comp.resolvedName = name;
+  }
+
+  function setCompChoice(id, val) {
+    var comp = companions.find(function(c) { return c.id === id; });
+    if (comp) comp.choice = val;
+    document.getElementById('comp-si-' + id).className = 'btn-choice' + (val==='si' ? ' selected-si' : '');
+    document.getElementById('comp-no-' + id).className = 'btn-choice' + (val==='no' ? ' selected-no' : '');
+  }
+
+  // ── Submit ────────────────────────────────────────────────
+  function submitRSVP() {
+    var errEl = document.getElementById('send-error');
     errEl.style.display = 'none';
 
     if (!mainChoice) {
@@ -805,283 +711,71 @@
       errEl.style.display = 'block'; return;
     }
 
-    // Check all ticked companions have a choice
-    const companions = selectedGuest.grupo
-      ? guestList.filter(g => g.grupo === selectedGuest.grupo && g.name !== selectedGuest.name)
-      : [];
-    for (let i = 0; i < companionData.length; i++) {
-      if (companionData[i].checked && !companionData[i].choice) {
-        errEl.textContent = `Por favor indica si "${companions[i].name}" asistirá o no.`;
+    // Validate companions
+    for (var i = 0; i < companions.length; i++) {
+      var c = companions[i];
+      var nameVal = document.getElementById('comp-name-' + c.id).value.trim();
+      if (!nameVal) {
+        errEl.textContent = 'Por favor introduce el nombre del acompañante ' + (i+1) + '.';
+        errEl.style.display = 'block'; return;
+      }
+      if (!c.choice) {
+        errEl.textContent = 'Por favor indica si "' + nameVal + '" asistirá o no.';
         errEl.style.display = 'block'; return;
       }
     }
 
-    const btn = document.getElementById('btn-send');
+    var btn = document.getElementById('btn-send');
     btn.textContent = 'Enviando...'; btn.disabled = true;
 
-    const payload = [{
+    var payload = [{
       name: selectedGuest.name,
       asistencia: mainChoice,
       intolerancias: document.getElementById('intol-main').value,
-      comentarios: document.getElementById('comment-main').value
+      comentarios: document.getElementById('comment-main').value,
+      confirmadoPor: selectedGuest.name
     }];
 
-    companions.forEach((c, i) => {
-      if (companionData[i].checked) {
-        payload.push({
-          name: c.name,
-          asistencia: companionData[i].choice,
-          intolerancias: document.getElementById(`intol-comp-${i}`).value,
-          comentarios: document.getElementById(`comment-comp-${i}`).value
-        });
+    companions.forEach(function(c) {
+      var nameVal = document.getElementById('comp-name-' + c.id).value.trim();
+      // Fuzzy resolve: if typed name closely matches a guest, use that name
+      var resolved = c.resolvedName || nameVal;
+      if (!c.resolvedName) {
+        var best = searchGuests(nameVal, 1);
+        if (best.length && fuzzyScore(nameVal, best[0].name) > 70) resolved = best[0].name;
       }
-    });
-
-    try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
-      });
-      document.getElementById('rsvp-step-2').style.display = 'none';
-      document.getElementById('rsvp-step-3').style.display = 'block';
-    } catch(e) {
-      errEl.textContent = 'Hubo un error al enviar. Por favor inténtalo de nuevo.';
-      errEl.style.display = 'block';
-      btn.textContent = 'Enviar confirmación'; btn.disabled = false;
-    }
-  }
-
-  document.addEventListener('click', e => {
-    if (!e.target.closest('#rsvp-step-1')) {
-      const list = document.getElementById('autocomplete-list');
-      if (list) list.style.display = 'none';
-    }
-  });
-
-  loadGuests();
-
-  function normalize(str) {
-    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-  }
-
-  function onSearchInput(val) {
-    const list = document.getElementById('autocomplete-list');
-    if (val.length < 2) { list.style.display = 'none'; return; }
-    const q = normalize(val);
-    const matches = guestList.filter(g => normalize(g.name).includes(q)).slice(0, 8);
-    if (!matches.length) { list.style.display = 'none'; return; }
-    list.innerHTML = matches.map(g => {
-      const re = new RegExp('(' + val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-      const hl = g.name.replace(re, '<strong>$1</strong>');
-      return `<li onclick="selectGuest(${guestList.indexOf(g)})">${hl}</li>`;
-    }).join('');
-    list.style.display = 'block';
-  }
-
-  function getGroupMembers(guest) {
-    // Returns all guests in the same group, or just the guest if solo
-    if (!guest.grupo) return [guest];
-    return guestList.filter(g => g.grupo === guest.grupo);
-  }
-
-  function selectGuest(idx) {
-    selectedGuest = guestList[idx];
-    document.getElementById('guest-search').value = selectedGuest.name;
-    document.getElementById('autocomplete-list').style.display = 'none';
-    document.getElementById('rsvp-step-1').style.display = 'none';
-
-    const members = getGroupMembers(selectedGuest);
-    groupMembers = members;
-
-    // Build group member cards
-    const container = document.getElementById('group-members-list');
-    container.innerHTML = members.map((m, i) => `
-      <div class="rsvp-card" id="member-card-${i}">
-        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-          <p class="rsvp-card-name">${m.name}${m.name === selectedGuest.name ? ' <span style="font-size:0.65rem; letter-spacing:0.15em; font-family:Jost,sans-serif; font-weight:200; opacity:0.5; font-style:normal;">(tú)</span>' : ''}</p>
-          <div style="display:flex; gap:0.6rem;">
-            <button type="button" class="btn-choice" id="btn-si-${i}" onclick="selectMemberChoice(${i},'si')">Sí 🥂</button>
-            <button type="button" class="btn-choice" id="btn-no-${i}" onclick="selectMemberChoice(${i},'no')">No</button>
-          </div>
-        </div>
-        <input type="text" class="form-input" id="intol-${i}" placeholder="Intolerancias / alergias..." style="margin-bottom:0.6rem;">
-        <textarea class="form-textarea form-input" id="comment-${i}" placeholder="Comentarios..." style="height:50px;"></textarea>
-      </div>
-    `).join('');
-
-    memberChoices = new Array(members.length).fill(null);
-
-    const step2 = document.getElementById('rsvp-step-2');
-    step2.style.display = 'block';
-    step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    document.getElementById('send-error').style.display = 'none';
-  }
-
-  function selectMemberChoice(idx, val) {
-    memberChoices[idx] = val;
-    document.getElementById(`btn-si-${idx}`).className = 'btn-choice' + (val === 'si' ? ' selected-si' : '');
-    document.getElementById(`btn-no-${idx}`).className = 'btn-choice' + (val === 'no' ? ' selected-no' : '');
-  }
-
-  async function submitRSVP() {
-    const errEl = document.getElementById('send-error');
-    errEl.style.display = 'none';
-
-    // Check all members have a choice
-    const unanswered = memberChoices.findIndex(c => c === null);
-    if (unanswered !== -1) {
-      errEl.textContent = `Por favor indica si "${groupMembers[unanswered].name}" asistirá o no.`;
-      errEl.style.display = 'block'; return;
-    }
-
-    const btn = document.getElementById('btn-send');
-    btn.textContent = 'Enviando...'; btn.disabled = true;
-
-    const payload = groupMembers.map((m, i) => ({
-      name: m.name,
-      asistencia: memberChoices[i],
-      intolerancias: document.getElementById(`intol-${i}`).value,
-      comentarios: document.getElementById(`comment-${i}`).value
-    }));
-
-    try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
-      });
-      document.getElementById('rsvp-step-2').style.display = 'none';
-      document.getElementById('rsvp-step-3').style.display = 'block';
-    } catch(e) {
-      errEl.textContent = 'Hubo un error al enviar. Por favor inténtalo de nuevo.';
-      errEl.style.display = 'block';
-      btn.textContent = 'Enviar confirmación'; btn.disabled = false;
-    }
-  }
-
-  document.addEventListener('click', e => {
-    if (!e.target.closest('#rsvp-step-1')) {
-      const list = document.getElementById('autocomplete-list');
-      if (list) list.style.display = 'none';
-    }
-  });
-
-  loadGuests();
-
-  function normalize(str) {
-    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-  }
-
-  function onSearchInput(val) {
-    const list = document.getElementById('autocomplete-list');
-    if (val.length < 2) { list.style.display = 'none'; return; }
-    const q = normalize(val);
-    const matches = guestList.filter(g => normalize(g.name).includes(q)).slice(0, 8);
-    if (!matches.length) { list.style.display = 'none'; return; }
-    list.innerHTML = matches.map(g => {
-      const re = new RegExp('(' + val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-      const hl = g.name.replace(re, '<strong>$1</strong>');
-      const idx = guestList.indexOf(g);
-      return `<li onclick="selectGuest(${idx})">${hl}</li>`;
-    }).join('');
-    list.style.display = 'block';
-  }
-
-  function selectGuest(idx) {
-    selectedGuest = guestList[idx];
-    document.getElementById('guest-search').value = selectedGuest.name;
-    document.getElementById('autocomplete-list').style.display = 'none';
-    document.getElementById('rsvp-step-1').style.display = 'none';
-    const step2 = document.getElementById('rsvp-step-2');
-    step2.style.display = 'block';
-    step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    document.getElementById('card-main-name').textContent = selectedGuest.name;
-    if (selectedGuest.companion) {
-      document.getElementById('card-companion-name').textContent = selectedGuest.companion;
-      document.getElementById('companion-section').style.display = 'block';
-    } else {
-      document.getElementById('companion-section').style.display = 'none';
-    }
-    choices.main = null; choices.comp = null;
-    ['btn-si-main','btn-no-main','btn-si-comp','btn-no-comp'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.className = 'btn-choice';
-    });
-    document.getElementById('companion-check').checked = false;
-    document.getElementById('companion-form').style.display = 'none';
-    document.getElementById('intol-main').value = '';
-    document.getElementById('comment-main').value = '';
-    document.getElementById('send-error').style.display = 'none';
-  }
-
-  function selectChoice(who, val) {
-    choices[who] = val;
-    const siId = who === 'main' ? 'btn-si-main' : 'btn-si-comp';
-    const noId = who === 'main' ? 'btn-no-main' : 'btn-no-comp';
-    document.getElementById(siId).className = 'btn-choice' + (val === 'si' ? ' selected-si' : '');
-    document.getElementById(noId).className = 'btn-choice' + (val === 'no' ? ' selected-no' : '');
-  }
-
-  function toggleCompanionForm() {
-    const checked = document.getElementById('companion-check').checked;
-    document.getElementById('companion-form').style.display = checked ? 'block' : 'none';
-    if (!checked) choices.comp = null;
-  }
-
-  async function submitRSVP() {
-    const errEl = document.getElementById('send-error');
-    errEl.style.display = 'none';
-    if (!choices.main) {
-      errEl.textContent = 'Por favor indica si asistirás o no.';
-      errEl.style.display = 'block'; return;
-    }
-    const companionChecked = document.getElementById('companion-check').checked;
-    if (companionChecked && !choices.comp) {
-      errEl.textContent = 'Por favor indica si tu acompañante asistirá.';
-      errEl.style.display = 'block'; return;
-    }
-    const btn = document.getElementById('btn-send');
-    btn.textContent = 'Enviando...'; btn.disabled = true;
-    const payload = [{
-      name: selectedGuest.name,
-      asistencia: choices.main,
-      intolerancias: document.getElementById('intol-main').value,
-      comentarios: document.getElementById('comment-main').value
-    }];
-    if (companionChecked && selectedGuest.companion) {
       payload.push({
-        name: selectedGuest.companion,
-        asistencia: choices.comp,
-        intolerancias: document.getElementById('intol-comp').value,
-        comentarios: document.getElementById('comment-comp').value
+        name: resolved,
+        asistencia: c.choice,
+        intolerancias: document.getElementById('comp-intol-' + c.id).value,
+        comentarios: document.getElementById('comp-comment-' + c.id).value,
+        confirmadoPor: selectedGuest.name
       });
-    }
-    try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
-      });
+    });
+
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    }).then(function() {
       document.getElementById('rsvp-step-2').style.display = 'none';
-      document.getElementById('rsvp-step-3').style.display = 'block';
-    } catch(e) {
+      var s3 = document.getElementById('rsvp-step-3');
+      s3.style.display = 'block';
+      s3.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }).catch(function() {
       errEl.textContent = 'Hubo un error al enviar. Por favor inténtalo de nuevo.';
       errEl.style.display = 'block';
       btn.textContent = 'Enviar confirmación'; btn.disabled = false;
-    }
+    });
   }
 
-  document.addEventListener('click', e => {
-    if (!e.target.closest('#rsvp-step-1')) {
-      const list = document.getElementById('autocomplete-list');
-      if (list) list.style.display = 'none';
+  // Close autocompletes on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#rsvp-step-1')) document.getElementById('autocomplete-list').style.display = 'none';
+    if (!e.target.closest('.companion-name-input')) {
+      document.querySelectorAll('.companion-autocomplete').forEach(function(el) { el.style.display = 'none'; });
     }
   });
-
 </script>
 </body>
 </html>
