@@ -188,6 +188,8 @@
 <nav>
   <a href="#inicio" class="active">Inicio</a>
   <div class="dot"></div>
+  <a href="#confirmacion">RSVP</a>
+  <div class="dot"></div>
   <a href="#nosotros">Nosotros</a>
   <div class="dot"></div>
   <a href="#fecha">Fecha</a>
@@ -197,18 +199,16 @@
   <a href="#programa">Programa</a>
   <div class="dot"></div>
   <a href="#contacto">Contacto</a>
-  <div class="dot"></div>
-  <a href="#confirmacion">RSVP</a>
 </nav>
 
 <div class="mobile-nav">
   <a href="#inicio">Inicio</a>
+  <a href="#confirmacion">RSVP</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#fecha">Fecha</a>
   <a href="#lugar">Lugar</a>
   <a href="#programa">Programa</a>
   <a href="#contacto">Contacto</a>
-  <a href="#confirmacion">RSVP</a>
 </div>
 
 <main>
@@ -248,10 +248,81 @@
     </div>
   </section>
 
+
+  <!-- RSVP -->
+  <section id="confirmacion" class="vichy vichy-inv">
+    <p class="section-label reveal">01 — Confirmación</p>
+    <h2 class="section-title reveal">¿Vendrás a<br>nuestra <em>boda?</em></h2>
+    <p class="confirm-text reveal">
+      Por favor, confirma tu asistencia antes del <strong style="color:var(--blush-light);">1 de marzo de 2027</strong>.
+      Tu presencia es el mejor regalo que nos puedes dar.
+    </p>
+
+    <!-- STEP 1: datos del invitado -->
+    <div id="rsvp-step-1" class="confirm-form reveal">
+      <div class="form-group">
+        <label class="form-label" for="guest-name">Nombre y apellidos</label>
+        <input type="text" id="guest-name" class="form-input" placeholder="Escribe tu nombre completo..." autocomplete="name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="guest-email">Email</label>
+        <input type="email" id="guest-email" class="form-input" placeholder="tu@email.com" autocomplete="email" required>
+      </div>
+      <input type="text" id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
+      <button type="button" class="btn-submit" onclick="startRSVP()">Continuar</button>
+      <p id="start-error" aria-live="polite" style="display:none; margin-top:0.5rem; font-size:0.8rem; color:#e88c8c;"></p>
+    </div>
+
+    <!-- STEP 2: formulario -->
+    <div id="rsvp-step-2" style="display:none; width:100%; max-width:500px;">
+
+      <!-- Tarjeta titular -->
+      <div class="rsvp-card">
+        <p class="rsvp-card-name" id="card-main-name"></p>
+        <div class="form-group">
+          <label class="form-label">¿Asistirás a la boda?</label>
+          <div style="display:flex; gap:0.8rem; margin-top:0.8rem; flex-wrap:wrap;">
+            <button type="button" class="btn-choice" id="btn-si-main" onclick="setMainChoice('si')">Sí, allí estaré 🥂</button>
+            <button type="button" class="btn-choice" id="btn-no-main" onclick="setMainChoice('no')">No podré ir</button>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:1rem;">
+          <label class="form-label">Intolerancias o alergias alimentarias</label>
+          <input type="text" id="intol-main" class="form-input" placeholder="Ej: sin gluten, alérgico a frutos secos...">
+        </div>
+        <div class="form-group" style="margin-top:1rem;">
+          <label class="form-label">Comentarios</label>
+          <textarea id="comment-main" class="form-textarea form-input" placeholder="Cualquier cosa que quieras contarnos..."></textarea>
+        </div>
+      </div>
+
+      <!-- Acompañantes añadidos dinámicamente -->
+      <div id="companions-container"></div>
+
+      <!-- Botón añadir acompañante -->
+      <button type="button" class="btn-add-companion" onclick="addCompanion()">
+        + Añadir acompañante
+      </button>
+
+      <button type="button" class="btn-submit" id="btn-send" onclick="submitRSVP()" style="margin-top:2rem;">
+        Enviar confirmación
+      </button>
+      <p id="send-error" aria-live="polite" style="display:none; margin-top:1rem; font-size:0.8rem; color:#e88c8c;"></p>
+    </div>
+
+    <!-- STEP 3: éxito -->
+    <div id="rsvp-step-3" style="display:none; max-width:500px;">
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2.2rem; line-height:1.4; color:var(--blush-light);">¡Gracias! 🌿</p>
+      <p style="margin-top:1rem; font-weight:300; font-size:1rem; line-height:1.8; color:rgba(254,252,252,0.6);">
+        Hemos recibido tu confirmación. <br>¡Te esperamos con los brazos abiertos!
+      </p>
+    </div>
+  </section>
+
   <!-- NOSOTROS -->
   <section id="nosotros" class="vichy vichy-inv">
     <div class="nos-text reveal">
-      <p class="section-label">01 — Nuestra historia</p>
+      <p class="section-label">02 — Nuestra historia</p>
       <h2 class="section-title">Dos <em>vidas</em><br>que se encuentran</h2>
       <p class="nos-body">
         Lo que comenzó como una historia ordinaria se convirtió en algo extraordinario.
@@ -273,7 +344,7 @@
   <section id="fecha" class="vichy">
     <div class="fecha-watermark">09.04</div>
     <div class="fecha-content">
-      <p class="section-label">02 — Cuándo</p>
+      <p class="section-label">03 — Cuándo</p>
       <h2 class="section-title">Faltan</h2>
       <div class="countdown">
         <div class="countdown-item">
@@ -298,7 +369,7 @@
   <!-- LUGAR -->
   <section id="lugar" class="vichy vichy-inv">
     <div class="lugar-text reveal">
-      <p class="section-label">03 — Dónde</p>
+      <p class="section-label">04 — Dónde</p>
       <h2 class="section-title">Can Ribas<br>de <em>Montbui</em></h2>
       <div class="location-details">
         <div class="detail-row">
@@ -343,7 +414,7 @@
   <!-- PROGRAMA -->
   <section id="programa" class="vichy">
     <div class="reveal">
-      <p class="section-label">04 — Programa</p>
+      <p class="section-label">05 — Programa</p>
       <h2 class="section-title">El gran <em>día</em></h2>
     </div>
     <div class="timeline reveal">
@@ -426,75 +497,6 @@
     </div>
   </section>
 
-  <!-- RSVP -->
-  <section id="confirmacion" class="vichy vichy-inv">
-    <p class="section-label reveal">07 — Confirmación</p>
-    <h2 class="section-title reveal">¿Vendrás a<br>nuestra <em>boda?</em></h2>
-    <p class="confirm-text reveal">
-      Por favor, confirma tu asistencia antes del <strong style="color:var(--blush-light);">1 de marzo de 2027</strong>.
-      Tu presencia es el mejor regalo que nos puedes dar.
-    </p>
-
-    <!-- STEP 1: datos del invitado -->
-    <div id="rsvp-step-1" class="confirm-form reveal">
-      <div class="form-group">
-        <label class="form-label" for="guest-name">Nombre y apellidos</label>
-        <input type="text" id="guest-name" class="form-input" placeholder="Escribe tu nombre completo..." autocomplete="name" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="guest-email">Email</label>
-        <input type="email" id="guest-email" class="form-input" placeholder="tu@email.com" autocomplete="email" required>
-      </div>
-      <input type="text" id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
-      <button type="button" class="btn-submit" onclick="startRSVP()">Continuar</button>
-      <p id="start-error" aria-live="polite" style="display:none; margin-top:0.5rem; font-size:0.8rem; color:#e88c8c;"></p>
-    </div>
-
-    <!-- STEP 2: formulario -->
-    <div id="rsvp-step-2" style="display:none; width:100%; max-width:500px;">
-
-      <!-- Tarjeta titular -->
-      <div class="rsvp-card">
-        <p class="rsvp-card-name" id="card-main-name"></p>
-        <div class="form-group">
-          <label class="form-label">¿Asistirás a la boda?</label>
-          <div style="display:flex; gap:0.8rem; margin-top:0.8rem; flex-wrap:wrap;">
-            <button type="button" class="btn-choice" id="btn-si-main" onclick="setMainChoice('si')">Sí, allí estaré 🥂</button>
-            <button type="button" class="btn-choice" id="btn-no-main" onclick="setMainChoice('no')">No podré ir</button>
-          </div>
-        </div>
-        <div class="form-group" style="margin-top:1rem;">
-          <label class="form-label">Intolerancias o alergias alimentarias</label>
-          <input type="text" id="intol-main" class="form-input" placeholder="Ej: sin gluten, alérgico a frutos secos...">
-        </div>
-        <div class="form-group" style="margin-top:1rem;">
-          <label class="form-label">Comentarios</label>
-          <textarea id="comment-main" class="form-textarea form-input" placeholder="Cualquier cosa que quieras contarnos..."></textarea>
-        </div>
-      </div>
-
-      <!-- Acompañantes añadidos dinámicamente -->
-      <div id="companions-container"></div>
-
-      <!-- Botón añadir acompañante -->
-      <button type="button" class="btn-add-companion" onclick="addCompanion()">
-        + Añadir acompañante
-      </button>
-
-      <button type="button" class="btn-submit" id="btn-send" onclick="submitRSVP()" style="margin-top:2rem;">
-        Enviar confirmación
-      </button>
-      <p id="send-error" aria-live="polite" style="display:none; margin-top:1rem; font-size:0.8rem; color:#e88c8c;"></p>
-    </div>
-
-    <!-- STEP 3: éxito -->
-    <div id="rsvp-step-3" style="display:none; max-width:500px;">
-      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2.2rem; line-height:1.4; color:var(--blush-light);">¡Gracias! 🌿</p>
-      <p style="margin-top:1rem; font-weight:300; font-size:1rem; line-height:1.8; color:rgba(254,252,252,0.6);">
-        Hemos recibido tu confirmación. <br>¡Te esperamos con los brazos abiertos!
-      </p>
-    </div>
-  </section>
 </main>
 
 <footer>
