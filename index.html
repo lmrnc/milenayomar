@@ -10,14 +10,14 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --white:        #fefcfc;
-    --off:          #f9f4f4;
-    --blush:        #ddb8b8;
-    --blush-light:  #eedada;
-    --garnet:       #7a1628;
-    --garnet-deep:  #4e0e1a;
-    --dark:         #2a0e16;
-    --stone:        #9a7070;
+    --white:        #fbfcff;
+    --off:          #f2f5fb;
+    --blush:        #9fb0dc;
+    --blush-light:  #d8e1ff;
+    --garnet:       #2f4f9b;
+    --garnet-deep:  #142552;
+    --dark:         #111a35;
+    --stone:        #697898;
   }
 
   html { scroll-behavior: smooth; }
@@ -27,20 +27,20 @@
   .vichy::after {
     content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
     background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(122,22,40,0.042) 18px, rgba(122,22,40,0.042) 36px),
-      repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(122,22,40,0.042) 18px, rgba(122,22,40,0.042) 36px);
+      repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(47,79,155,0.026) 18px, rgba(47,79,155,0.026) 36px),
+      repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(47,79,155,0.026) 18px, rgba(47,79,155,0.026) 36px);
   }
   .vichy-inv::after {
     background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,255,255,0.055) 20px, rgba(255,255,255,0.055) 40px),
-      repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,255,255,0.055) 20px, rgba(255,255,255,0.055) 40px);
+      repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,255,255,0.035) 20px, rgba(255,255,255,0.035) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,255,255,0.035) 20px, rgba(255,255,255,0.035) 40px);
   }
   .vichy > * { position: relative; z-index: 1; }
 
   nav {
     position: fixed; left: 0; top: 0; width: 60px; height: 100vh;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 2.5rem; z-index: 100; border-right: 1px solid rgba(122,22,40,0.1); background: var(--white);
+    gap: 2.5rem; z-index: 100; border-right: 1px solid rgba(47,79,155,0.12); background: var(--white);
   }
   nav a { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); text-decoration: none; writing-mode: vertical-rl; transform: rotate(180deg); transition: color 0.3s, opacity 0.3s; opacity: 0.55; }
   nav a:hover, nav a.active { color: var(--garnet); opacity: 1; }
@@ -103,7 +103,7 @@
   #programa .section-title em { color: var(--garnet); }
   .timeline { margin-top: 4rem; max-width: 600px; width: 100%; }
   .timeline-item { display: flex; gap: 2rem; padding-bottom: 2.5rem; position: relative; }
-  .timeline-item::after { content: ''; position: absolute; left: 3.5rem; top: 1.5rem; bottom: 0; width: 1px; background: rgba(122,22,40,0.12); }
+  .timeline-item::after { content: ''; position: absolute; left: 3.5rem; top: 1.5rem; bottom: 0; width: 1px; background: rgba(47,79,155,0.12); }
   .timeline-item:last-child::after { display: none; }
   .timeline-time { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--garnet); width: 5rem; flex-shrink: 0; text-align: right; }
   .timeline-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blush); margin-top: 0.45rem; flex-shrink: 0; position: relative; z-index: 1; }
@@ -114,7 +114,7 @@
   #contacto .section-label { color: var(--stone); }
   #contacto .section-title { color: var(--dark); }
   #contacto .section-title em { color: var(--garnet); }
-  .contact-card { background: var(--white); padding: 2.5rem 3rem; border-radius: 2px; border: 1px solid rgba(122,22,40,0.1); min-width: 280px; }
+  .contact-card { background: var(--white); padding: 2.5rem 3rem; border-radius: 2px; border: 1px solid rgba(47,79,155,0.12); min-width: 280px; }
   .contact-card-role { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--garnet); letter-spacing: 0.05em; margin-bottom: 1.2rem; }
   .contact-card-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2rem; color: var(--dark); margin-bottom: 2rem; }
   .contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--dark); transition: color 0.25s; margin-bottom: 1.2rem; }
@@ -149,7 +149,7 @@
   }
   .btn-submit:hover { background: var(--white); border-color: var(--white); color: var(--garnet); }
 
-  footer { margin-left: 60px; padding: 2.5rem 8vw; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(122,22,40,0.1); background: var(--white); flex-wrap: wrap; gap: 1rem; }
+  footer { margin-left: 60px; padding: 2.5rem 8vw; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(47,79,155,0.12); background: var(--white); flex-wrap: wrap; gap: 1rem; }
   .footer-names { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--stone); }
   .footer-date { font-weight: 200; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone); opacity: 0.5; }
 
@@ -165,7 +165,7 @@
     #nosotros, #lugar { flex-direction: column; }
     .hero-title { font-size: clamp(3.5rem,15vw,6rem); }
     footer { flex-direction: column; text-align: center; }
-    .mobile-nav { display: flex; position: fixed; bottom:0; left:0; right:0; background: var(--white); border-top: 1px solid rgba(122,22,40,0.1); padding: 0.75rem 1rem; justify-content: space-around; z-index: 100; }
+    .mobile-nav { display: flex; position: fixed; bottom:0; left:0; right:0; background: var(--white); border-top: 1px solid rgba(47,79,155,0.12); padding: 0.75rem 1rem; justify-content: space-around; z-index: 100; }
     .mobile-nav a { font-weight:200; font-size:0.5rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--stone); text-decoration:none; text-align:center; }
   }
   @media (min-width: 769px) { .mobile-nav { display: none; } }
@@ -175,8 +175,8 @@
   .rsvp-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--white); margin-bottom: 1rem; }
   .btn-choice { padding: 0.55rem 1.2rem; background: transparent; border: 1px solid rgba(254,252,252,0.2); color: rgba(254,252,252,0.65); font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.75rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; border-radius: 1px; }
   .btn-choice:hover { border-color: rgba(254,252,252,0.5); color: var(--white); }
-  .btn-choice.selected-si { background: #1e3d2f; border-color: #1e3d2f; color: #fff; }
-  .btn-choice.selected-no { background: #3d1e1e; border-color: #3d1e1e; color: #fff; }
+  .btn-choice.selected-si { background: #254a80; border-color: #254a80; color: #fff; }
+  .btn-choice.selected-no { background: #1c2747; border-color: #1c2747; color: #fff; }
   .btn-add-companion { display: flex; align-items: center; gap: 0.5rem; background: transparent; border: 1px dashed rgba(254,252,252,0.2); color: rgba(254,252,252,0.5); font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem 1.2rem; cursor: pointer; transition: all 0.2s; border-radius: 1px; width: 100%; justify-content: center; margin-top: 0.5rem; }
   .btn-add-companion:hover { border-color: rgba(254,252,252,0.4); color: rgba(254,252,252,0.8); }
   .remove-companion { background: transparent; border: none; color: rgba(254,252,252,0.3); font-size: 1rem; cursor: pointer; padding: 0 0.3rem; line-height: 1; transition: color 0.2s; }
@@ -216,26 +216,26 @@
   <!-- HERO -->
   <section id="inicio" class="vichy">
     <svg class="floral" viewBox="0 0 400 500" fill="none">
-      <circle cx="200" cy="250" r="120" stroke="#7a1628" stroke-width="0.6"/>
-      <circle cx="200" cy="250" r="165" stroke="#7a1628" stroke-width="0.3"/>
-      <circle cx="200" cy="250" r="78"  stroke="#7a1628" stroke-width="0.3"/>
-      <path d="M200 130 C222 162 222 204 200 250 C178 204 178 162 200 130Z" stroke="#7a1628" stroke-width="0.6" fill="none"/>
-      <path d="M200 370 C222 338 222 296 200 250 C178 296 178 338 200 370Z" stroke="#7a1628" stroke-width="0.6" fill="none"/>
-      <path d="M78 250 C112 228 154 228 200 250 C154 272 112 272 78 250Z"   stroke="#7a1628" stroke-width="0.6" fill="none"/>
-      <path d="M322 250 C288 228 246 228 200 250 C246 272 288 272 322 250Z" stroke="#7a1628" stroke-width="0.6" fill="none"/>
-      <path d="M113 134 C136 162 157 197 200 250 C163 197 146 158 113 134Z" stroke="#7a1628" stroke-width="0.4" fill="none"/>
-      <path d="M287 134 C264 162 243 197 200 250 C237 197 254 158 287 134Z" stroke="#7a1628" stroke-width="0.4" fill="none"/>
-      <path d="M113 366 C136 338 157 303 200 250 C163 303 146 342 113 366Z" stroke="#7a1628" stroke-width="0.4" fill="none"/>
-      <path d="M287 366 C264 338 243 303 200 250 C237 303 254 342 287 366Z" stroke="#7a1628" stroke-width="0.4" fill="none"/>
-      <circle cx="200" cy="250" r="9"   stroke="#7a1628" stroke-width="0.6"/>
-      <circle cx="200" cy="130" r="5"   stroke="#ddb8b8" stroke-width="0.5"/>
-      <circle cx="200" cy="370" r="5"   stroke="#ddb8b8" stroke-width="0.5"/>
-      <circle cx="78"  cy="250" r="5"   stroke="#ddb8b8" stroke-width="0.5"/>
-      <circle cx="322" cy="250" r="5"   stroke="#ddb8b8" stroke-width="0.5"/>
-      <circle cx="113" cy="134" r="4"   stroke="#ddb8b8" stroke-width="0.5"/>
-      <circle cx="287" cy="134" r="4"   stroke="#ddb8b8" stroke-width="0.5"/>
-      <circle cx="113" cy="366" r="4"   stroke="#ddb8b8" stroke-width="0.5"/>
-      <circle cx="287" cy="366" r="4"   stroke="#ddb8b8" stroke-width="0.5"/>
+      <circle cx="200" cy="250" r="120" stroke="#2f4f9b" stroke-width="0.6"/>
+      <circle cx="200" cy="250" r="165" stroke="#2f4f9b" stroke-width="0.3"/>
+      <circle cx="200" cy="250" r="78"  stroke="#2f4f9b" stroke-width="0.3"/>
+      <path d="M200 130 C222 162 222 204 200 250 C178 204 178 162 200 130Z" stroke="#2f4f9b" stroke-width="0.6" fill="none"/>
+      <path d="M200 370 C222 338 222 296 200 250 C178 296 178 338 200 370Z" stroke="#2f4f9b" stroke-width="0.6" fill="none"/>
+      <path d="M78 250 C112 228 154 228 200 250 C154 272 112 272 78 250Z"   stroke="#2f4f9b" stroke-width="0.6" fill="none"/>
+      <path d="M322 250 C288 228 246 228 200 250 C246 272 288 272 322 250Z" stroke="#2f4f9b" stroke-width="0.6" fill="none"/>
+      <path d="M113 134 C136 162 157 197 200 250 C163 197 146 158 113 134Z" stroke="#2f4f9b" stroke-width="0.4" fill="none"/>
+      <path d="M287 134 C264 162 243 197 200 250 C237 197 254 158 287 134Z" stroke="#2f4f9b" stroke-width="0.4" fill="none"/>
+      <path d="M113 366 C136 338 157 303 200 250 C163 303 146 342 113 366Z" stroke="#2f4f9b" stroke-width="0.4" fill="none"/>
+      <path d="M287 366 C264 338 243 303 200 250 C237 303 254 342 287 366Z" stroke="#2f4f9b" stroke-width="0.4" fill="none"/>
+      <circle cx="200" cy="250" r="9"   stroke="#2f4f9b" stroke-width="0.6"/>
+      <circle cx="200" cy="130" r="5"   stroke="#9fb0dc" stroke-width="0.5"/>
+      <circle cx="200" cy="370" r="5"   stroke="#9fb0dc" stroke-width="0.5"/>
+      <circle cx="78"  cy="250" r="5"   stroke="#9fb0dc" stroke-width="0.5"/>
+      <circle cx="322" cy="250" r="5"   stroke="#9fb0dc" stroke-width="0.5"/>
+      <circle cx="113" cy="134" r="4"   stroke="#9fb0dc" stroke-width="0.5"/>
+      <circle cx="287" cy="134" r="4"   stroke="#9fb0dc" stroke-width="0.5"/>
+      <circle cx="113" cy="366" r="4"   stroke="#9fb0dc" stroke-width="0.5"/>
+      <circle cx="287" cy="366" r="4"   stroke="#9fb0dc" stroke-width="0.5"/>
     </svg>
     <div>
       <p class="hero-eyebrow">Nos casamos</p>
@@ -401,12 +401,12 @@
         <p class="map-pin-text">Can Ribas de Montbui</p>
       </div>
       <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12" viewBox="0 0 300 300" fill="none">
-        <path d="M0 100 Q150 80 300 120"                    stroke="#fefcfc" stroke-width="0.5"/>
-        <path d="M0 150 Q100 140 150 160 Q200 180 300 155" stroke="#fefcfc" stroke-width="0.5"/>
-        <path d="M0 200 Q150 210 300 190"                  stroke="#fefcfc" stroke-width="0.5"/>
-        <path d="M80 0 Q90 150 85 300"                     stroke="#fefcfc" stroke-width="0.5"/>
-        <path d="M150 0 Q155 150 148 300"                  stroke="#fefcfc" stroke-width="0.5"/>
-        <path d="M220 0 Q215 150 225 300"                  stroke="#fefcfc" stroke-width="0.5"/>
+        <path d="M0 100 Q150 80 300 120"                    stroke="#fbfcff" stroke-width="0.5"/>
+        <path d="M0 150 Q100 140 150 160 Q200 180 300 155" stroke="#fbfcff" stroke-width="0.5"/>
+        <path d="M0 200 Q150 210 300 190"                  stroke="#fbfcff" stroke-width="0.5"/>
+        <path d="M80 0 Q90 150 85 300"                     stroke="#fbfcff" stroke-width="0.5"/>
+        <path d="M150 0 Q155 150 148 300"                  stroke="#fbfcff" stroke-width="0.5"/>
+        <path d="M220 0 Q215 150 225 300"                  stroke="#fbfcff" stroke-width="0.5"/>
       </svg>
     </div>
   </section>
