@@ -118,17 +118,17 @@ test('RSVP function returns a gateway error if Apps Script cannot be reached', a
   }
 });
 
-test('HTML uses the protected RSVP endpoint and does not expose guest lookup logic', () => {
+test('HTML uses RSVP endpoints and does not expose guest lookup logic', () => {
   const html = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
 
   assert.match(html, /var RSVP_ENDPOINT = '\/api\/rsvp';/);
+  assert.match(html, /var RSVP_GITHUB_PAGES_ENDPOINT = 'https:\/\/script\.google\.com\/macros\/s\/[^']+\/exec';/);
+  assert.match(html, /function isGithubPages\(\)/);
   assert.doesNotMatch(html, /APPS_SCRIPT_URL/);
   assert.doesNotMatch(html, /guestList/);
   assert.doesNotMatch(html, /loadGuests/);
   assert.doesNotMatch(html, /onSearchInput/);
   assert.doesNotMatch(html, /selectGuest/);
-  assert.doesNotMatch(html, /no-cors/);
-  assert.doesNotMatch(html, /script\.google\.com/);
 });
 
 test('RSVP section appears immediately after the hero section', () => {

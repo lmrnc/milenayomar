@@ -543,6 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ── RSVP ────────────────────────────────────────────────
   var RSVP_ENDPOINT = '/api/rsvp';
+  var RSVP_GITHUB_PAGES_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzxoLnEQUQefiRPCyMTtHfTsSgRKMCpSHnpZmUhmYbUMf9jFOzd1m8PT0FYlTJAVGzp/exec';
   var selectedGuest = null;
   var selectedEmail = null;
   var mainChoice = null;
@@ -561,6 +562,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function clearError(el) {
     el.textContent = '';
     el.style.display = 'none';
+  }
+
+  function isGithubPages() {
+    return window.location.hostname.indexOf('github.io') !== -1;
   }
 
   window.startRSVP = function() {
@@ -703,11 +708,19 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    fetch(RSVP_ENDPOINT, {
+    var endpoint = isGithubPages() ? RSVP_GITHUB_PAGES_ENDPOINT : RSVP_ENDPOINT;
+    var requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload)
-    }).then(function(response) {
+    };
+
+    if (isGithubPages()) {
+      requestOptions.mode = 'no-cors';
+    }
+
+    fetch(endpoint, requestOptions).then(function(response) {
+      if (response.type === 'opaque') return {};
       return response.text().then(function(text) {
         var data = {};
         if (text) {
