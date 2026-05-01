@@ -4,18 +4,13 @@ Landing page estatica para la boda.
 
 ## RSVP
 
-El formulario usa Netlify Forms con el nombre `rsvp`.
+El RSVP escribe en Google Sheets mediante Google Apps Script.
 
-Campos configurados:
+La lista de invitados no se publica en el frontend ni se guarda en el repo, porque el repositorio es publico.
 
-- `guest`
-- `email`
-- `asistencia`
-- `intolerancias`
-- `comentarios`
-- `acompanantes`
+## Google Sheet
 
-La hoja original `lista_invitados - Hoja 1.csv` tenia 91 filas y estas columnas:
+El CSV original `lista_invitados - Hoja 1.csv` tenia 91 filas y estas columnas:
 
 - `guest`
 - `guest_link`
@@ -23,25 +18,32 @@ La hoja original `lista_invitados - Hoja 1.csv` tenia 91 filas y estas columnas:
 - `Intoleracias`
 - `Comentarios`
 
-La lista de invitados no se publica en el frontend ni se guarda en el repo, porque el repositorio es publico.
+El Apps Script conserva esas columnas y anade:
 
-## Revisar Confirmaciones
+- `Email`
+- `ConfirmadoPor`
+- `Timestamp`
+- `Source`
 
-En Netlify:
+## Configurar Apps Script
+
+1. Abre la Google Sheet.
+2. Ve a `Extensiones -> Apps Script`.
+3. Copia el contenido de `apps-script/Code.gs`.
+4. Despliega como `Web app`.
+5. Usa `Execute as: Me`.
+6. Usa `Who has access: Anyone`.
+7. Copia la URL `/exec`.
+8. En `index.html`, sustituye:
 
 ```text
-Site dashboard -> Forms -> rsvp
+PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE
 ```
 
-Desde ahi se pueden revisar respuestas, exportar CSV y configurar notificaciones por email.
+por la URL real del despliegue.
 
-## Deploy En Netlify
+## Tests
 
-Conecta este repositorio en Netlify y usa:
-
-```text
-Build command: dejar vacio
-Publish directory: .
+```powershell
+node --test
 ```
-
-El archivo `netlify.toml` ya define `publish = "."`.

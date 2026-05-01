@@ -9,47 +9,58 @@ function readHtml() {
   return fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
 }
 
-test('HTML declares a Netlify-detectable RSVP form', () => {
+function readAppsScript() {
+  return fs.readFileSync(path.join(rootDir, 'apps-script', 'Code.gs'), 'utf8');
+}
+
+test('HTML submits RSVP to a configurable Google Apps Script endpoint', () => {
   const html = readHtml();
 
-  assert.match(html, /<form name="rsvp" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>/);
-  assert.match(html, /<input type="hidden" name="form-name" value="rsvp">/);
-  assert.match(html, /name="guest"/);
-  assert.match(html, /name="email"/);
-  assert.match(html, /name="asistencia"/);
-  assert.match(html, /name="intolerancias"/);
-  assert.match(html, /name="comentarios"/);
-  assert.match(html, /name="acompanantes"/);
-});
-
-test('RSVP submission posts URL-encoded data to Netlify Forms', () => {
-  const html = readHtml();
-
-  assert.match(html, /fetch\('\/', \{/);
+  assert.match(html, /var RSVP_ENDPOINT = 'PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE';/);
+  assert.match(html, /fetch\(RSVP_ENDPOINT, \{/);
+  assert.match(html, /mode: 'no-cors'/);
   assert.match(html, /'Content-Type': 'application\/x-www-form-urlencoded'/);
-  assert.match(html, /'form-name': 'rsvp'/);
   assert.match(html, /body: encodeForm\(formPayload\)/);
 });
 
-test('RSVP keeps companion details in a readable Netlify field', () => {
+test('HTML sends the expected Sheet fields without exposing guest lookup logic', () => {
   const html = readHtml();
 
-  assert.match(html, /function formatCompanions\(\)/);
+  assert.match(html, /guest: selectedGuest\.name/);
+  assert.match(html, /email: selectedEmail/);
+  assert.match(html, /asistencia: mainChoice/);
+  assert.match(html, /intolerancias: document\.getElementById\('intol-main'\)/);
+  assert.match(html, /comentarios: document\.getElementById\('comment-main'\)/);
   assert.match(html, /acompanantes: formatCompanions\(\)/);
-  assert.match(html, /'Asistencia: ' \+ \(c.choice === 'si' \? 'Sí' : 'No'\)/);
-});
-
-test('HTML does not expose guest list lookup logic or Apps Script endpoints', () => {
-  const html = readHtml();
-
-  assert.doesNotMatch(html, /APPS_SCRIPT_URL/);
-  assert.doesNotMatch(html, /RSVP_GITHUB_PAGES_ENDPOINT/);
   assert.doesNotMatch(html, /guestList/);
   assert.doesNotMatch(html, /loadGuests/);
   assert.doesNotMatch(html, /onSearchInput/);
   assert.doesNotMatch(html, /selectGuest/);
-  assert.doesNotMatch(html, /script\.google\.com/);
-  assert.doesNotMatch(html, /no-cors/);
+});
+
+test('Apps Script handles POST, validates payload, and returns JSON', () => {
+  const code = readAppsScript();
+
+  assert.match(code, /function doPost\(e\)/);
+  assert.match(code, /function validatePayload_\(payload\)/);
+  assert.match(code, /function json_\(data\)/);
+  assert.match(code, /ContentService\.MimeType\.JSON/);
+});
+
+test('Apps Script preserves original CSV columns and adds operational columns', () => {
+  const code = readAppsScript();
+
+  ['guest', 'guest_link', 'Asistencia', 'Intoleracias', 'Comentarios', 'Email', 'ConfirmadoPor', 'Timestamp', 'Source']
+    .forEach((header) => assert.match(code, new RegExp("'" + header + "'")));
+});
+
+test('Apps Script upserts guests and parses companion blocks', () => {
+  const code = readAppsScript();
+
+  assert.match(code, /function upsertGuest_\(sheet, row\)/);
+  assert.match(code, /function findGuestRow_\(sheet, guestName\)/);
+  assert.match(code, /function parseCompanions_\(text\)/);
+  assert.match(code, /guest_link: mainGuest/);
 });
 
 test('RSVP section appears immediately after the hero section', () => {
