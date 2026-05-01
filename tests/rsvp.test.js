@@ -16,7 +16,8 @@ function readAppsScript() {
 test('HTML submits RSVP to a configurable Google Apps Script endpoint', () => {
   const html = readHtml();
 
-  assert.match(html, /var RSVP_ENDPOINT = 'PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE';/);
+  assert.match(html, /var RSVP_ENDPOINT = 'https:\/\/script\.google\.com\/macros\/s\/[^']+\/exec';/);
+  assert.doesNotMatch(html, /PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE/);
   assert.match(html, /fetch\(RSVP_ENDPOINT, \{/);
   assert.match(html, /mode: 'no-cors'/);
   assert.match(html, /'Content-Type': 'application\/x-www-form-urlencoded'/);

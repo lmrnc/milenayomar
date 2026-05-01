@@ -34,13 +34,7 @@ El Apps Script conserva esas columnas y anade:
 5. Usa `Execute as: Me`.
 6. Usa `Who has access: Anyone`.
 7. Copia la URL `/exec`.
-8. En `index.html`, sustituye:
-
-```text
-PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE
-```
-
-por la URL real del despliegue.
+8. En `index.html`, actualiza `RSVP_ENDPOINT` si se crea un nuevo despliegue.
 
 ## Tests
 
