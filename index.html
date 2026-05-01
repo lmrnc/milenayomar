@@ -252,6 +252,17 @@
 
   <!-- RSVP -->
   <section id="confirmacion" class="vichy vichy-inv">
+    <form name="rsvp" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="rsvp">
+      <input type="text" name="guest">
+      <input type="email" name="email">
+      <input type="text" name="asistencia">
+      <input type="text" name="intolerancias">
+      <textarea name="comentarios"></textarea>
+      <textarea name="acompanantes"></textarea>
+      <input type="text" name="bot-field">
+    </form>
+
     <p class="section-label reveal">01 — Confirmación</p>
     <h2 class="section-title reveal">¿Vendrás a<br>nuestra <em>boda?</em></h2>
     <p class="confirm-text reveal">
@@ -543,8 +554,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('section').forEach(function(s) { secObs.observe(s); });
 
   // ── RSVP ────────────────────────────────────────────────
-  var RSVP_ENDPOINT = '/api/rsvp';
-  var RSVP_GITHUB_PAGES_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzxoLnEQUQefiRPCyMTtHfTsSgRKMCpSHnpZmUhmYbUMf9jFOzd1m8PT0FYlTJAVGzp/exec';
   var selectedGuest = null;
   var selectedEmail = null;
   var mainChoice = null;
@@ -565,8 +574,26 @@ document.addEventListener('DOMContentLoaded', function() {
     el.style.display = 'none';
   }
 
-  function isGithubPages() {
-    return window.location.hostname.indexOf('github.io') !== -1;
+  function encodeForm(data) {
+    return Object.keys(data).map(function(key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }).join('&');
+  }
+
+  function formatCompanions() {
+    if (!companions.length) return '';
+    return companions.map(function(c, index) {
+      var name = document.getElementById('comp-name-' + c.id).value.trim();
+      var intolerancias = document.getElementById('comp-intol-' + c.id).value.trim() || '-';
+      var comentarios = document.getElementById('comp-comment-' + c.id).value.trim() || '-';
+
+      return [
+        (index + 1) + '. Nombre: ' + name,
+        'Asistencia: ' + (c.choice === 'si' ? 'Sí' : 'No'),
+        'Intolerancias: ' + intolerancias,
+        'Comentarios: ' + comentarios
+      ].join('\n');
+    }).join('\n\n');
   }
 
   window.startRSVP = function() {
@@ -689,49 +716,23 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.textContent = 'Enviando...';
     btn.disabled = true;
 
-    var payload = [{
-      name: selectedGuest.name,
+    var formPayload = {
+      'form-name': 'rsvp',
+      'bot-field': '',
+      guest: selectedGuest.name,
       email: selectedEmail,
       asistencia: mainChoice,
       intolerancias: document.getElementById('intol-main').value.trim(),
       comentarios: document.getElementById('comment-main').value.trim(),
-      confirmadoPor: selectedGuest.name
-    }];
-
-    companions.forEach(function(c) {
-      payload.push({
-        name: document.getElementById('comp-name-' + c.id).value.trim(),
-        email: selectedEmail,
-        asistencia: c.choice,
-        intolerancias: document.getElementById('comp-intol-' + c.id).value.trim(),
-        comentarios: document.getElementById('comp-comment-' + c.id).value.trim(),
-        confirmadoPor: selectedGuest.name
-      });
-    });
-
-    var endpoint = isGithubPages() ? RSVP_GITHUB_PAGES_ENDPOINT : RSVP_ENDPOINT;
-    var requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload)
+      acompanantes: formatCompanions()
     };
 
-    if (isGithubPages()) {
-      requestOptions.mode = 'no-cors';
-    }
-
-    fetch(endpoint, requestOptions).then(function(response) {
-      if (response.type === 'opaque') return {};
-      return response.text().then(function(text) {
-        var data = {};
-        if (text) {
-          try { data = JSON.parse(text); } catch (e) { data = { message: text }; }
-        }
-        if (!response.ok || data.ok === false || data.success === false || data.error) {
-          throw new Error(data.error || data.message || 'No se pudo enviar la confirmación.');
-        }
-        return data;
-      });
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encodeForm(formPayload)
+    }).then(function(response) {
+      if (!response.ok) throw new Error('No se pudo enviar la confirmación.');
     }).then(function() {
       document.getElementById('rsvp-step-2').style.display = 'none';
       var s3 = document.getElementById('rsvp-step-3');
