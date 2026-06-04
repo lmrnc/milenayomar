@@ -1,0 +1,134 @@
+PROJECT HANDOVER - MILENA Y OMAR WEDDING WEBSITE
+Date: 2026-06-04
+Repo: https://github.com/lmrnc/milenayomar
+Local path: C:\Users\Omar\milenayomar
+Live site: https://lmrnc.github.io/milenayomar/
+Latest verified cache-buster URL: https://lmrnc.github.io/milenayomar/?v=bebe164
+Current main commit: bebe164 Refine hero typography color
+
+GOAL
+Build and polish a wedding website for Milena and Omar, matching the printed invitation design direction:
+- Artisan white paper feel.
+- Fine red botanical pattern as the background.
+- Elegant classic typography.
+- Functional RSVP form connected to Google Apps Script / Google Sheets.
+
+CURRENT DESIGN DIRECTION
+- The red botanical pattern from assets/rojo.webp is used as the background across all sections.
+- The green pattern was intentionally removed.
+- The hero/inicio section has:
+  - Red pattern background with a soft white overlay.
+  - No white blurred panel behind the names.
+  - Hero text in near-black (#111).
+  - Names set in Cormorant Garamond italic for a more classic cursive feel.
+- Content sections use white/paper cards for readability on top of the patterned background.
+- The RSVP form uses blue ink-like typography and white card surfaces.
+
+IMPORTANT FILES
+- index.html
+  Main single-page site: markup, CSS, JavaScript, RSVP behavior.
+- assets/rojo.webp
+  Optimized red botanical pattern used for the page backgrounds.
+- apps-script/Code.gs
+  Google Apps Script backend source for RSVP collection.
+- apps-script/appsscript.json
+  Apps Script manifest.
+- tests/rsvp.test.js
+  Node test suite that protects RSVP wiring, backend behavior assumptions, and mojibake/encoding regressions.
+- package.json
+  Test command: npm test or node --test.
+
+RSVP BACKEND
+Current Apps Script web app URL:
+https://script.google.com/macros/s/AKfycbwBbBeac1I3ho_9Mv4TLGjnVv95flcjn2UDHM9Gme0bZij0xvqOfapUdmgoiiD-NAjN-A/exec
+
+The frontend posts to this URL through a native HTML form:
+- form id: rsvp-form
+- method: POST
+- target: rsvp-submit-frame
+
+Fields sent to Apps Script / Google Sheets:
+- guest
+- email
+- bot-field
+- asistencia
+- intolerancias
+- comentarios
+- acompanantes
+
+Apps Script records submissions into sheet:
+- RSVP_Web
+
+Expected columns:
+- Timestamp
+- Nombre
+- Email
+- Asistencia
+- Intolerancias
+- Comentarios
+- Acompanantes
+- Estado
+- ValidadoCon
+- Notas
+- Source
+
+Backend behavior:
+- Append-only.
+- Does not update or validate against the official guest list.
+- New rows use Estado = pendiente and Source = web.
+- This supports manual review/validation by the couple.
+
+CURRENT RSVP UX
+Initial view:
+- Shows only Nombre y apellidos, Email, and Continuar.
+
+After Continuar:
+- Shows Datos de asistencia.
+- User can select attendance for the main guest.
+- User can enter intolerancias and comentarios.
+- User can add companions.
+- Submit sends native POST to Apps Script and then shows success message.
+
+Important implementation detail:
+- Do not replace the native form POST with fetch unless CORS and Apps Script redirects are handled properly.
+- The native form + hidden iframe approach is intentional because Apps Script redirects can break fetch/no-cors UX.
+
+RECENT COMMITS
+- bebe164 Refine hero typography color
+  Hero text black, no white blur behind names, classic italic typography.
+- 3ac7577 Apply red pattern across all sections
+  Red pattern applied to all sections.
+- c0f4f96 Soften hero background pattern
+  Lowered background pattern intensity.
+- cc8a24b Simplify invitation background treatment
+  Earlier simplification before applying red pattern everywhere.
+- e661d24 Integrate invitation visual style
+  Initial invitation visual integration.
+
+VERIFICATION ALREADY DONE
+- node --test passes: 8/8 tests.
+- GitHub Pages published latest version at cache-buster URL:
+  https://lmrnc.github.io/milenayomar/?v=bebe164
+- Browser checks with Edge/Playwright verified:
+  - Hero uses red pattern.
+  - Hero central text is black.
+  - Hero wrapper background is none.
+  - RSVP POST works when intercepted.
+  - Console had no relevant errors in previous QA runs.
+
+KNOWN TEST DATA IN GOOGLE SHEETS
+During debugging, real test rows may exist in RSVP_Web. They are safe to delete:
+- PRUEBA REAL CODEx BORRAR
+- PRUEBA NAVEGADOR BORRAR
+- PRUEBA FINAL BORRAR
+There may also be other rows starting with PRUEBA from later checks.
+
+IMPORTANT CONSTRAINTS FOR NEXT SESSION
+- Keep the RSVP functional.
+- Run node --test after changes.
+- If visual changes are made, verify desktop and mobile screenshots.
+- If testing live submit, prefer intercepting the POST to avoid creating more test rows.
+- If a real end-to-end backend test is necessary, use a clearly named guest like PRUEBA BORRAR.
+- Do not reintroduce mojibake characters such as Ã, Â, â, or ð in index.html.
+- Keep assets reasonably optimized; rojo.webp is intentionally used instead of the original heavy PNG.
+

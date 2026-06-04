@@ -1,0 +1,124 @@
+NEXT SESSION INSTRUCTIONS - MILENA Y OMAR WEBSITE
+
+START HERE
+1. Open repo:
+   C:\Users\Omar\milenayomar
+
+2. Check state:
+   git status --short
+   git log -5 --oneline
+
+3. Run tests before changing anything:
+   node --test
+
+4. Open latest live URL:
+   https://lmrnc.github.io/milenayomar/?v=bebe164
+
+CURRENT GOAL
+Continue polishing the wedding website UI while preserving the working RSVP backend.
+
+Design goal:
+- Match the printed invitation direction.
+- Red botanical pattern across the page.
+- White/paper content surfaces.
+- Elegant classic typography.
+- Clean, refined, not overly web-template-like.
+
+Current user preference:
+- Background pattern should be present across all sections.
+- Hero center text should be black.
+- No white/blurry box behind the names in the hero.
+- Names should use a more elegant/classic cursive style.
+
+WHAT TO WORK ON NEXT
+Likely next tasks are visual polish, not backend rewrites.
+
+Recommended next improvements:
+1. Fine-tune hero typography:
+   - Check if Cormorant Garamond italic feels classic enough.
+   - If not, consider a more formal script font, but keep readability high.
+   - Avoid overly playful or modern script fonts.
+
+2. Improve section rhythm:
+   - The red pattern is now everywhere.
+   - Make sure each content section has enough white/paper contrast.
+   - Avoid heavy boxes or large shadows.
+   - Favor thin borders, airy spacing, and invitation-like composition.
+
+3. Review mobile:
+   - Check hero at 390x844.
+   - Check RSVP first step and second step.
+   - Ensure text does not overlap and buttons fit.
+
+4. Preserve RSVP behavior:
+   - Initial RSVP should show only name/email/Continuar.
+   - Continue opens second step.
+   - Submit posts to Apps Script and shows thank-you message.
+
+HOW TO TEST UI LOCALLY
+The site is static. You can open index.html directly or use Playwright with Edge.
+
+Useful test:
+   node --test
+
+For browser QA:
+- Use Edge executable:
+  C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+- Install temporary Playwright only if needed:
+  npm.cmd install --no-save playwright-core
+- Remove node_modules after QA:
+  Remove-Item -LiteralPath node_modules -Recurse -Force
+
+Suggested browser flow:
+1. Load local index.html.
+2. Screenshot hero desktop: 1440x950.
+3. Screenshot RSVP desktop.
+4. Screenshot hero mobile: 390x844.
+5. Fill RSVP:
+   - guest = PRUEBA QA BORRAR
+   - email = prueba@example.com
+   - click Continuar
+   - click Sí, allí estaré
+   - click Enviar confirmación
+6. Intercept the Apps Script POST so no Google Sheets row is created.
+7. Confirm thank-you message appears.
+8. Confirm console has no relevant errors.
+
+PUBLICATION FLOW
+After changes:
+1. node --test
+2. git status --short
+3. git add relevant files
+4. git commit -m "Clear concise message"
+5. git push
+6. Wait for GitHub Pages to publish.
+7. Verify with cache buster:
+   https://lmrnc.github.io/milenayomar/?v=<commit>
+
+BACKEND DETAILS
+Do not change backend unless the user specifically asks.
+
+Apps Script URL:
+https://script.google.com/macros/s/AKfycbwBbBeac1I3ho_9Mv4TLGjnVv95flcjn2UDHM9Gme0bZij0xvqOfapUdmgoiiD-NAjN-A/exec
+
+The frontend uses native form POST to avoid fetch/CORS issues with Apps Script redirects.
+
+If backend source changes in apps-script/Code.gs:
+- The repo change alone does not update the deployed Apps Script.
+- Omar must paste/update/deploy the script in Google Apps Script unless a direct Apps Script deployment tool is configured.
+
+DO NOT BREAK THESE
+- No fetch RSVP rewrite unless thoroughly tested.
+- No guest lookup list in the frontend.
+- No limitation tokens or per-invite QR logic.
+- No mojibake text artifacts.
+- No heavy PNG assets if WebP is enough.
+
+HANDOFF SUMMARY FOR NEXT AGENT
+You are continuing a static GitHub Pages wedding website.
+The latest working version is commit bebe164.
+The live RSVP backend works through Google Apps Script and records to RSVP_Web.
+The current task is likely visual refinement around the printed invitation style.
+Before making edits, inspect index.html and run node --test.
+After edits, verify desktop/mobile and RSVP flow.
+
