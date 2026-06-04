@@ -39,6 +39,20 @@ test('HTML sends the expected Sheet fields without exposing guest lookup logic',
   assert.doesNotMatch(html, /selectGuest/);
 });
 
+test('HTML exposes the second RSVP step with attendance details and companions', () => {
+  const html = readHtml();
+
+  assert.match(html, /Paso 2 de 2/);
+  assert.match(html, /Datos de asistencia/);
+  assert.match(html, /id="intol-main"/);
+  assert.match(html, /id="comment-main"/);
+  assert.match(html, /onclick="addCompanion\(\)"/);
+  assert.match(html, /window\.addCompanion = function\(\)/);
+  assert.match(html, /comp-name-/);
+  assert.match(html, /comp-intol-/);
+  assert.match(html, /comp-comment-/);
+});
+
 test('Apps Script handles POST, validates payload, and returns JSON', () => {
   const code = readAppsScript();
 
