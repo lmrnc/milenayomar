@@ -60,6 +60,16 @@ test('HTML exposes the second RSVP step with attendance details and companions',
   assert.match(html, /comp-comment-/);
 });
 
+test('HTML does not render mojibake text artifacts', () => {
+  const html = readHtml();
+
+  assert.doesNotMatch(html, /Ã|Â|â|ð/);
+  assert.match(html, /Confirmación/);
+  assert.match(html, /¿Vendrás/);
+  assert.match(html, /Sí, allí estaré/);
+  assert.match(html, /No podré ir/);
+});
+
 test('Apps Script handles POST, validates payload, and returns JSON', () => {
   const code = readAppsScript();
 

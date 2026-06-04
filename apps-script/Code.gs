@@ -106,7 +106,7 @@ function appendRsvp_(sheet, row) {
 
 function normalizeAttendanceLabel_(value) {
   const normalized = String(value || '').toLowerCase().trim();
-  if (normalized === 'si' || normalized === 'sí' || normalized === 'sÃ­' || normalized === 'true' || normalized === 'yes') {
+  if (normalized === 'si' || normalized === 'sí' || normalized === 'true' || normalized === 'yes') {
     return 'Si';
   }
   return 'No';
