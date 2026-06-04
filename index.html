@@ -282,7 +282,7 @@
         <input type="email" id="guest-email" class="form-input" placeholder="tu@email.com" autocomplete="email" required>
       </div>
       <input type="text" id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
-      <button type="button" class="btn-submit" onclick="startRSVP()">Continuar</button>
+      <button type="button" class="btn-submit" id="btn-rsvp-start" onclick="startRSVP()">Continuar</button>
       <p id="start-error" aria-live="polite" style="display:none; margin-top:0.5rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
@@ -537,31 +537,41 @@ document.addEventListener('DOMContentLoaded', function() {
   // ── Countdown ────────────────────────────────────────────
   function updateCountdown() {
     var diff = new Date('2027-04-09T17:00:00') - new Date();
-    if (diff <= 0) { document.getElementById('days').textContent = 'Hoy'; return; }
-    document.getElementById('days').textContent    = String(Math.floor(diff/86400000)).padStart(2,'0');
-    document.getElementById('hours').textContent   = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
-    document.getElementById('minutes').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    var daysEl = document.getElementById('days');
+    var hoursEl = document.getElementById('hours');
+    var minutesEl = document.getElementById('minutes');
+    if (!daysEl || !hoursEl || !minutesEl) return;
+    if (diff <= 0) { daysEl.textContent = 'Hoy'; return; }
+    daysEl.textContent    = String(Math.floor(diff/86400000)).padStart(2,'0');
+    hoursEl.textContent   = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+    minutesEl.textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
   }
   updateCountdown();
   setInterval(updateCountdown, 60000);
 
   // ── Reveal on scroll ────────────────────────────────────
-  var revObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(function(el) { revObs.observe(el); });
+  if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(function(el) { revObs.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+  }
 
   // ── Nav active state ────────────────────────────────────
-  var secObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        document.querySelectorAll('nav a').forEach(function(a) { a.classList.remove('active'); });
-        var lnk = document.querySelector('nav a[href="#' + e.target.id + '"]');
-        if (lnk) lnk.classList.add('active');
-      }
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('section').forEach(function(s) { secObs.observe(s); });
+  if ('IntersectionObserver' in window) {
+    var secObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          document.querySelectorAll('nav a').forEach(function(a) { a.classList.remove('active'); });
+          var lnk = document.querySelector('nav a[href="#' + e.target.id + '"]');
+          if (lnk) lnk.classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('section').forEach(function(s) { secObs.observe(s); });
+  }
 
   // ── RSVP ────────────────────────────────────────────────
   var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwBbBeac1I3ho_9Mv4TLGjnVv95flcjn2UDHM9Gme0bZij0xvqOfapUdmgoiiD-NAjN-A/exec';
@@ -771,6 +781,11 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.disabled = false;
     });
   };
+
+  var startButton = document.getElementById('btn-rsvp-start');
+  if (startButton) {
+    startButton.addEventListener('click', window.startRSVP);
+  }
 
 }); // end DOMContentLoaded
 </script>
