@@ -44,11 +44,14 @@ test('HTML sends the expected Sheet fields without exposing guest lookup logic',
 test('HTML exposes the second RSVP step with attendance details and companions', () => {
   const html = readHtml();
 
-  assert.match(html, /id="rsvp-step-2" style="display:block;/);
+  assert.match(html, /href="#rsvp-step-2"/);
+  assert.match(html, /\.rsvp-details:target, \.rsvp-details\.is-open \{ display: block; \}/);
+  assert.match(html, /id="rsvp-step-2" class="rsvp-details"/);
   assert.match(html, /Datos de asistencia/);
   assert.match(html, /id="intol-main"/);
   assert.match(html, /id="comment-main"/);
   assert.match(html, /data-rsvp-action="add-companion"/);
+  assert.match(html, /data-rsvp-action="start"/);
   assert.match(html, /data-rsvp-action="submit"/);
   assert.match(html, /rsvpSection\.addEventListener\('click'/);
   assert.match(html, /var name = document\.getElementById\('guest-name'\)\.value\.trim\(\)/);

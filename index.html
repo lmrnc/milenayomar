@@ -134,6 +134,8 @@
   .rsvp-step-kicker { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(254,252,252,0.42); margin-bottom: 0.4rem; }
   .rsvp-step-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--white); margin-bottom: 0.6rem; }
   .rsvp-step-help { font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: rgba(254,252,252,0.58); margin-bottom: 1.5rem; max-width: 500px; }
+  .rsvp-details { display: none; width: 100%; max-width: 500px; margin-top: 2rem; scroll-margin-top: 2rem; }
+  .rsvp-details:target, .rsvp-details.is-open { display: block; }
   .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
   .form-label { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(254,252,252,0.45); }
   .form-input, .form-textarea {
@@ -152,6 +154,7 @@
     transition: all 0.3s; align-self: flex-start;
   }
   .btn-submit:hover { background: var(--white); border-color: var(--white); color: var(--garnet); }
+  a.btn-submit { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
   .btn-secondary { margin-top: 0.8rem; padding: 0.8rem 0; background: transparent; border: none; color: rgba(254,252,252,0.55); font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
   .btn-secondary:hover { color: var(--white); }
 
@@ -269,9 +272,9 @@
     <!-- STEP 1: datos del invitado -->
     <div id="rsvp-step-1" class="confirm-form reveal">
       <div>
-        <p class="rsvp-step-kicker">Confirmacion</p>
+        <p class="rsvp-step-kicker">Paso 1 de 2</p>
         <p class="rsvp-step-title">Tus datos</p>
-        <p class="rsvp-step-help">Indica quien confirma y completa los datos de asistencia justo debajo.</p>
+        <p class="rsvp-step-help">Primero dinos quien confirma. Después podrás indicar asistencia, acompañantes, intolerancias y comentarios.</p>
       </div>
       <div class="form-group">
         <label class="form-label" for="guest-name">Nombre y apellidos</label>
@@ -282,12 +285,13 @@
         <input type="email" id="guest-email" class="form-input" placeholder="tu@email.com" autocomplete="email" required>
       </div>
       <input type="text" id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
+      <a href="#rsvp-step-2" class="btn-submit" id="btn-rsvp-start" data-rsvp-action="start">Continuar</a>
       <p id="start-error" aria-live="polite" style="display:none; margin-top:0.5rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
     <!-- Datos de asistencia -->
-    <div id="rsvp-step-2" style="display:block; width:100%; max-width:500px; margin-top:2rem;">
-      <p class="rsvp-step-kicker">Asistencia</p>
+    <div id="rsvp-step-2" class="rsvp-details">
+      <p class="rsvp-step-kicker">Paso 2 de 2</p>
       <p class="rsvp-step-title">Datos de asistencia</p>
       <p class="rsvp-step-help">Completa tu confirmación y añade acompañantes si vienen contigo. Cada acompañante puede tener sus propias intolerancias o comentarios.</p>
 
@@ -638,8 +642,7 @@ document.addEventListener('DOMContentLoaded', function() {
     clearError(document.getElementById('send-error'));
 
     var step2 = document.getElementById('rsvp-step-2');
-    step2.style.display = 'block';
-    step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    step2.classList.add('is-open');
   };
 
   window.backToRsvpStart = function() {
