@@ -16,26 +16,23 @@ function readAppsScript() {
 test('HTML submits RSVP to a configurable Google Apps Script endpoint', () => {
   const html = readHtml();
 
-  assert.match(html, /var RSVP_ENDPOINT = 'https:\/\/script\.google\.com\/macros\/s\/[^']+\/exec';/);
+  assert.match(html, /<form id="rsvp-form" action="https:\/\/script\.google\.com\/macros\/s\/[^"]+\/exec" method="POST" target="rsvp-submit-frame"/);
+  assert.match(html, /<iframe name="rsvp-submit-frame" style="display:none;"><\/iframe>/);
+  assert.match(html, /rsvpForm\.addEventListener\('submit', validateNativeRsvpSubmit\)/);
   assert.doesNotMatch(html, /PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE/);
-  assert.match(html, /function postToHiddenFrame\(data\)/);
-  assert.match(html, /form\.action = RSVP_ENDPOINT/);
-  assert.match(html, /form\.target = frameName/);
-  assert.match(html, /postToHiddenFrame\(formPayload\)/);
   assert.doesNotMatch(html, /fetch\(RSVP_ENDPOINT/);
 });
 
 test('HTML sends the expected Sheet fields without exposing guest lookup logic', () => {
   const html = readHtml();
 
-  assert.match(html, /var name = document\.getElementById\('guest-name'\)\.value\.trim\(\)/);
-  assert.match(html, /var email = document\.getElementById\('guest-email'\)\.value\.trim\(\)/);
-  assert.match(html, /guest: name/);
-  assert.match(html, /email: email/);
-  assert.match(html, /asistencia: mainChoice/);
-  assert.match(html, /intolerancias: document\.getElementById\('intol-main'\)/);
-  assert.match(html, /comentarios: document\.getElementById\('comment-main'\)/);
-  assert.match(html, /acompanantes: formatCompanions\(\)/);
+  assert.match(html, /id="guest-name" name="guest"/);
+  assert.match(html, /id="guest-email" name="email"/);
+  assert.match(html, /name="asistencia" value="si"/);
+  assert.match(html, /name="asistencia" value="no"/);
+  assert.match(html, /id="intol-main" name="intolerancias"/);
+  assert.match(html, /id="comment-main" name="comentarios"/);
+  assert.match(html, /id="acompanantes-field" name="acompanantes"/);
   assert.doesNotMatch(html, /guestList/);
   assert.doesNotMatch(html, /loadGuests/);
   assert.doesNotMatch(html, /onSearchInput/);
@@ -45,7 +42,7 @@ test('HTML sends the expected Sheet fields without exposing guest lookup logic',
 test('HTML exposes the second RSVP step with attendance details and companions', () => {
   const html = readHtml();
 
-  assert.match(html, /href="#rsvp-step-2"/);
+  assert.match(html, /type="button" class="btn-submit" id="btn-rsvp-start" data-rsvp-action="start"/);
   assert.match(html, /\.rsvp-details:target, \.rsvp-details\.is-open \{ display: block; \}/);
   assert.match(html, /id="rsvp-step-2" class="rsvp-details"/);
   assert.match(html, /Datos de asistencia/);
@@ -53,8 +50,9 @@ test('HTML exposes the second RSVP step with attendance details and companions',
   assert.match(html, /id="comment-main"/);
   assert.match(html, /data-rsvp-action="add-companion"/);
   assert.match(html, /data-rsvp-action="start"/);
-  assert.match(html, /data-rsvp-action="submit"/);
+  assert.match(html, /type="submit" class="btn-submit" id="btn-send"/);
   assert.match(html, /rsvpSection\.addEventListener\('click'/);
+  assert.match(html, /rsvpForm\.addEventListener\('submit', validateNativeRsvpSubmit\)/);
   assert.match(html, /var name = document\.getElementById\('guest-name'\)\.value\.trim\(\)/);
   assert.match(html, /window\.addCompanion = function\(\)/);
   assert.match(html, /comp-name-/);
