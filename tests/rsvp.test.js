@@ -46,7 +46,10 @@ test('HTML exposes the second RSVP step with attendance details and companions',
   assert.match(html, /Datos de asistencia/);
   assert.match(html, /id="intol-main"/);
   assert.match(html, /id="comment-main"/);
-  assert.match(html, /onclick="addCompanion\(\)"/);
+  assert.match(html, /data-rsvp-action="add-companion"/);
+  assert.match(html, /data-rsvp-action="start"/);
+  assert.match(html, /data-rsvp-action="submit"/);
+  assert.match(html, /rsvpSection\.addEventListener\('click'/);
   assert.match(html, /window\.addCompanion = function\(\)/);
   assert.match(html, /comp-name-/);
   assert.match(html, /comp-intol-/);

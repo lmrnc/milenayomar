@@ -282,7 +282,7 @@
         <input type="email" id="guest-email" class="form-input" placeholder="tu@email.com" autocomplete="email" required>
       </div>
       <input type="text" id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
-      <button type="button" class="btn-submit" id="btn-rsvp-start" onclick="startRSVP()">Continuar</button>
+      <button type="button" class="btn-submit" id="btn-rsvp-start" data-rsvp-action="start">Continuar</button>
       <p id="start-error" aria-live="polite" style="display:none; margin-top:0.5rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
@@ -303,8 +303,8 @@
         <div class="form-group">
           <label class="form-label">¿Asistirás a la boda?</label>
           <div style="display:flex; gap:0.8rem; margin-top:0.8rem; flex-wrap:wrap;">
-            <button type="button" class="btn-choice" id="btn-si-main" onclick="setMainChoice('si')">Sí, allí estaré 🥂</button>
-            <button type="button" class="btn-choice" id="btn-no-main" onclick="setMainChoice('no')">No podré ir</button>
+            <button type="button" class="btn-choice" id="btn-si-main" data-rsvp-action="main-choice" data-choice="si">Sí, allí estaré 🥂</button>
+            <button type="button" class="btn-choice" id="btn-no-main" data-rsvp-action="main-choice" data-choice="no">No podré ir</button>
           </div>
         </div>
         <div class="form-group" style="margin-top:1rem;">
@@ -321,14 +321,14 @@
       <div id="companions-container"></div>
 
       <!-- Botón añadir acompañante -->
-      <button type="button" class="btn-add-companion" onclick="addCompanion()">
+      <button type="button" class="btn-add-companion" data-rsvp-action="add-companion">
         + Añadir acompañante
       </button>
 
-      <button type="button" class="btn-submit" id="btn-send" onclick="submitRSVP()" style="margin-top:2rem;">
+      <button type="button" class="btn-submit" id="btn-send" data-rsvp-action="submit" style="margin-top:2rem;">
         Enviar confirmación
       </button>
-      <button type="button" class="btn-secondary" onclick="backToRsvpStart()">Volver a mis datos</button>
+      <button type="button" class="btn-secondary" data-rsvp-action="back">Volver a mis datos</button>
       <p id="send-error" aria-live="polite" style="display:none; margin-top:1rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
@@ -678,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function() {
           '<p class="rsvp-card-tag">Acompañante</p>' +
           '<p class="rsvp-card-name" style="font-size:1.35rem;margin-bottom:0;">Datos del acompañante</p>' +
         '</div>' +
-        '<button type="button" class="remove-companion" onclick="removeCompanion(' + id + ')">✕</button>' +
+        '<button type="button" class="remove-companion" data-rsvp-action="remove-companion" data-companion-id="' + id + '">✕</button>' +
       '</div>' +
       '<div class="form-group" style="position:relative;">' +
         '<label class="form-label" for="comp-name-' + id + '">Nombre</label>' +
@@ -687,8 +687,8 @@ document.addEventListener('DOMContentLoaded', function() {
       '<div class="form-group" style="margin-top:1rem;">' +
         '<label class="form-label">¿Asistirá?</label>' +
         '<div style="display:flex;gap:0.8rem;margin-top:0.7rem;flex-wrap:wrap;">' +
-          '<button type="button" class="btn-choice" id="comp-si-' + id + '" onclick="setCompChoice(' + id + ',\'si\')">Sí</button>' +
-          '<button type="button" class="btn-choice" id="comp-no-' + id + '" onclick="setCompChoice(' + id + ',\'no\')">No podrá</button>' +
+          '<button type="button" class="btn-choice" id="comp-si-' + id + '" data-rsvp-action="comp-choice" data-companion-id="' + id + '" data-choice="si">Sí</button>' +
+          '<button type="button" class="btn-choice" id="comp-no-' + id + '" data-rsvp-action="comp-choice" data-companion-id="' + id + '" data-choice="no">No podrá</button>' +
         '</div>' +
       '</div>' +
       '<div class="form-group" style="margin-top:1rem;">' +
@@ -782,9 +782,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  var startButton = document.getElementById('btn-rsvp-start');
-  if (startButton) {
-    startButton.addEventListener('click', window.startRSVP);
+  var rsvpSection = document.getElementById('confirmacion');
+  if (rsvpSection) {
+    rsvpSection.addEventListener('click', function(event) {
+      var button = event.target.closest('[data-rsvp-action]');
+      if (!button) return;
+
+      var action = button.getAttribute('data-rsvp-action');
+      if (action === 'start') window.startRSVP();
+      if (action === 'back') window.backToRsvpStart();
+      if (action === 'add-companion') window.addCompanion();
+      if (action === 'submit') window.submitRSVP();
+      if (action === 'main-choice') window.setMainChoice(button.getAttribute('data-choice'));
+      if (action === 'comp-choice') window.setCompChoice(Number(button.getAttribute('data-companion-id')), button.getAttribute('data-choice'));
+      if (action === 'remove-companion') window.removeCompanion(Number(button.getAttribute('data-companion-id')));
+    });
   }
 
 }); // end DOMContentLoaded
