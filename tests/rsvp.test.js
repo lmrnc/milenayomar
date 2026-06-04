@@ -18,10 +18,11 @@ test('HTML submits RSVP to a configurable Google Apps Script endpoint', () => {
 
   assert.match(html, /var RSVP_ENDPOINT = 'https:\/\/script\.google\.com\/macros\/s\/[^']+\/exec';/);
   assert.doesNotMatch(html, /PASTE_GOOGLE_APPS_SCRIPT_EXEC_URL_HERE/);
-  assert.match(html, /fetch\(RSVP_ENDPOINT, \{/);
-  assert.match(html, /mode: 'no-cors'/);
-  assert.match(html, /'Content-Type': 'application\/x-www-form-urlencoded'/);
-  assert.match(html, /body: encodeForm\(formPayload\)/);
+  assert.match(html, /function postToHiddenFrame\(data\)/);
+  assert.match(html, /form\.action = RSVP_ENDPOINT/);
+  assert.match(html, /form\.target = frameName/);
+  assert.match(html, /postToHiddenFrame\(formPayload\)/);
+  assert.doesNotMatch(html, /fetch\(RSVP_ENDPOINT/);
 });
 
 test('HTML sends the expected Sheet fields without exposing guest lookup logic', () => {

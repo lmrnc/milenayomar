@@ -603,6 +603,42 @@ document.addEventListener('DOMContentLoaded', function() {
     }).join('&');
   }
 
+  function showRsvpSuccess() {
+    document.getElementById('rsvp-step-2').style.display = 'none';
+    var s3 = document.getElementById('rsvp-step-3');
+    s3.style.display = 'block';
+    s3.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function postToHiddenFrame(data) {
+    var frameName = 'rsvp-submit-frame';
+    var frame = document.querySelector('iframe[name="' + frameName + '"]');
+    if (!frame) {
+      frame = document.createElement('iframe');
+      frame.name = frameName;
+      frame.style.display = 'none';
+      document.body.appendChild(frame);
+    }
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = RSVP_ENDPOINT;
+    form.target = frameName;
+    form.style.display = 'none';
+
+    Object.keys(data).forEach(function(key) {
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = data[key];
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+    form.remove();
+  }
+
   function formatCompanions() {
     if (!companions.length) return '';
     return companions.map(function(c, index) {
@@ -764,23 +800,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    fetch(RSVP_ENDPOINT, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encodeForm(formPayload)
-    }).then(function(response) {
-      if (response.type !== 'opaque' && !response.ok) throw new Error('No se pudo enviar la confirmación.');
-    }).then(function() {
-      document.getElementById('rsvp-step-2').style.display = 'none';
-      var s3 = document.getElementById('rsvp-step-3');
-      s3.style.display = 'block';
-      s3.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }).catch(function(error) {
-      showError(errEl, error.message || 'Hubo un error al enviar. Por favor inténtalo de nuevo.');
-      btn.textContent = 'Enviar confirmación';
-      btn.disabled = false;
-    });
+    postToHiddenFrame(formPayload);
+    setTimeout(showRsvpSuccess, 900);
+    return;
   };
 
   var rsvpSection = document.getElementById('confirmacion');
