@@ -269,9 +269,9 @@
     <!-- STEP 1: datos del invitado -->
     <div id="rsvp-step-1" class="confirm-form reveal">
       <div>
-        <p class="rsvp-step-kicker">Paso 1 de 2</p>
+        <p class="rsvp-step-kicker">Confirmacion</p>
         <p class="rsvp-step-title">Tus datos</p>
-        <p class="rsvp-step-help">Primero dinos quien confirma. En el siguiente paso podrás indicar asistencia, acompañantes, intolerancias y comentarios.</p>
+        <p class="rsvp-step-help">Indica quien confirma y completa los datos de asistencia justo debajo.</p>
       </div>
       <div class="form-group">
         <label class="form-label" for="guest-name">Nombre y apellidos</label>
@@ -282,13 +282,12 @@
         <input type="email" id="guest-email" class="form-input" placeholder="tu@email.com" autocomplete="email" required>
       </div>
       <input type="text" id="rsvp-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
-      <button type="button" class="btn-submit" id="btn-rsvp-start" data-rsvp-action="start">Continuar</button>
       <p id="start-error" aria-live="polite" style="display:none; margin-top:0.5rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
-    <!-- STEP 2: formulario -->
-    <div id="rsvp-step-2" style="display:none; width:100%; max-width:500px;">
-      <p class="rsvp-step-kicker">Paso 2 de 2</p>
+    <!-- Datos de asistencia -->
+    <div id="rsvp-step-2" style="display:block; width:100%; max-width:500px; margin-top:2rem;">
+      <p class="rsvp-step-kicker">Asistencia</p>
       <p class="rsvp-step-title">Datos de asistencia</p>
       <p class="rsvp-step-help">Completa tu confirmación y añade acompañantes si vienen contigo. Cada acompañante puede tener sus propias intolerancias o comentarios.</p>
 
@@ -297,7 +296,7 @@
         <div class="rsvp-card-header">
           <div>
             <p class="rsvp-card-tag">Invitado/a principal</p>
-            <p class="rsvp-card-name" id="card-main-name"></p>
+            <p class="rsvp-card-name" id="card-main-name">Tu asistencia</p>
           </div>
         </div>
         <div class="form-group">
@@ -328,7 +327,6 @@
       <button type="button" class="btn-submit" id="btn-send" data-rsvp-action="submit" style="margin-top:2rem;">
         Enviar confirmación
       </button>
-      <button type="button" class="btn-secondary" data-rsvp-action="back">Volver a mis datos</button>
       <p id="send-error" aria-live="polite" style="display:none; margin-top:1rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
@@ -635,17 +633,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     selectedGuest = { name: name };
     selectedEmail = email;
-    mainChoice = null;
-    companions = [];
-    companionCount = 0;
 
-    document.getElementById('rsvp-step-1').style.display = 'none';
     document.getElementById('card-main-name').textContent = name;
-    document.getElementById('btn-si-main').className = 'btn-choice';
-    document.getElementById('btn-no-main').className = 'btn-choice';
-    document.getElementById('intol-main').value = '';
-    document.getElementById('comment-main').value = '';
-    document.getElementById('companions-container').innerHTML = '';
     clearError(document.getElementById('send-error'));
 
     var step2 = document.getElementById('rsvp-step-2');
@@ -719,10 +708,19 @@ document.addEventListener('DOMContentLoaded', function() {
   window.submitRSVP = function() {
     var errEl = document.getElementById('send-error');
     var btn = document.getElementById('btn-send');
+    var name = document.getElementById('guest-name').value.trim();
+    var email = document.getElementById('guest-email').value.trim();
     clearError(errEl);
 
-    if (!selectedGuest || !selectedEmail) {
-      showError(errEl, 'Vuelve al paso anterior e indica tu nombre y email.');
+    if (document.getElementById('rsvp-website').value) return;
+    if (name.length < 3) {
+      showError(errEl, 'Por favor escribe tu nombre completo.');
+      document.getElementById('guest-name').focus();
+      return;
+    }
+    if (!isValidEmail(email)) {
+      showError(errEl, 'Por favor escribe un email válido.');
+      document.getElementById('guest-email').focus();
       return;
     }
     if (!mainChoice) {
@@ -748,8 +746,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var formPayload = {
       'bot-field': '',
-      guest: selectedGuest.name,
-      email: selectedEmail,
+      guest: name,
+      email: email,
       asistencia: mainChoice,
       intolerancias: document.getElementById('intol-main').value.trim(),
       comentarios: document.getElementById('comment-main').value.trim(),
@@ -796,6 +794,14 @@ document.addEventListener('DOMContentLoaded', function() {
       if (action === 'main-choice') window.setMainChoice(button.getAttribute('data-choice'));
       if (action === 'comp-choice') window.setCompChoice(Number(button.getAttribute('data-companion-id')), button.getAttribute('data-choice'));
       if (action === 'remove-companion') window.removeCompanion(Number(button.getAttribute('data-companion-id')));
+    });
+  }
+
+  var guestNameInput = document.getElementById('guest-name');
+  if (guestNameInput) {
+    guestNameInput.addEventListener('input', function() {
+      var label = guestNameInput.value.trim() || 'Tu asistencia';
+      document.getElementById('card-main-name').textContent = label;
     });
   }
 

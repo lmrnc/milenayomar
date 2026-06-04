@@ -27,8 +27,10 @@ test('HTML submits RSVP to a configurable Google Apps Script endpoint', () => {
 test('HTML sends the expected Sheet fields without exposing guest lookup logic', () => {
   const html = readHtml();
 
-  assert.match(html, /guest: selectedGuest\.name/);
-  assert.match(html, /email: selectedEmail/);
+  assert.match(html, /var name = document\.getElementById\('guest-name'\)\.value\.trim\(\)/);
+  assert.match(html, /var email = document\.getElementById\('guest-email'\)\.value\.trim\(\)/);
+  assert.match(html, /guest: name/);
+  assert.match(html, /email: email/);
   assert.match(html, /asistencia: mainChoice/);
   assert.match(html, /intolerancias: document\.getElementById\('intol-main'\)/);
   assert.match(html, /comentarios: document\.getElementById\('comment-main'\)/);
@@ -42,14 +44,14 @@ test('HTML sends the expected Sheet fields without exposing guest lookup logic',
 test('HTML exposes the second RSVP step with attendance details and companions', () => {
   const html = readHtml();
 
-  assert.match(html, /Paso 2 de 2/);
+  assert.match(html, /id="rsvp-step-2" style="display:block;/);
   assert.match(html, /Datos de asistencia/);
   assert.match(html, /id="intol-main"/);
   assert.match(html, /id="comment-main"/);
   assert.match(html, /data-rsvp-action="add-companion"/);
-  assert.match(html, /data-rsvp-action="start"/);
   assert.match(html, /data-rsvp-action="submit"/);
   assert.match(html, /rsvpSection\.addEventListener\('click'/);
+  assert.match(html, /var name = document\.getElementById\('guest-name'\)\.value\.trim\(\)/);
   assert.match(html, /window\.addCompanion = function\(\)/);
   assert.match(html, /comp-name-/);
   assert.match(html, /comp-intol-/);
