@@ -6,7 +6,7 @@
 <title>Milena & Omar — 09.04.2027</title>
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&family=Parisienne&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -135,7 +135,7 @@
   .rsvp-step-kicker { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(254,252,252,0.42); margin-bottom: 0.4rem; }
   .rsvp-step-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--white); margin-bottom: 0.6rem; }
   .rsvp-step-help { font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: rgba(254,252,252,0.58); margin-bottom: 1.5rem; max-width: 500px; }
-  .rsvp-details { display: none; width: 100%; max-width: 500px; margin-top: 2rem; scroll-margin-top: 2rem; }
+    .rsvp-details { display: none; width: 100%; max-width: 500px; margin-top: 2rem; scroll-margin-top: 2rem; }
   .rsvp-details:target, .rsvp-details.is-open { display: block; }
   .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
   .form-label { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(254,252,252,0.45); }
@@ -194,6 +194,452 @@
   .btn-add-companion:hover { border-color: rgba(254,252,252,0.4); color: rgba(254,252,252,0.8); }
   .remove-companion { background: transparent; border: none; color: rgba(254,252,252,0.3); font-size: 1rem; cursor: pointer; padding: 0 0.3rem; line-height: 1; transition: color 0.2s; }
   .remove-companion:hover { color: rgba(254,252,252,0.7); }
+
+  /* ── Diseño invitación MO ── */
+  :root {
+    --paper: #f7f6f1;
+    --paper-soft: #efeee8;
+    --ink: #174c78;
+    --ink-deep: #0f385c;
+    --botanical-red: #9b4053;
+    --botanical-green: #263f17;
+    --line: rgba(23,76,120,0.22);
+    --shadow-paper: 0 28px 80px rgba(22,32,36,0.16);
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink-deep);
+  }
+
+  .vichy::after,
+  .vichy-inv::after {
+    display: none;
+  }
+
+  nav {
+    width: 72px;
+    background: rgba(247,246,241,0.94);
+    border-right: 1px solid rgba(23,76,120,0.18);
+    backdrop-filter: blur(10px);
+  }
+
+  nav a,
+  .mobile-nav a {
+    color: var(--ink);
+    opacity: 0.62;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: var(--botanical-red);
+  }
+
+  nav .dot {
+    background: var(--botanical-red);
+    opacity: 0.45;
+  }
+
+  main,
+  footer {
+    margin-left: 72px;
+  }
+
+  section {
+    min-height: 100vh;
+    padding: clamp(4rem, 8vw, 7rem);
+  }
+
+  .section-label {
+    color: var(--ink);
+    opacity: 0.64;
+  }
+
+  .section-title {
+    color: var(--ink-deep);
+  }
+
+  .section-title em,
+  .hero-title em,
+  .hero-name-omar {
+    color: var(--ink);
+  }
+
+  #inicio {
+    padding: clamp(2rem, 5vw, 5rem);
+    justify-content: center;
+    background-color: #fff;
+    background-image: linear-gradient(rgba(255,255,255,0.34), rgba(255,255,255,0.34)), url('assets/rojo.webp');
+    background-size: min(760px, 115vw) auto;
+    background-position: center;
+  }
+
+  #inicio > div {
+    width: min(760px, 92vw);
+    min-height: min(620px, calc(100vh - 5rem));
+    padding: clamp(3rem, 8vw, 6rem) clamp(2rem, 6vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+      linear-gradient(rgba(247,246,241,0.99), rgba(247,246,241,0.99)) padding-box,
+      linear-gradient(135deg, rgba(23,76,120,0.48), rgba(23,76,120,0.08), rgba(23,76,120,0.48)) border-box;
+    border: 1px solid transparent;
+    box-shadow: var(--shadow-paper);
+  }
+
+  #inicio > div::before,
+  #inicio > div::after {
+    content: '';
+    width: min(260px, 46vw);
+    height: 1px;
+    background: rgba(23,76,120,0.38);
+  }
+
+  #inicio > div::before { margin-bottom: clamp(2.5rem, 7vh, 5rem); }
+  #inicio > div::after { margin-top: clamp(2.5rem, 7vh, 5rem); }
+
+  .floral {
+    display: none;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 1.8rem;
+    color: var(--ink) !important;
+    opacity: 1;
+    font-size: 0.68rem;
+    letter-spacing: 0.32em;
+    animation: none;
+  }
+
+  .hero-title {
+    color: var(--ink) !important;
+    font-family: 'Parisienne', 'Cormorant Garamond', serif;
+    font-size: clamp(4.2rem, 11vw, 7.8rem);
+    line-height: 0.92;
+    animation: none;
+  }
+
+  .hero-ampersand {
+    color: var(--ink) !important;
+    font-family: 'Parisienne', 'Cormorant Garamond', serif;
+    font-size: clamp(2.3rem, 6vw, 4rem);
+    margin: 0.1em 0;
+  }
+
+  .hero-date {
+    margin-top: 2.4rem;
+    color: var(--ink-deep) !important;
+    opacity: 1;
+    letter-spacing: 0.26em;
+    animation: none;
+  }
+
+  #confirmacion,
+  #lugar {
+    background-color: #fff;
+    background-image: linear-gradient(rgba(255,255,255,0.64), rgba(255,255,255,0.64)), url('assets/verde.webp');
+    background-size: min(780px, 120vw) auto;
+    background-position: center;
+    align-items: center;
+  }
+
+  #confirmacion > .section-label,
+  #confirmacion > .section-title,
+  #confirmacion > .confirm-text,
+  #confirmacion > form,
+  #confirmacion > #rsvp-step-3 {
+    width: min(760px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #confirmacion > .section-label,
+  #confirmacion > .section-title,
+  #confirmacion > .confirm-text {
+    text-align: center;
+  }
+
+  #confirmacion .section-label,
+  #confirmacion .section-title,
+  #lugar .section-title,
+  #nosotros .section-title {
+    color: var(--ink);
+  }
+
+  #confirmacion .section-title em,
+  #lugar .section-title em {
+    color: var(--ink);
+  }
+
+  .confirm-text {
+    color: var(--ink-deep);
+    max-width: 620px;
+    margin-bottom: 2.2rem;
+  }
+
+  #rsvp-form,
+  .confirm-form,
+  .rsvp-details,
+  #rsvp-step-3 {
+    max-width: 760px !important;
+  }
+
+  #rsvp-form,
+  #rsvp-step-3,
+  .contact-card,
+  .timeline,
+  .placeholder-img {
+    background: rgba(247,246,241,0.99);
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 46px rgba(38,63,23,0.14);
+  }
+
+  #rsvp-form {
+    padding: clamp(1.6rem, 4vw, 3rem);
+  }
+
+  .confirm-form {
+    gap: 1.25rem;
+  }
+
+  .rsvp-step-kicker,
+  .rsvp-card-tag,
+  .form-label,
+  .detail-label,
+  .contact-link-label,
+  .countdown-label {
+    color: rgba(23,76,120,0.82);
+  }
+
+  .rsvp-step-title,
+  .rsvp-card-name,
+  .detail-value,
+  .timeline-event,
+  .contact-card-name {
+    color: var(--ink);
+  }
+
+  .rsvp-step-title,
+  .contact-card-role {
+    font-family: 'Parisienne', 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 3.5rem);
+  }
+
+  .rsvp-step-help,
+  .nos-body,
+  .timeline-desc {
+    color: rgba(15,56,92,0.74);
+  }
+
+  .form-input,
+  .form-textarea {
+    color: var(--ink-deep);
+    border-bottom-color: rgba(23,76,120,0.38);
+  }
+
+  .form-input::placeholder {
+    color: rgba(23,76,120,0.56);
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    border-bottom-color: var(--botanical-red);
+  }
+
+  .btn-submit,
+  .btn-add-companion,
+  .btn-choice {
+    color: var(--ink);
+    border-color: rgba(23,76,120,0.52);
+    background: transparent;
+  }
+
+  .btn-submit:hover,
+  .btn-add-companion:hover,
+  .btn-choice:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .btn-choice.selected-si,
+  .btn-choice.selected-no {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .rsvp-card {
+    background: rgba(255,255,255,0.7);
+    border-color: rgba(23,76,120,0.18);
+  }
+
+  .remove-companion {
+    color: rgba(23,76,120,0.42);
+  }
+
+  .remove-companion:hover {
+    color: var(--botanical-red);
+  }
+
+  #rsvp-step-3 {
+    padding: clamp(2rem, 5vw, 4rem);
+    text-align: center;
+  }
+
+  #rsvp-step-3 p:first-child {
+    color: var(--ink) !important;
+    font-family: 'Parisienne', 'Cormorant Garamond', serif !important;
+    font-size: clamp(3rem, 8vw, 5rem) !important;
+  }
+
+  #rsvp-step-3 p:last-child {
+    color: rgba(15,56,92,0.72) !important;
+  }
+
+  #nosotros {
+    background: var(--paper);
+  }
+
+  .placeholder-img {
+    background-image: url('assets/rojo.webp');
+    background-size: 520px auto;
+    border: 12px solid var(--paper);
+    outline: 1px solid var(--line);
+  }
+
+  .placeholder-img span {
+    color: var(--ink);
+    background: rgba(247,246,241,0.92);
+    padding: 0.45rem 0.8rem;
+  }
+
+  #fecha,
+  #programa,
+  #contacto {
+    background: var(--paper-soft);
+  }
+
+  .fecha-watermark,
+  .countdown-number,
+  .timeline-time,
+  .contact-quote {
+    color: var(--ink);
+  }
+
+  .timeline {
+    padding: clamp(2rem, 4vw, 3.2rem);
+    max-width: 760px;
+  }
+
+  .timeline-dot {
+    background: var(--botanical-red);
+  }
+
+  .timeline-item::after {
+    background: rgba(23,76,120,0.18);
+  }
+
+  #lugar {
+    color: var(--ink);
+  }
+
+  .lugar-map {
+    background: rgba(247,246,241,0.94);
+    border-color: var(--line);
+    box-shadow: 0 18px 46px rgba(38,63,23,0.14);
+  }
+
+  .map-pin-dot {
+    background: var(--botanical-red);
+  }
+
+  .map-pin-dot::after {
+    border-color: var(--botanical-red);
+  }
+
+  .map-pin-text {
+    color: var(--ink);
+  }
+
+  .detail-row {
+    border-bottom-color: rgba(23,76,120,0.18);
+  }
+
+  .detail-icon {
+    opacity: 0.72;
+  }
+
+  .contact-card {
+    background: rgba(247,246,241,0.96);
+  }
+
+  footer,
+  .mobile-nav {
+    background: var(--paper);
+    border-color: rgba(23,76,120,0.18);
+  }
+
+  .footer-names,
+  .footer-date,
+  .contact-link,
+  .contact-link-value {
+    color: var(--ink);
+  }
+
+  @media (max-width: 768px) {
+    main,
+    footer {
+      margin-left: 0;
+    }
+
+    section {
+      padding: 5rem 1.25rem;
+    }
+
+    #inicio {
+      padding: 1rem;
+      background-size: 640px auto;
+    }
+
+    #inicio > div {
+      min-height: calc(100vh - 2rem);
+      width: 100%;
+      padding: 2.2rem 1.2rem;
+    }
+
+    .hero-title {
+      font-size: clamp(3.6rem, 18vw, 5.4rem);
+    }
+
+    .hero-date {
+      letter-spacing: 0.16em;
+      line-height: 1.8;
+    }
+
+    #confirmacion {
+      padding-bottom: 6rem;
+    }
+
+    #rsvp-form {
+      padding: 1.35rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .mobile-nav {
+      overflow-x: auto;
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+  }
 </style>
 </head>
 <body>
@@ -315,7 +761,7 @@
         </div>
         <div class="form-group" style="margin-top:1rem;">
           <label class="form-label">Intolerancias o alergias alimentarias</label>
-          <input type="text" id="intol-main" name="intolerancias" class="form-input" placeholder="Ej: sin gluten, alérgico a frutos secos...">
+          <input type="text" id="intol-main" name="intolerancias" class="form-input" placeholder="Ej: sin gluten, frutos secos...">
         </div>
         <div class="form-group" style="margin-top:1rem;">
           <label class="form-label">Comentarios</label>
@@ -658,7 +1104,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var step2 = document.getElementById('rsvp-step-2');
     step2.classList.add('is-open');
-    step2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return true;
   };
 
