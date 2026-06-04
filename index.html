@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Milena & Omar — 09.04.2027</title>
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
@@ -612,6 +613,11 @@ document.addEventListener('DOMContentLoaded', function() {
     s3.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  function cleanupSubmitFrame() {
+    var frame = document.querySelector('iframe[name="rsvp-submit-frame"]');
+    if (frame) frame.remove();
+  }
+
   function formatCompanions() {
     if (!companions.length) return '';
     return companions.map(function(c, index) {
@@ -768,6 +774,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('acompanantes-field').value = formatCompanions();
     btn.textContent = 'Enviando...';
     btn.disabled = true;
+    setTimeout(cleanupSubmitFrame, 250);
     setTimeout(showRsvpSuccess, 900);
   }
 
