@@ -1,14 +1,16 @@
 const CONFIG = {
-  SHEET_NAME: 'Hoja 1',
-  HEADERS: [
-    'guest',
-    'guest_link',
-    'Asistencia',
-    'Intoleracias',
-    'Comentarios',
-    'Email',
-    'ConfirmadoPor',
+  RSVP_SHEET_NAME: 'RSVP_Web',
+  RSVP_HEADERS: [
     'Timestamp',
+    'Nombre',
+    'Email',
+    'Asistencia',
+    'Intolerancias',
+    'Comentarios',
+    'Acompanantes',
+    'Estado',
+    'ValidadoCon',
+    'Notas',
     'Source'
   ]
 };
@@ -18,13 +20,11 @@ function doPost(e) {
     const payload = parsePayload_(e);
     validatePayload_(payload);
 
-    const sheet = getSheet_();
+    const sheet = getOrCreateRsvpSheet_();
     ensureHeaders_(sheet);
+    const rowNumber = appendRsvp_(sheet, buildRsvpRow_(payload));
 
-    const rows = buildRows_(payload);
-    const results = rows.map((row) => upsertGuest_(sheet, row));
-
-    return json_({ ok: true, results });
+    return json_({ ok: true, status: 'recorded', rowNumber });
   } catch (error) {
     return json_({ ok: false, error: error.message });
   }
@@ -64,143 +64,52 @@ function validatePayload_(payload) {
   if (!payload.asistencia) throw new Error('Missing asistencia');
 }
 
-function getSheet_() {
+function getOrCreateRsvpSheet_() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = spreadsheet.getSheetByName(CONFIG.SHEET_NAME) || spreadsheet.getSheets()[0];
-  if (!sheet) throw new Error('Sheet not found');
+  let sheet = spreadsheet.getSheetByName(CONFIG.RSVP_SHEET_NAME);
+  if (!sheet) sheet = spreadsheet.insertSheet(CONFIG.RSVP_SHEET_NAME);
   return sheet;
 }
 
 function ensureHeaders_(sheet) {
-  const width = Math.max(sheet.getLastColumn(), CONFIG.HEADERS.length);
+  const width = Math.max(sheet.getLastColumn(), CONFIG.RSVP_HEADERS.length);
   const current = sheet.getRange(1, 1, 1, width).getValues()[0];
 
-  CONFIG.HEADERS.forEach((header, index) => {
+  CONFIG.RSVP_HEADERS.forEach((header, index) => {
     if (!current[index]) {
       sheet.getRange(1, index + 1).setValue(header);
     }
   });
 }
 
-function buildRows_(payload) {
-  const now = new Date();
-  const mainGuest = payload.guest.trim();
-  const rows = [{
-    guest: mainGuest,
-    guest_link: '',
-    asistencia: normalizeAttendance_(payload.asistencia),
-    intoleracias: payload.intolerancias || '',
-    comentarios: payload.comentarios || '',
-    email: payload.email || '',
-    confirmadoPor: mainGuest,
-    timestamp: now,
-    source: 'web'
-  }];
-
-  parseCompanions_(payload.acompanantes).forEach((companion) => {
-    rows.push({
-      guest: companion.guest,
-      guest_link: mainGuest,
-      asistencia: normalizeAttendance_(companion.asistencia),
-      intoleracias: companion.intolerancias,
-      comentarios: companion.comentarios,
-      email: payload.email || '',
-      confirmadoPor: mainGuest,
-      timestamp: now,
-      source: 'web-companion'
-    });
-  });
-
-  return rows;
+function buildRsvpRow_(payload) {
+  return [
+    new Date(),
+    payload.guest.trim(),
+    payload.email || '',
+    normalizeAttendanceLabel_(payload.asistencia),
+    payload.intolerancias || '',
+    payload.comentarios || '',
+    payload.acompanantes || '',
+    'pendiente',
+    '',
+    '',
+    'web'
+  ];
 }
 
-function parseCompanions_(text) {
-  if (!text) return [];
-
-  return text.split(/\n{2,}/).map((block) => {
-    const guest = matchLine_(block, /Nombre:\s*(.+)/i);
-    if (!guest) return null;
-
-    return {
-      guest,
-      asistencia: matchLine_(block, /Asistencia:\s*(.+)/i) || '',
-      intolerancias: emptyDash_(matchLine_(block, /Intolerancias:\s*(.*)/i)),
-      comentarios: emptyDash_(matchLine_(block, /Comentarios:\s*(.*)/i))
-    };
-  }).filter(Boolean);
+function appendRsvp_(sheet, row) {
+  const targetRow = sheet.getLastRow() + 1;
+  sheet.getRange(targetRow, 1, 1, row.length).setValues([row]);
+  return targetRow;
 }
 
-function matchLine_(text, regex) {
-  const match = text.match(regex);
-  return match ? match[1].trim() : '';
-}
-
-function emptyDash_(value) {
-  return value === '-' ? '' : value;
-}
-
-function normalizeAttendance_(value) {
+function normalizeAttendanceLabel_(value) {
   const normalized = String(value || '').toLowerCase().trim();
-  return normalized === 'si' || normalized === 'sí' || normalized === 'true' || normalized === 'yes';
-}
-
-function upsertGuest_(sheet, row) {
-  const headerMap = getHeaderMap_(sheet);
-  const rowNumber = findGuestRow_(sheet, row.guest);
-  const values = sheet.getRange(rowNumber || sheet.getLastRow() + 1, 1, 1, sheet.getLastColumn()).getValues()[0];
-
-  setValue_(values, headerMap, 'guest', row.guest);
-  setValue_(values, headerMap, 'guest_link', row.guest_link);
-  setValue_(values, headerMap, 'Asistencia', row.asistencia);
-  setValue_(values, headerMap, 'Intoleracias', row.intoleracias);
-  setValue_(values, headerMap, 'Comentarios', row.comentarios);
-  setValue_(values, headerMap, 'Email', row.email);
-  setValue_(values, headerMap, 'ConfirmadoPor', row.confirmadoPor);
-  setValue_(values, headerMap, 'Timestamp', row.timestamp);
-  setValue_(values, headerMap, 'Source', row.source);
-
-  const targetRow = rowNumber || sheet.getLastRow() + 1;
-  sheet.getRange(targetRow, 1, 1, values.length).setValues([values]);
-
-  return {
-    guest: row.guest,
-    status: rowNumber ? 'updated' : 'added'
-  };
-}
-
-function getHeaderMap_(sheet) {
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  return headers.reduce((acc, header, index) => {
-    if (header) acc[String(header).trim()] = index;
-    return acc;
-  }, {});
-}
-
-function findGuestRow_(sheet, guestName) {
-  const lastRow = sheet.getLastRow();
-  if (lastRow < 2) return null;
-
-  const names = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
-  const needle = normalizeName_(guestName);
-
-  for (let i = 0; i < names.length; i++) {
-    if (normalizeName_(names[i][0]) === needle) return i + 2;
+  if (normalized === 'si' || normalized === 'sí' || normalized === 'sÃ­' || normalized === 'true' || normalized === 'yes') {
+    return 'Si';
   }
-
-  return null;
-}
-
-function normalizeName_(value) {
-  return String(value || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim();
-}
-
-function setValue_(values, headerMap, header, value) {
-  if (headerMap[header] === undefined) return;
-  values[headerMap[header]] = value;
+  return 'No';
 }
 
 function json_(data) {

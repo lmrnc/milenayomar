@@ -6,7 +6,7 @@ Landing page estatica para la boda.
 
 El RSVP escribe en Google Sheets mediante Google Apps Script.
 
-La lista de invitados no se publica en el frontend ni se guarda en el repo, porque el repositorio es publico.
+La lista de invitados no se publica en el frontend ni se guarda en el repo, porque el repositorio es publico. El formulario tampoco actualiza automaticamente la lista oficial: cada envio se guarda en una pestana paralela para validarlo manualmente.
 
 ## Google Sheet
 
@@ -18,12 +18,21 @@ El CSV original `lista_invitados - Hoja 1.csv` tenia 91 filas y estas columnas:
 - `Intoleracias`
 - `Comentarios`
 
-El Apps Script conserva esas columnas y anade:
+El Apps Script no modifica esta lista desde la web. Crea o usa una pestana `RSVP_Web` con estas columnas:
 
-- `Email`
-- `ConfirmadoPor`
 - `Timestamp`
+- `Nombre`
+- `Email`
+- `Asistencia`
+- `Intolerancias`
+- `Comentarios`
+- `Acompanantes`
+- `Estado`
+- `ValidadoCon`
+- `Notas`
 - `Source`
+
+`Estado` empieza como `pendiente`. Despues se puede marcar manualmente como `validado`, `duplicado` o `descartado`, y usar `ValidadoCon` para apuntar al nombre exacto de la lista oficial.
 
 ## Configurar Apps Script
 

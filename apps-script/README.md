@@ -16,7 +16,7 @@ Este script se pega en una extension de Google Apps Script vinculada a la Google
 
 ## Columnas
 
-El CSV original tenia:
+El CSV original de invitados se mantiene como lista oficial y no se modifica automaticamente desde la web. Sus columnas eran:
 
 - `guest`
 - `guest_link`
@@ -24,12 +24,21 @@ El CSV original tenia:
 - `Intoleracias`
 - `Comentarios`
 
-El script conserva esas columnas y anade si faltan:
+El script crea o usa una pestana paralela `RSVP_Web` para recoger cada envio del formulario:
 
-- `Email`
-- `ConfirmadoPor`
 - `Timestamp`
+- `Nombre`
+- `Email`
+- `Asistencia`
+- `Intolerancias`
+- `Comentarios`
+- `Acompanantes`
+- `Estado`
+- `ValidadoCon`
+- `Notas`
 - `Source`
+
+Cada envio se guarda como una fila nueva con `Estado = pendiente`. La conciliacion con la lista oficial se hace manualmente para evitar sobrescrituras por nombres ambiguos o motes.
 
 ## Payload esperado
 

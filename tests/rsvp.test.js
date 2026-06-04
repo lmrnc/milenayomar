@@ -48,20 +48,23 @@ test('Apps Script handles POST, validates payload, and returns JSON', () => {
   assert.match(code, /ContentService\.MimeType\.JSON/);
 });
 
-test('Apps Script preserves original CSV columns and adds operational columns', () => {
+test('Apps Script records web RSVPs in a manual review sheet', () => {
   const code = readAppsScript();
 
-  ['guest', 'guest_link', 'Asistencia', 'Intoleracias', 'Comentarios', 'Email', 'ConfirmadoPor', 'Timestamp', 'Source']
+  assert.match(code, /RSVP_SHEET_NAME: 'RSVP_Web'/);
+  ['Timestamp', 'Nombre', 'Email', 'Asistencia', 'Intolerancias', 'Comentarios', 'Acompanantes', 'Estado', 'ValidadoCon', 'Notas', 'Source']
     .forEach((header) => assert.match(code, new RegExp("'" + header + "'")));
 });
 
-test('Apps Script upserts guests and parses companion blocks', () => {
+test('Apps Script appends each RSVP instead of upserting the official guest list', () => {
   const code = readAppsScript();
 
-  assert.match(code, /function upsertGuest_\(sheet, row\)/);
-  assert.match(code, /function findGuestRow_\(sheet, guestName\)/);
-  assert.match(code, /function parseCompanions_\(text\)/);
-  assert.match(code, /guest_link: mainGuest/);
+  assert.match(code, /function appendRsvp_\(sheet, row\)/);
+  assert.match(code, /status: 'recorded'/);
+  assert.match(code, /'pendiente'/);
+  assert.doesNotMatch(code, /function upsertGuest_/);
+  assert.doesNotMatch(code, /function findGuestRow_/);
+  assert.doesNotMatch(code, /guest_link/);
 });
 
 test('RSVP section appears immediately after the hero section', () => {
