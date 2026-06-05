@@ -249,14 +249,15 @@
     min-height: 100vh;
     padding: clamp(4rem, 8vw, 7rem);
     background-color: #fff;
-    background-image: linear-gradient(rgba(255,255,255,0.72), rgba(255,255,255,0.72)), url('assets/rojo.webp');
+    background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url('assets/rojo.webp');
     background-size: min(760px, 115vw) auto;
     background-position: center;
   }
 
   .section-label {
     color: var(--ink);
-    opacity: 0.64;
+    opacity: 0.82;
+    font-weight: 300;
   }
 
   .section-title {
@@ -344,7 +345,7 @@
   #confirmacion,
   #lugar {
     background-color: #fff;
-    background-image: linear-gradient(rgba(255,255,255,0.72), rgba(255,255,255,0.72)), url('assets/rojo.webp');
+    background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url('assets/rojo.webp');
     background-size: min(760px, 115vw) auto;
     background-position: center;
     align-items: center;
@@ -382,6 +383,12 @@
     color: var(--ink-deep);
     max-width: 620px;
     margin-bottom: 2.2rem;
+    font-weight: 400;
+  }
+
+  .confirm-text strong {
+    color: var(--botanical-red) !important;
+    font-weight: 600;
   }
 
   #rsvp-form,
@@ -415,7 +422,8 @@
   .detail-label,
   .contact-link-label,
   .countdown-label {
-    color: rgba(23,76,120,0.82);
+    color: rgba(15,56,92,0.92);
+    font-weight: 300;
   }
 
   .rsvp-step-title,
@@ -437,7 +445,8 @@
   .rsvp-step-help,
   .nos-body,
   .timeline-desc {
-    color: rgba(15,56,92,0.74);
+    color: rgba(15,56,92,0.88);
+    font-weight: 400;
   }
 
   .form-input,
@@ -509,7 +518,7 @@
   }
 
   #nosotros {
-    background-image: linear-gradient(rgba(255,255,255,0.72), rgba(255,255,255,0.72)), url('assets/rojo.webp');
+    background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url('assets/rojo.webp');
   }
 
   .placeholder-img {
@@ -527,7 +536,7 @@
   #fecha,
   #programa,
   #contacto {
-    background-image: linear-gradient(rgba(255,255,255,0.72), rgba(255,255,255,0.72)), url('assets/rojo.webp');
+    background-image: linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.78)), url('assets/rojo.webp');
   }
 
   .fecha-watermark,
@@ -535,6 +544,10 @@
   .timeline-time,
   .contact-quote {
     color: var(--ink);
+  }
+
+  .contact-quote {
+    opacity: 0.72;
   }
 
   .timeline {
