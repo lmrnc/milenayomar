@@ -725,10 +725,11 @@
   <!-- RSVP -->
   <section id="confirmacion" class="vichy vichy-inv">
     <p class="section-label reveal">01 — Confirmación</p>
-    <h2 class="section-title reveal">¿Vendrás a<br>nuestra <em>boda?</em></h2>
+    <h2 class="section-title reveal">¿Nos acompañas en<br>nuestro <em>gran día?</em></h2>
     <p class="confirm-text reveal">
-      Por favor, confirma tu asistencia antes del <strong style="color:var(--blush-light);">1 de marzo de 2027</strong>.
-      Tu presencia es el mejor regalo que nos puedes dar.
+      El amor lo ponemos nosotros; el día inolvidable, entre todos.
+      Confirma tu asistencia antes del <strong>1 de marzo de 2027</strong>
+      y ven a formar parte de este recuerdo.
     </p>
 
     <form id="rsvp-form" action="https://script.google.com/macros/s/AKfycbwBbBeac1I3ho_9Mv4TLGjnVv95flcjn2UDHM9Gme0bZij0xvqOfapUdmgoiiD-NAjN-A/exec" method="POST" target="rsvp-submit-frame" style="width:100%; max-width:500px;">
@@ -736,8 +737,8 @@
     <div id="rsvp-step-1" class="confirm-form reveal">
       <div>
         <p class="rsvp-step-kicker">Paso 1 de 2</p>
-        <p class="rsvp-step-title">Tus datos</p>
-        <p class="rsvp-step-help">Primero dinos quién confirma. Después podrás indicar asistencia, acompañantes, intolerancias y comentarios.</p>
+        <p class="rsvp-step-title">¿Quién nos dice “sí, voy”?</p>
+        <p class="rsvp-step-help">Cuéntanos quién confirma y, en el siguiente paso, podrás añadir asistencia, acompañantes, intolerancias o cualquier comentario.</p>
       </div>
       <div class="form-group">
         <label class="form-label" for="guest-name">Nombre y apellidos</label>
@@ -748,15 +749,15 @@
         <input type="email" id="guest-email" name="email" class="form-input" placeholder="tu@email.com" autocomplete="email" required>
       </div>
       <input type="text" id="rsvp-website" name="bot-field" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
-      <button type="button" class="btn-submit" id="btn-rsvp-start" data-rsvp-action="start">Continuar</button>
+      <button type="button" class="btn-submit" id="btn-rsvp-start" data-rsvp-action="start">Siguiente pasito</button>
       <p id="start-error" aria-live="polite" style="display:none; margin-top:0.5rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
 
     <!-- Datos de asistencia -->
     <div id="rsvp-step-2" class="rsvp-details">
       <p class="rsvp-step-kicker">Paso 2 de 2</p>
-      <p class="rsvp-step-title">Datos de asistencia</p>
-      <p class="rsvp-step-help">Completa tu confirmación y añade acompañantes si vienen contigo. Cada acompañante puede tener sus propias intolerancias o comentarios.</p>
+      <p class="rsvp-step-title">Tu asistencia</p>
+      <p class="rsvp-step-help">Ya casi está. Dinos si vienes, añade acompañantes si los hay y cuéntanos cualquier detalle que debamos tener en cuenta.</p>
 
       <!-- Tarjeta titular -->
       <div class="rsvp-card">
@@ -793,7 +794,7 @@
 
       <input type="hidden" id="acompanantes-field" name="acompanantes" value="">
       <button type="submit" class="btn-submit" id="btn-send" style="margin-top:2rem;">
-        Enviar confirmación
+        Enviar mi “sí, voy”
       </button>
       <p id="send-error" aria-live="polite" style="display:none; margin-top:1rem; font-size:0.8rem; color:#e88c8c;"></p>
     </div>
@@ -802,9 +803,10 @@
 
     <!-- STEP 3: éxito -->
     <div id="rsvp-step-3" style="display:none; max-width:500px;">
-      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2.2rem; line-height:1.4; color:var(--blush-light);">¡Gracias! 🌿</p>
-      <p style="margin-top:1rem; font-weight:300; font-size:1rem; line-height:1.8; color:rgba(254,252,252,0.6);">
-        Hemos recibido tu confirmación. <br>¡Te esperamos con los brazos abiertos!
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2.2rem; line-height:1.4;">¡Gracias! 🌿</p>
+      <p style="margin-top:1rem; font-weight:400; font-size:1rem; line-height:1.8;">
+        Tu confirmación ya forma parte de nuestro gran día.<br>
+        Nos vemos para celebrar, emocionarnos y bailar juntos.
       </p>
     </div>
   </section>
@@ -813,13 +815,13 @@
   <section id="nosotros" class="vichy vichy-inv">
     <div class="nos-text reveal">
       <p class="section-label">02 — Nuestra historia</p>
-      <h2 class="section-title">Dos <em>vidas</em><br>que se encuentran</h2>
+      <h2 class="section-title">Entre <em>destino</em><br>y casualidad</h2>
       <p class="nos-body">
-        Lo que comenzó como una historia ordinaria se convirtió en algo extraordinario.
-        Cada momento compartido nos acercó más hasta que supimos, con certeza,
-        que queríamos recorrer juntos el resto del camino.<br><br>
-        Ahora queremos celebrarlo rodeados de las personas que más queremos.
-        Os esperamos con los brazos abiertos.
+        No sabemos si fue destino o casualidad,
+        pero qué bonito fue encontrarnos.<br><br>
+        Desde entonces, hemos ido caminando juntos,
+        construyendo una historia con amor del bueno,
+        risas, cariño y muchos momentos que ya son parte de nosotros.
       </p>
     </div>
     <div class="nos-image reveal">
@@ -835,7 +837,7 @@
     <div class="fecha-watermark">09.04</div>
     <div class="fecha-content">
       <p class="section-label">03 — Cuándo</p>
-      <h2 class="section-title">Faltan</h2>
+      <h2 class="section-title">La cuenta atrás<br>empieza <em>aquí</em></h2>
       <div class="countdown">
         <div class="countdown-item">
           <span class="countdown-number" id="days">—</span>
@@ -861,6 +863,11 @@
     <div class="lugar-text reveal">
       <p class="section-label">04 — Dónde</p>
       <h2 class="section-title">Can Ribas<br>de <em>Montbui</em></h2>
+      <p class="nos-body" style="margin-top:0.5rem; margin-bottom:2rem; max-width:520px;">
+        El lugar elegido para nuestro gran día:
+        una masía con jardines, montaña y ese encanto que nos hizo decir
+        “aquí tiene que ser”.
+      </p>
       <div class="location-details">
         <div class="detail-row">
           <span class="detail-icon">📍</span>
@@ -873,7 +880,7 @@
           <span class="detail-icon">🚗</span>
           <div>
             <p class="detail-label">Cómo llegar</p>
-            <p class="detail-value">A 45 min de Barcelona ciudad<br>Parking disponible en el recinto</p>
+            <p class="detail-value">A unos 45 minutos de Barcelona ciudad.<br>Habrá parking disponible en el recinto<br>para quienes vengan en coche.<br>También habilitaremos guaguas de ida y vuelta<br>desde Barcelona, para que solo tengan<br>que preocuparse de disfrutar.</p>
           </div>
         </div>
         <div class="detail-row">
@@ -909,7 +916,7 @@
     </div>
     <div class="timeline reveal">
       <div class="timeline-item">
-        <span class="timeline-time">16:00</span>
+        <span class="timeline-time">16:30</span>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <p class="timeline-event">Llegada de invitados</p>
@@ -920,7 +927,7 @@
         <span class="timeline-time">17:00</span>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <p class="timeline-event">Ceremonia Civil</p>
+          <p class="timeline-event">Nuestro “sí, quiero”</p>
           <p class="timeline-desc">El momento que tanto esperamos. Ceremonia civil en el jardín principal bajo el cielo abierto.</p>
         </div>
       </div>
@@ -928,7 +935,7 @@
         <span class="timeline-time">18:30</span>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <p class="timeline-event">Cóctel & Aperitivos</p>
+          <p class="timeline-event">Cóctel y aperitivos</p>
           <p class="timeline-desc">Tiempo para compartir, celebrar y disfrutar de los aperitivos en la terraza.</p>
         </div>
       </div>
@@ -936,7 +943,7 @@
         <span class="timeline-time">20:00</span>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <p class="timeline-event">Banquete</p>
+          <p class="timeline-event">Cena</p>
           <p class="timeline-desc">Mesa y mantel en el salón principal con menú degustación.</p>
         </div>
       </div>
@@ -944,15 +951,15 @@
         <span class="timeline-time">23:00</span>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <p class="timeline-event">Corte de tarta & Baile</p>
+          <p class="timeline-event">Tarta, baile y fiesta</p>
           <p class="timeline-desc">¡Que empiece la fiesta! Primera pieza y pista de baile abierta.</p>
         </div>
       </div>
       <div class="timeline-item">
-        <span class="timeline-time">02:00</span>
+        <span class="timeline-time">02:30</span>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <p class="timeline-event">Despedida</p>
+          <p class="timeline-event">Hasta pronto</p>
           <p class="timeline-desc">Con el corazón lleno de alegría y buenos recuerdos. ¡Gracias!</p>
         </div>
       </div>
@@ -962,8 +969,8 @@
   <!-- CONTACTO -->
   <section id="contacto" class="vichy">
     <p class="section-label reveal">06 — Contacto</p>
-    <h2 class="section-title reveal">¿Tienes alguna<br><em>duda?</em></h2>
-    <p class="nos-body reveal" style="color:var(--stone); margin-bottom:3rem;">Para cualquier consulta, nuestra wedding planner estará encantada de ayudarte.</p>
+    <h2 class="section-title reveal">¿Tienen alguna<br><em>duda?</em></h2>
+    <p class="nos-body reveal" style="margin-bottom:3rem;">Nuestra wedding planner les ayudará con cualquier consulta sobre horarios, transporte, ubicación o detalles del día.</p>
     <div class="reveal" style="display:flex; gap:4vw; flex-wrap:wrap; align-items:flex-start;">
       <div class="contact-card">
         <p class="contact-card-role">Wedding Planner</p>
@@ -983,7 +990,7 @@
           </div>
         </a>
       </div>
-      <p class="contact-quote">"No hay pregunta pequeña cuando se trata de un día tan especial."</p>
+      <p class="contact-quote" style="display:none;">"No hay pregunta pequeña cuando se trata de un día tan especial."</p>
     </div>
   </section>
 

@@ -45,7 +45,7 @@ test('HTML exposes the second RSVP step with attendance details and companions',
   assert.match(html, /type="button" class="btn-submit" id="btn-rsvp-start" data-rsvp-action="start"/);
   assert.match(html, /\.rsvp-details:target, \.rsvp-details\.is-open \{ display: block; \}/);
   assert.match(html, /id="rsvp-step-2" class="rsvp-details"/);
-  assert.match(html, /Datos de asistencia/);
+  assert.match(html, /Tu asistencia/);
   assert.match(html, /id="intol-main"/);
   assert.match(html, /id="comment-main"/);
   assert.match(html, /data-rsvp-action="add-companion"/);
@@ -65,7 +65,7 @@ test('HTML does not render mojibake text artifacts', () => {
 
   assert.doesNotMatch(html, /Ã|Â|â|ð/);
   assert.match(html, /Confirmación/);
-  assert.match(html, /¿Vendrás/);
+  assert.match(html, /¿Nos acompañas/);
   assert.match(html, /Sí, allí estaré/);
   assert.match(html, /No podré ir/);
 });
