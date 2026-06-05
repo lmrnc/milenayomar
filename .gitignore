@@ -1,2 +1,11 @@
 apps-script/.clasp-project/
 .clasp.json
+
+# Runtime QA artefacts
+qa_shots/
+node_modules/
+package-lock.json
+
+# Media upload runtime files (created on the server, never versioned)
+_pepper.txt
+private_uploads/

@@ -1,0 +1,12 @@
+# This file is a template. Copy it to <PRIVATE_DIR>/.htaccess on the server,
+# alongside the actual private_uploads/ directory that lives OUTSIDE public_html.
+# private_uploads/ itself is not served by the web server (it sits outside the
+# document root) but this is defence-in-depth in case of misconfiguration.
+
+php_flag engine off
+
+<FilesMatch "\.(php|phtml|phar|cgi|pl|py)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes

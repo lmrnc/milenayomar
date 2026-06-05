@@ -1,0 +1,11 @@
+Options -Indexes
+
+# Only upload.php may be served from this directory
+<FilesMatch "^(?!upload\.php$).*\.php$">
+    Require all denied
+</FilesMatch>
+
+# Hide everything else
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

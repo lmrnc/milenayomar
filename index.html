@@ -687,6 +687,175 @@
     opacity: 1;
     transform: none;
   }
+
+  /* ── MEDIA / Recuerdos ── */
+  #recuerdos > .section-label,
+  #recuerdos > .section-title,
+  #recuerdos > .confirm-text,
+  #recuerdos > #media-form {
+    width: min(760px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #recuerdos > .section-label,
+  #recuerdos > .section-title,
+  #recuerdos > .confirm-text {
+    text-align: center;
+  }
+
+  #recuerdos .section-title,
+  #recuerdos .section-title em {
+    color: var(--ink);
+  }
+
+  #media-form {
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 46px rgba(23,76,120,0.08);
+    padding: clamp(1.6rem, 4vw, 3rem);
+    border-radius: 2px;
+  }
+
+  #media-form .form-input,
+  #media-form .form-textarea,
+  #media-form .media-select {
+    color: var(--ink-deep);
+    border-bottom: 1px solid rgba(23,76,120,0.38);
+    min-height: 44px;
+  }
+
+  #media-form input[type="file"] {
+    border: 1px dashed rgba(23,76,120,0.32);
+    padding: 0.9rem;
+    background: rgba(247,246,241,0.6);
+    border-radius: 2px;
+    cursor: pointer;
+    width: 100%;
+    color: var(--ink-deep);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  #media-form input[type="file"]:focus {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .media-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    padding: 0.75rem 0;
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .media-help {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: rgba(15,56,92,0.7);
+    font-weight: 400;
+  }
+
+  .media-file-list {
+    margin-top: 0.8rem;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .media-file-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.55rem 0.75rem;
+    background: rgba(247,246,241,0.85);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+
+  .media-file-list .file-meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .media-file-list .file-size {
+    color: rgba(15,56,92,0.6);
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+  }
+
+  .media-file-list button {
+    background: transparent;
+    border: none;
+    color: rgba(15,56,92,0.5);
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0 0.3rem;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .media-file-list button:hover {
+    color: var(--botanical-red);
+  }
+
+  .media-progress {
+    width: 100%;
+    height: 6px;
+    margin-top: 1.2rem;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .media-progress::-webkit-progress-bar {
+    background: rgba(247,246,241,0.6);
+  }
+
+  .media-progress::-webkit-progress-value {
+    background: var(--ink);
+    transition: width 0.2s ease;
+  }
+
+  .media-progress::-moz-progress-bar {
+    background: var(--ink);
+  }
+
+  .media-status {
+    margin-top: 0.9rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    min-height: 1.4em;
+    color: var(--ink-deep);
+  }
+
+  .media-status.is-error {
+    color: var(--botanical-red);
+  }
+
+  .media-status.is-success {
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+  }
+
+  #media-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
 </style>
 </head>
 <body>
@@ -695,6 +864,8 @@
   <a href="#inicio" class="active">Inicio</a>
   <div class="dot"></div>
   <a href="#confirmacion">RSVP</a>
+  <div class="dot"></div>
+  <a href="#recuerdos">Recuerdos</a>
   <div class="dot"></div>
   <a href="#nosotros">Nosotros</a>
   <div class="dot"></div>
@@ -710,6 +881,7 @@
 <div class="mobile-nav">
   <a href="#inicio">Inicio</a>
   <a href="#confirmacion">RSVP</a>
+  <a href="#recuerdos">Recuerdos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#fecha">Fecha</a>
   <a href="#lugar">Lugar</a>
@@ -842,6 +1014,68 @@
         Nos vemos para celebrar, emocionarnos y bailar juntos.
       </p>
     </div>
+  </section>
+
+  <!-- MEDIA -->
+  <section id="recuerdos" class="vichy vichy-inv" hidden>
+    <p class="section-label reveal">02 — Recuerdos</p>
+    <h2 class="section-title reveal">Compártenos<br><em>los momentos</em></h2>
+    <p class="confirm-text reveal">
+      Cuelguen aquí sus fotos y vídeos de la celebración.
+      Nos llegan directos a Milena y Omar; no se publican en ninguna galería.
+    </p>
+
+    <form id="media-form"
+          action="/api/upload.php"
+          method="POST"
+          enctype="multipart/form-data"
+          novalidate>
+      <input type="text" name="bot-field" tabindex="-1" autocomplete="off"
+             aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
+
+      <div class="form-group">
+        <label class="form-label" for="media-files">Fotos y vídeos</label>
+        <input id="media-files" name="archivos[]" type="file"
+               accept="image/jpeg,image/png,image/webp,image/heic,image/heif,video/mp4,video/quicktime"
+               multiple capture="environment" class="form-input" required>
+        <p class="media-help">Hasta 5 archivos por envío, máximo 30 MB cada uno.</p>
+      </div>
+
+      <ul id="media-file-list" class="media-file-list" aria-live="polite"></ul>
+
+      <div class="form-group" style="margin-top:1rem;">
+        <label class="form-label" for="media-personas">¿Quién sale?</label>
+        <input id="media-personas" name="personas" type="text" maxlength="200"
+               class="form-input"
+               placeholder="P. ej. Marta y los primos">
+      </div>
+
+      <div class="form-group" style="margin-top:1rem;">
+        <label class="form-label" for="media-momento">¿En qué momento?</label>
+        <select id="media-momento" name="momento" class="form-input media-select">
+          <option value="">Sin especificar</option>
+          <option value="ceremonia">Ceremonia</option>
+          <option value="coctel">Cóctel</option>
+          <option value="cena">Cena</option>
+          <option value="baile">Baile</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-top:1rem;">
+        <label class="form-label" for="media-pie">Pie de foto</label>
+        <textarea id="media-pie" name="pie" maxlength="500" rows="3"
+                  class="form-input form-textarea"
+                  placeholder="Una palabra, una broma, una dedicatoria..."></textarea>
+      </div>
+
+      <progress id="media-progress" class="media-progress" value="0" max="100" hidden></progress>
+      <p id="media-status" class="media-status" role="status" aria-live="polite"></p>
+
+      <button type="submit" class="btn-submit" id="media-submit" style="margin-top:1.5rem;">
+        Enviar recuerdos
+      </button>
+    </form>
   </section>
 
   <!-- NOSOTROS -->
@@ -1299,6 +1533,254 @@ document.addEventListener('DOMContentLoaded', function() {
     guestNameInput.addEventListener('input', function() {
       var label = guestNameInput.value.trim() || 'Tu asistencia';
       document.getElementById('card-main-name').textContent = label;
+    });
+  }
+
+  // ── MEDIA / Recuerdos ────────────────────────────────────
+  const MEDIA_CONFIG = {
+    ENABLED: true,
+    ENDPOINT: '/api/upload.php',
+    PROD_HOSTNAMES: ['milenayomar.es', 'www.milenayomar.es', 'localhost', '127.0.0.1'],
+    MAX_FILE_SIZE_BYTES: 30 * 1024 * 1024,
+    MAX_FILES_PER_SUBMISSION: 5,
+    MAX_POST_SIZE_BYTES: 200 * 1024 * 1024,
+    ALLOWED_MIME: [
+      'image/jpeg','image/png','image/webp',
+      'image/heic','image/heif',
+      'video/mp4','video/quicktime'
+    ],
+    ALLOWED_EXT: ['.jpg','.jpeg','.png','.webp','.heic','.heif','.mp4','.mov'],
+    MOMENT_OPTIONS: ['ceremonia','coctel','cena','baile','otro'],
+    CLIENT_THROTTLE_MS: 10000,
+    REQUEST_TIMEOUT_MS: 120000,
+    STORAGE_KEY_LAST_SUBMIT: 'media:lastSubmitTs'
+  };
+
+  function isMediaFeatureEnabledHere() {
+    if (!MEDIA_CONFIG.ENABLED) return false;
+    return MEDIA_CONFIG.PROD_HOSTNAMES.indexOf(window.location.hostname) !== -1;
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function classifyMediaFile(file) {
+    var nameLower = (file.name || '').toLowerCase();
+    var extOk = MEDIA_CONFIG.ALLOWED_EXT.some(function(e){ return nameLower.endsWith(e); });
+    var mimeOk = MEDIA_CONFIG.ALLOWED_MIME.indexOf(file.type) !== -1;
+    if (!extOk && !mimeOk) return { ok: false, reason: 'tipo' };
+    if (file.size > MEDIA_CONFIG.MAX_FILE_SIZE_BYTES) return { ok: false, reason: 'tamano' };
+    return { ok: true };
+  }
+
+  function validateMediaSubmission(files) {
+    if (!files || files.length === 0) {
+      return { ok: false, msg: 'Selecciona al menos una foto o vídeo.' };
+    }
+    if (files.length > MEDIA_CONFIG.MAX_FILES_PER_SUBMISSION) {
+      return { ok: false, msg: 'Máximo ' + MEDIA_CONFIG.MAX_FILES_PER_SUBMISSION + ' archivos por envío. Has elegido ' + files.length + '.' };
+    }
+    var total = 0;
+    for (var i = 0; i < files.length; i++) {
+      var r = classifyMediaFile(files[i]);
+      if (!r.ok) {
+        if (r.reason === 'tipo') {
+          return { ok: false, msg: '"' + files[i].name + '" no es un formato que aceptemos. Usa JPG, PNG, WEBP, HEIC, MP4 o MOV.' };
+        }
+        return { ok: false, msg: '"' + files[i].name + '" pesa ' + formatBytes(files[i].size) + ' y el máximo por archivo son 30 MB.' };
+      }
+      total += files[i].size;
+    }
+    if (total > MEDIA_CONFIG.MAX_POST_SIZE_BYTES) {
+      return { ok: false, msg: 'En total son demasiados megabytes. Prueba a enviarlos en dos veces.' };
+    }
+    return { ok: true };
+  }
+
+  function checkMediaThrottle(now) {
+    if (typeof now !== 'number') now = Date.now();
+    try {
+      var raw = sessionStorage.getItem(MEDIA_CONFIG.STORAGE_KEY_LAST_SUBMIT);
+      var last = raw ? Number(raw) : 0;
+      if (!isFinite(last) || last <= 0) return { ok: true };
+      var delta = now - last;
+      if (delta < MEDIA_CONFIG.CLIENT_THROTTLE_MS) {
+        return { ok: false, waitMs: MEDIA_CONFIG.CLIENT_THROTTLE_MS - delta };
+      }
+      return { ok: true };
+    } catch (_) {
+      return { ok: true }; // Si sessionStorage falla, no bloqueamos.
+    }
+  }
+
+  var mediaSection = document.getElementById('recuerdos');
+  var mediaForm = document.getElementById('media-form');
+  var mediaFiles = document.getElementById('media-files');
+  var mediaList = document.getElementById('media-file-list');
+  var mediaSubmit = document.getElementById('media-submit');
+  var mediaStatus = document.getElementById('media-status');
+  var mediaProgress = document.getElementById('media-progress');
+  var selectedFiles = [];
+
+  if (mediaSection) {
+    if (isMediaFeatureEnabledHere()) {
+      mediaSection.removeAttribute('hidden');
+    } else {
+      // Mientras la web no esté en producción mostramos un mensaje informativo
+      // en lugar de un botón roto.
+      mediaSection.removeAttribute('hidden');
+      if (mediaForm) mediaForm.style.display = 'none';
+      if (mediaStatus) {
+        mediaStatus.textContent = 'Estamos rematando esta sección. Cuando publiquemos la web definitiva, podrás subir aquí tus fotos y vídeos.';
+      }
+    }
+  }
+
+  function setMediaStatus(text, kind) {
+    if (!mediaStatus) return;
+    mediaStatus.textContent = text || '';
+    mediaStatus.classList.remove('is-error', 'is-success');
+    if (kind) mediaStatus.classList.add('is-' + kind);
+  }
+
+  function renderMediaList() {
+    if (!mediaList) return;
+    mediaList.innerHTML = '';
+    selectedFiles.forEach(function(file, idx) {
+      var li = document.createElement('li');
+      var meta = document.createElement('span');
+      meta.className = 'file-meta';
+      meta.textContent = file.name;
+      var size = document.createElement('span');
+      size.className = 'file-size';
+      size.textContent = formatBytes(file.size);
+      meta.appendChild(size);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Quitar ' + file.name);
+      btn.textContent = '✕';
+      btn.addEventListener('click', function() {
+        selectedFiles.splice(idx, 1);
+        renderMediaList();
+      });
+      li.appendChild(meta);
+      li.appendChild(btn);
+      mediaList.appendChild(li);
+    });
+  }
+
+  if (mediaFiles) {
+    mediaFiles.addEventListener('change', function() {
+      // Sustituimos la lista, no acumulamos: el input ya es multiple.
+      selectedFiles = Array.prototype.slice.call(mediaFiles.files);
+      renderMediaList();
+      setMediaStatus('');
+    });
+  }
+
+  function setMediaFormDisabled(disabled) {
+    if (!mediaForm) return;
+    var controls = mediaForm.querySelectorAll('input, textarea, select, button');
+    for (var i = 0; i < controls.length; i++) controls[i].disabled = disabled;
+  }
+
+  function submitMediaWithProgress(formData, onProgress, signal) {
+    return new Promise(function(resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', MEDIA_CONFIG.ENDPOINT);
+      xhr.responseType = 'json';
+      xhr.upload.onprogress = function(e) {
+        if (e.lengthComputable && onProgress) onProgress((e.loaded / e.total) * 100);
+      };
+      xhr.onload = function() { resolve({ status: xhr.status, body: xhr.response }); };
+      xhr.onerror = function() { reject(new Error('network')); };
+      xhr.ontimeout = function() { reject(new Error('timeout')); };
+      if (signal) {
+        signal.addEventListener('abort', function(){ try { xhr.abort(); } catch (_) {} });
+      }
+      xhr.send(formData);
+    });
+  }
+
+  if (mediaForm) {
+    mediaForm.addEventListener('submit', function(event) {
+      if (!isMediaFeatureEnabledHere()) {
+        event.preventDefault();
+        return;
+      }
+      event.preventDefault();
+
+      // Honeypot
+      var hp = mediaForm.querySelector('input[name="bot-field"]');
+      if (hp && hp.value) {
+        // Acción silenciosa, comportamiento idéntico al server
+        setMediaStatus('¡Gracias!', 'success');
+        return;
+      }
+
+      var validation = validateMediaSubmission(selectedFiles);
+      if (!validation.ok) {
+        setMediaStatus(validation.msg, 'error');
+        return;
+      }
+
+      var throttle = checkMediaThrottle();
+      if (!throttle.ok) {
+        var secs = Math.ceil(throttle.waitMs / 1000);
+        setMediaStatus('Espera ' + secs + ' segundo' + (secs === 1 ? '' : 's') + ' antes del siguiente envío.', 'error');
+        return;
+      }
+
+      var fd = new FormData();
+      selectedFiles.forEach(function(f){ fd.append('archivos[]', f); });
+      fd.append('personas', document.getElementById('media-personas').value || '');
+      fd.append('momento', document.getElementById('media-momento').value || '');
+      fd.append('pie', document.getElementById('media-pie').value || '');
+      fd.append('bot-field', '');
+
+      setMediaFormDisabled(true);
+      if (mediaProgress) {
+        mediaProgress.hidden = false;
+        mediaProgress.value = 0;
+      }
+      setMediaStatus('Enviando…');
+
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      var timeout = setTimeout(function() {
+        if (ctrl) ctrl.abort();
+      }, MEDIA_CONFIG.REQUEST_TIMEOUT_MS);
+
+      submitMediaWithProgress(
+        fd,
+        function(p){ if (mediaProgress) mediaProgress.value = p; },
+        ctrl ? ctrl.signal : null
+      ).then(function(res) {
+        clearTimeout(timeout);
+        if (mediaProgress) mediaProgress.hidden = true;
+        if (res.status >= 200 && res.status < 300 && res.body && res.body.ok) {
+          try { sessionStorage.setItem(MEDIA_CONFIG.STORAGE_KEY_LAST_SUBMIT, String(Date.now())); } catch (_) {}
+          setMediaStatus('¡Gracias, ya lo tenemos guardado!', 'success');
+          mediaForm.reset();
+          selectedFiles = [];
+          renderMediaList();
+        } else {
+          var msg = (res.body && res.body.error) || 'Algo no fue bien por nuestro lado, inténtalo de nuevo.';
+          setMediaStatus(msg, 'error');
+        }
+        setMediaFormDisabled(false);
+      }).catch(function(err) {
+        clearTimeout(timeout);
+        if (mediaProgress) mediaProgress.hidden = true;
+        if (err && err.message === 'timeout') {
+          setMediaStatus('Tu envío está tardando, prueba de nuevo cuando tengas mejor conexión.', 'error');
+        } else {
+          setMediaStatus('Parece que se perdió la conexión, inténtalo otra vez.', 'error');
+        }
+        setMediaFormDisabled(false);
+      });
     });
   }
 
