@@ -565,6 +565,37 @@
     box-shadow: 0 18px 46px rgba(38,63,23,0.14);
   }
 
+  .lugar-map iframe {
+    display: block;
+    filter: saturate(0.85);
+  }
+
+  .map-cta {
+    position: absolute;
+    bottom: 0.9rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.96);
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    box-shadow: 0 6px 20px rgba(23,76,120,0.12);
+    transition: background 0.25s, color 0.25s;
+    white-space: nowrap;
+  }
+
+  .map-cta:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
   .map-pin-dot {
     background: var(--botanical-red);
   }
@@ -879,7 +910,7 @@
         <div class="detail-row">
           <div>
             <p class="detail-label">Dirección</p>
-            <p class="detail-value">Can Ribas de Montbui<br>Santa Maria de Montbui, Barcelona</p>
+            <p class="detail-value">Camí de Can Ribas, s/n<br>08415 Bigues i Riells, Barcelona</p>
           </div>
         </div>
         <div class="detail-row">
@@ -899,18 +930,20 @@
       </div>
     </div>
     <div class="lugar-map reveal">
-      <div class="map-pin">
-        <div class="map-pin-dot"></div>
-        <p class="map-pin-text">Can Ribas de Montbui</p>
-      </div>
-      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12" viewBox="0 0 300 300" fill="none">
-        <path d="M0 100 Q150 80 300 120"                    stroke="#fbfcff" stroke-width="0.5"/>
-        <path d="M0 150 Q100 140 150 160 Q200 180 300 155" stroke="#fbfcff" stroke-width="0.5"/>
-        <path d="M0 200 Q150 210 300 190"                  stroke="#fbfcff" stroke-width="0.5"/>
-        <path d="M80 0 Q90 150 85 300"                     stroke="#fbfcff" stroke-width="0.5"/>
-        <path d="M150 0 Q155 150 148 300"                  stroke="#fbfcff" stroke-width="0.5"/>
-        <path d="M220 0 Q215 150 225 300"                  stroke="#fbfcff" stroke-width="0.5"/>
-      </svg>
+      <iframe
+        src="https://maps.google.com/maps?q=Cam%C3%AD%20de%20Can%20Ribas%2C%20s%2Fn%2C%2008415%20Bigues%20i%20Riells%2C%20Barcelona&t=m&z=14&output=embed&iwloc=near"
+        title="Can Ribas — Bigues i Riells, Barcelona"
+        aria-label="Mapa de Can Ribas en Bigues i Riells, Barcelona"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        style="border:0; width:100%; height:100%;"
+        allowfullscreen></iframe>
+      <a class="map-cta"
+         href="https://www.google.com/maps/dir/?api=1&destination=Cam%C3%AD+de+Can+Ribas%2C+s%2Fn%2C+08415+Bigues+i+Riells%2C+Barcelona"
+         target="_blank"
+         rel="noopener">
+        Cómo llegar en Google Maps →
+      </a>
     </div>
   </section>
 
