@@ -78,9 +78,9 @@
   #fecha .section-title em { color: var(--garnet); }
   .fecha-watermark { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(5rem,18vw,14rem); line-height: 1; color: var(--garnet); opacity: 0.04; position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; user-select: none; }
   .fecha-content { position: relative; z-index: 1; }
-  .countdown { display: flex; gap: clamp(2rem,5vw,5rem); justify-content: center; margin-top: 3rem; }
+  .countdown { display: flex; gap: clamp(0.8rem,3vw,3.5rem); justify-content: center; margin-top: 3rem; flex-wrap: wrap; }
   .countdown-item { text-align: center; }
-  .countdown-number { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3rem,6vw,5rem); line-height: 1; color: var(--garnet); display: block; }
+  .countdown-number { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.4rem,5vw,4.5rem); line-height: 1; color: var(--garnet); display: block; }
   .countdown-label { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone); margin-top: 0.5rem; display: block; }
   .countdown-sep { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--blush); align-self: flex-start; margin-top: 0.4rem; }
 
@@ -93,11 +93,13 @@
   .map-pin-text { margin-top: 0.8rem; font-weight: 300; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--white); opacity: 0.65; }
   .lugar-text { flex: 1; min-width: 280px; }
   .location-details { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
-  .detail-row { display: flex; align-items: flex-start; gap: 1.2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .detail-row { display: flex; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .detail-row:last-child { border-bottom: none; }
   .detail-icon { font-size: 1.1rem; opacity: 0.4; margin-top: 0.1rem; flex-shrink: 0; }
   .detail-label { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blush); margin-bottom: 0.3rem; }
   .detail-value { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 300; color: var(--white); }
+  .detail-sub { font-family: 'Jost', sans-serif; font-size: 0.95rem; font-weight: 400; line-height: 1.7; margin-top: 0.6rem; color: rgba(15,56,92,0.88); max-width: 460px; }
+  .detail-sub strong { font-weight: 500; color: var(--ink); }
 
   #programa { padding: 8vw; flex-direction: column; }
   #programa .section-label { color: var(--stone); }
@@ -853,6 +855,11 @@
           <span class="countdown-number" id="minutes">—</span>
           <span class="countdown-label">Minutos</span>
         </div>
+        <span class="countdown-sep">·</span>
+        <div class="countdown-item">
+          <span class="countdown-number" id="seconds">—</span>
+          <span class="countdown-label">Segundos</span>
+        </div>
       </div>
       <p style="text-align:center; margin-top:3rem; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.4rem; color:var(--stone);">Viernes, 9 de abril de 2027</p>
     </div>
@@ -870,21 +877,20 @@
       </p>
       <div class="location-details">
         <div class="detail-row">
-          <span class="detail-icon">📍</span>
           <div>
             <p class="detail-label">Dirección</p>
             <p class="detail-value">Can Ribas de Montbui<br>Santa Maria de Montbui, Barcelona</p>
           </div>
         </div>
         <div class="detail-row">
-          <span class="detail-icon">🚗</span>
           <div>
             <p class="detail-label">Cómo llegar</p>
-            <p class="detail-value">A unos 45 minutos de Barcelona ciudad.<br>Habrá parking disponible en el recinto<br>para quienes vengan en coche.<br>También habilitaremos guaguas de ida y vuelta<br>desde Barcelona, para que solo tengan<br>que preocuparse de disfrutar.</p>
+            <p class="detail-value">A unos 45 minutos de Barcelona ciudad.</p>
+            <p class="detail-sub">Habrá <strong>parking disponible</strong> en el recinto para quienes vengan en coche.</p>
+            <p class="detail-sub">También habilitaremos <strong>guaguas de ida y vuelta</strong> desde Barcelona, para que solo tengan que preocuparse de disfrutar.</p>
           </div>
         </div>
         <div class="detail-row">
-          <span class="detail-icon">🏡</span>
           <div>
             <p class="detail-label">El espacio</p>
             <p class="detail-value">Masía rural con jardines<br>y vistas a la montaña</p>
@@ -969,7 +975,7 @@
   <!-- CONTACTO -->
   <section id="contacto" class="vichy">
     <p class="section-label reveal">06 — Contacto</p>
-    <h2 class="section-title reveal">¿Tienen alguna<br><em>duda?</em></h2>
+    <h2 class="section-title reveal">¿Alguna<br><em>duda?</em></h2>
     <p class="nos-body reveal" style="margin-bottom:3rem;">Nuestra wedding planner les ayudará con cualquier consulta sobre horarios, transporte, ubicación o detalles del día.</p>
     <div class="reveal" style="display:flex; gap:4vw; flex-wrap:wrap; align-items:flex-start;">
       <div class="contact-card">
@@ -1015,14 +1021,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var daysEl = document.getElementById('days');
     var hoursEl = document.getElementById('hours');
     var minutesEl = document.getElementById('minutes');
-    if (!daysEl || !hoursEl || !minutesEl) return;
+    var secondsEl = document.getElementById('seconds');
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
     if (diff <= 0) { daysEl.textContent = 'Hoy'; return; }
     daysEl.textContent    = String(Math.floor(diff/86400000)).padStart(2,'0');
     hoursEl.textContent   = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
     minutesEl.textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    secondsEl.textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
   }
   updateCountdown();
-  setInterval(updateCountdown, 60000);
+  setInterval(updateCountdown, 1000);
 
   // ── Reveal on scroll ────────────────────────────────────
   if ('IntersectionObserver' in window) {
@@ -1094,7 +1102,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
       return [
         (index + 1) + '. Nombre: ' + name,
-        'Asistencia: ' + (c.choice === 'si' ? 'Sí' : 'No'),
         'Intolerancias: ' + intolerancias,
         'Comentarios: ' + comentarios
       ].join('\n');
@@ -1163,13 +1170,6 @@ document.addEventListener('DOMContentLoaded', function() {
         '<input type="text" class="form-input" id="comp-name-' + id + '" placeholder="Nombre del acompañante..." autocomplete="name">' +
       '</div>' +
       '<div class="form-group" style="margin-top:1rem;">' +
-        '<label class="form-label">¿Asistirá?</label>' +
-        '<div style="display:flex;gap:0.8rem;margin-top:0.7rem;flex-wrap:wrap;">' +
-          '<button type="button" class="btn-choice" id="comp-si-' + id + '" data-rsvp-action="comp-choice" data-companion-id="' + id + '" data-choice="si">Sí</button>' +
-          '<button type="button" class="btn-choice" id="comp-no-' + id + '" data-rsvp-action="comp-choice" data-companion-id="' + id + '" data-choice="no">No podrá</button>' +
-        '</div>' +
-      '</div>' +
-      '<div class="form-group" style="margin-top:1rem;">' +
         '<label class="form-label" for="comp-intol-' + id + '">Intolerancias o alergias</label>' +
         '<input type="text" class="form-input" id="comp-intol-' + id + '" placeholder="Ej: vegetariana, sin lactosa...">' +
       '</div>' +
@@ -1229,11 +1229,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!nameVal) {
         event.preventDefault();
         showError(errEl, 'Por favor introduce el nombre del acompañante ' + (i + 1) + '.');
-        return;
-      }
-      if (!c.choice) {
-        event.preventDefault();
-        showError(errEl, 'Por favor indica si "' + nameVal + '" asistirá o no.');
         return;
       }
     }
