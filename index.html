@@ -1185,11 +1185,11 @@
 
   <!-- MEDIA -->
   <section id="recuerdos" class="vichy vichy-inv" hidden>
-    <p class="section-label reveal">06 — Recuerdos</p>
-    <h2 class="section-title reveal">Compártenos<br><em>los momentos</em></h2>
+    <p class="section-label reveal">06 — Vuestra mirada</p>
+    <h2 class="section-title reveal">Vean lo que <em>vemos</em></h2>
     <p class="confirm-text reveal">
-      Cuelguen aquí sus fotos y vídeos de la celebración.
-      Nos llegan directos a Milena y Omar; no se publican en ninguna galería.
+      Cuelguen aquí las fotos y vídeos del día.
+      Llegan directos a nuestras manos, sin pasar por ninguna red social.
     </p>
 
     <form id="media-form"
@@ -1201,20 +1201,20 @@
              aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
 
       <div class="form-group">
-        <label class="form-label" for="media-files">Fotos y vídeos</label>
+        <label class="form-label" for="media-files">Sus fotos y vídeos</label>
         <input id="media-files" name="archivos[]" type="file"
                accept="image/jpeg,image/png,image/webp,image/heic,image/heif,video/mp4,video/quicktime"
                multiple capture="environment" class="form-input" required>
-        <p class="media-help">Hasta 5 archivos por envío, máximo 30 MB cada uno.</p>
+        <p class="media-help">Hasta 5 archivos por envío. Cada uno hasta 30 MB.</p>
       </div>
 
       <ul id="media-file-list" class="media-file-list" aria-live="polite"></ul>
 
       <div class="form-group" style="margin-top:1rem;">
-        <label class="form-label" for="media-personas">¿Quién sale?</label>
+        <label class="form-label" for="media-personas">¿Quién aparece?</label>
         <input id="media-personas" name="personas" type="text" maxlength="200"
                class="form-input"
-               placeholder="P. ej. Marta y los primos">
+               placeholder="Los novios, los abuelos, la cuadrilla...">
       </div>
 
       <div class="form-group" style="margin-top:1rem;">
@@ -1230,17 +1230,17 @@
       </div>
 
       <div class="form-group" style="margin-top:1rem;">
-        <label class="form-label" for="media-pie">Pie de foto</label>
+        <label class="form-label" for="media-pie">Una nota</label>
         <textarea id="media-pie" name="pie" maxlength="500" rows="3"
                   class="form-input form-textarea"
-                  placeholder="Una palabra, una broma, una dedicatoria..."></textarea>
+                  placeholder="Una broma, un susurro, una dedicatoria..."></textarea>
       </div>
 
       <progress id="media-progress" class="media-progress" value="0" max="100" hidden></progress>
       <p id="media-status" class="media-status" role="status" aria-live="polite"></p>
 
       <button type="submit" class="btn-submit" id="media-submit" style="margin-top:1.5rem;">
-        Enviar recuerdos
+        Enviarlo
       </button>
     </form>
   </section>
