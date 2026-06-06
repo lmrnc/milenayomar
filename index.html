@@ -871,8 +871,6 @@
   <div class="dot"></div>
   <a href="#confirmacion">RSVP</a>
   <div class="dot"></div>
-  <a href="#recuerdos">Recuerdos</a>
-  <div class="dot"></div>
   <a href="#nosotros">Nosotros</a>
   <div class="dot"></div>
   <a href="#fecha">Fecha</a>
@@ -880,6 +878,8 @@
   <a href="#lugar">Lugar</a>
   <div class="dot"></div>
   <a href="#programa">Programa</a>
+  <div class="dot"></div>
+  <a href="#recuerdos">Recuerdos</a>
   <div class="dot"></div>
   <a href="#contacto">Contacto</a>
 </nav>
@@ -887,11 +887,11 @@
 <div class="mobile-nav">
   <a href="#inicio">Inicio</a>
   <a href="#confirmacion">RSVP</a>
-  <a href="#recuerdos">Recuerdos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#fecha">Fecha</a>
   <a href="#lugar">Lugar</a>
   <a href="#programa">Programa</a>
+  <a href="#recuerdos">Recuerdos</a>
   <a href="#contacto">Contacto</a>
 </div>
 
@@ -1020,68 +1020,6 @@
         Nos vemos para celebrar, emocionarnos y bailar juntos.
       </p>
     </div>
-  </section>
-
-  <!-- MEDIA -->
-  <section id="recuerdos" class="vichy vichy-inv" hidden>
-    <p class="section-label reveal">02 — Recuerdos</p>
-    <h2 class="section-title reveal">Compártenos<br><em>los momentos</em></h2>
-    <p class="confirm-text reveal">
-      Cuelguen aquí sus fotos y vídeos de la celebración.
-      Nos llegan directos a Milena y Omar; no se publican en ninguna galería.
-    </p>
-
-    <form id="media-form"
-          action="/api/upload.php"
-          method="POST"
-          enctype="multipart/form-data"
-          novalidate>
-      <input type="text" name="bot-field" tabindex="-1" autocomplete="off"
-             aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
-
-      <div class="form-group">
-        <label class="form-label" for="media-files">Fotos y vídeos</label>
-        <input id="media-files" name="archivos[]" type="file"
-               accept="image/jpeg,image/png,image/webp,image/heic,image/heif,video/mp4,video/quicktime"
-               multiple capture="environment" class="form-input" required>
-        <p class="media-help">Hasta 5 archivos por envío, máximo 30 MB cada uno.</p>
-      </div>
-
-      <ul id="media-file-list" class="media-file-list" aria-live="polite"></ul>
-
-      <div class="form-group" style="margin-top:1rem;">
-        <label class="form-label" for="media-personas">¿Quién sale?</label>
-        <input id="media-personas" name="personas" type="text" maxlength="200"
-               class="form-input"
-               placeholder="P. ej. Marta y los primos">
-      </div>
-
-      <div class="form-group" style="margin-top:1rem;">
-        <label class="form-label" for="media-momento">¿En qué momento?</label>
-        <select id="media-momento" name="momento" class="form-input media-select">
-          <option value="">Sin especificar</option>
-          <option value="ceremonia">Ceremonia</option>
-          <option value="coctel">Cóctel</option>
-          <option value="cena">Cena</option>
-          <option value="baile">Baile</option>
-          <option value="otro">Otro</option>
-        </select>
-      </div>
-
-      <div class="form-group" style="margin-top:1rem;">
-        <label class="form-label" for="media-pie">Pie de foto</label>
-        <textarea id="media-pie" name="pie" maxlength="500" rows="3"
-                  class="form-input form-textarea"
-                  placeholder="Una palabra, una broma, una dedicatoria..."></textarea>
-      </div>
-
-      <progress id="media-progress" class="media-progress" value="0" max="100" hidden></progress>
-      <p id="media-status" class="media-status" role="status" aria-live="polite"></p>
-
-      <button type="submit" class="btn-submit" id="media-submit" style="margin-top:1.5rem;">
-        Enviar recuerdos
-      </button>
-    </form>
   </section>
 
   <!-- NOSOTROS -->
@@ -1245,9 +1183,71 @@
     </div>
   </section>
 
+  <!-- MEDIA -->
+  <section id="recuerdos" class="vichy vichy-inv" hidden>
+    <p class="section-label reveal">06 — Recuerdos</p>
+    <h2 class="section-title reveal">Compártenos<br><em>los momentos</em></h2>
+    <p class="confirm-text reveal">
+      Cuelguen aquí sus fotos y vídeos de la celebración.
+      Nos llegan directos a Milena y Omar; no se publican en ninguna galería.
+    </p>
+
+    <form id="media-form"
+          action="/api/upload.php"
+          method="POST"
+          enctype="multipart/form-data"
+          novalidate>
+      <input type="text" name="bot-field" tabindex="-1" autocomplete="off"
+             aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;">
+
+      <div class="form-group">
+        <label class="form-label" for="media-files">Fotos y vídeos</label>
+        <input id="media-files" name="archivos[]" type="file"
+               accept="image/jpeg,image/png,image/webp,image/heic,image/heif,video/mp4,video/quicktime"
+               multiple capture="environment" class="form-input" required>
+        <p class="media-help">Hasta 5 archivos por envío, máximo 30 MB cada uno.</p>
+      </div>
+
+      <ul id="media-file-list" class="media-file-list" aria-live="polite"></ul>
+
+      <div class="form-group" style="margin-top:1rem;">
+        <label class="form-label" for="media-personas">¿Quién sale?</label>
+        <input id="media-personas" name="personas" type="text" maxlength="200"
+               class="form-input"
+               placeholder="P. ej. Marta y los primos">
+      </div>
+
+      <div class="form-group" style="margin-top:1rem;">
+        <label class="form-label" for="media-momento">¿En qué momento?</label>
+        <select id="media-momento" name="momento" class="form-input media-select">
+          <option value="">Sin especificar</option>
+          <option value="ceremonia">Ceremonia</option>
+          <option value="coctel">Cóctel</option>
+          <option value="cena">Cena</option>
+          <option value="baile">Baile</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-top:1rem;">
+        <label class="form-label" for="media-pie">Pie de foto</label>
+        <textarea id="media-pie" name="pie" maxlength="500" rows="3"
+                  class="form-input form-textarea"
+                  placeholder="Una palabra, una broma, una dedicatoria..."></textarea>
+      </div>
+
+      <progress id="media-progress" class="media-progress" value="0" max="100" hidden></progress>
+      <p id="media-status" class="media-status" role="status" aria-live="polite"></p>
+
+      <button type="submit" class="btn-submit" id="media-submit" style="margin-top:1.5rem;">
+        Enviar recuerdos
+      </button>
+    </form>
+  </section>
+
   <!-- CONTACTO -->
   <section id="contacto" class="vichy">
-    <p class="section-label reveal">06 — Contacto</p>
+    <p class="section-label reveal">07 — Contacto</p>
     <h2 class="section-title reveal">¿Alguna<br><em>duda?</em></h2>
     <p class="nos-body reveal" style="margin-bottom:3rem;">Nuestra wedding planner les ayudará con cualquier consulta sobre horarios, transporte, ubicación o detalles del día.</p>
     <div class="reveal" style="display:flex; gap:4vw; flex-wrap:wrap; align-items:flex-start;">

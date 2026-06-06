@@ -32,17 +32,17 @@ const ALLOWED_MIME = [
 
 // ── Bloque A: HTML structural assertions ────────────────────
 
-test('Media section sits between RSVP and NOSOTROS markers', () => {
+test('Media section sits between PROGRAMA and CONTACTO markers', () => {
   const html = readHtml();
-  const rsvpIdx = html.indexOf('<!-- RSVP -->');
+  const programaIdx = html.indexOf('<!-- PROGRAMA -->');
   const mediaIdx = html.indexOf('<!-- MEDIA -->');
-  const nosotrosIdx = html.indexOf('<!-- NOSOTROS -->');
+  const contactoIdx = html.indexOf('<!-- CONTACTO -->');
 
-  assert.ok(rsvpIdx !== -1, 'RSVP marker missing');
+  assert.ok(programaIdx !== -1, 'PROGRAMA marker missing');
   assert.ok(mediaIdx !== -1, 'MEDIA marker missing');
-  assert.ok(nosotrosIdx !== -1, 'NOSOTROS marker missing');
-  assert.ok(rsvpIdx < mediaIdx, 'MEDIA should come after RSVP');
-  assert.ok(mediaIdx < nosotrosIdx, 'MEDIA should come before NOSOTROS');
+  assert.ok(contactoIdx !== -1, 'CONTACTO marker missing');
+  assert.ok(programaIdx < mediaIdx, 'MEDIA should come after PROGRAMA');
+  assert.ok(mediaIdx < contactoIdx, 'MEDIA should come before CONTACTO');
 });
 
 test('Media form has correct attributes and points to /api/upload.php', () => {
